@@ -1,0 +1,299 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "Initialise a Next.js 15 project with TypeScript strict mode in the workspace root": [
+      {
+        "executionId": "81687cd3-9f3f-48e7-8d90-8d36c52a4e10",
+        "chatSessionId": "sess_a4b3fc1e-e574-45ab-a7fc-944fba451f5d",
+        "timestamp": 1793509932438
+      },
+      {
+        "executionId": "3075e921-a5a7-47e1-af09-f880a0048fc2",
+        "chatSessionId": "sess_e299f10c-5f8f-4d02-8656-4a8dcde7ec52",
+        "timestamp": 1793510157034
+      },
+      {
+        "executionId": "b8468c42-c97b-40b3-a8db-9b8ec54874e9",
+        "chatSessionId": "sess_cd3bb629-5d21-4ba2-9ebc-041c53f9808d",
+        "timestamp": 1793510358897
+      },
+      {
+        "executionId": "b8468c42-c97b-40b3-a8db-9b8ec54874e9",
+        "chatSessionId": "sess_cd3bb629-5d21-4ba2-9ebc-041c53f9808d",
+        "timestamp": 1793510980550
+      }
+    ],
+    "Add Vitest, @vitest/ui, fast-check, and zod as dev dependencies": [
+      {
+        "executionId": "146bcd76-54d0-4fb3-930a-99933bc33a96",
+        "chatSessionId": "sess_1ad9bbca-afb9-49b2-959c-77553223b237",
+        "timestamp": 1793511047383
+      },
+      {
+        "executionId": "146bcd76-54d0-4fb3-930a-99933bc33a96",
+        "chatSessionId": "sess_1ad9bbca-afb9-49b2-959c-77553223b237",
+        "timestamp": 1793511129464
+      },
+      {
+        "executionId": "482278ab-3da8-482f-8dbb-9ef1abcdbbd3",
+        "chatSessionId": "sess_b30cce83-e83d-4233-a21a-08da7eeaf8a0",
+        "timestamp": 1793511135840
+      },
+      {
+        "executionId": "482278ab-3da8-482f-8dbb-9ef1abcdbbd3",
+        "chatSessionId": "sess_b30cce83-e83d-4233-a21a-08da7eeaf8a0",
+        "timestamp": 1793511141712
+      }
+    ],
+    "Configure `vitest.config.ts` with a `core` test alias": [
+      {
+        "executionId": "4f448100-ee30-4b9d-9917-6ad4b0e63e1e",
+        "chatSessionId": "sess_07182da5-3e8f-4cb4-8243-1dc4df9170a2",
+        "timestamp": 1793511209188
+      },
+      {
+        "executionId": "4f448100-ee30-4b9d-9917-6ad4b0e63e1e",
+        "chatSessionId": "sess_07182da5-3e8f-4cb4-8243-1dc4df9170a2",
+        "timestamp": 1793511285677
+      }
+    ],
+    "Add `src/core/index.ts` as the public entry point (empty re-export for now)": [
+      {
+        "executionId": "29157fd4-bf44-4c02-a89a-bf8bee53d299",
+        "chatSessionId": "sess_32026f18-a1cc-48c3-97f2-25fdbcb53dbf",
+        "timestamp": 1793511341217
+      },
+      {
+        "executionId": "29157fd4-bf44-4c02-a89a-bf8bee53d299",
+        "chatSessionId": "sess_32026f18-a1cc-48c3-97f2-25fdbcb53dbf",
+        "timestamp": 1793511370183
+      }
+    ],
+    "Implement `SignalSource` union type in `src/core/signal.ts`": [
+      {
+        "executionId": "01e561bc-dfa7-495e-b1f8-e9d2899067c7",
+        "chatSessionId": "sess_c58ddf90-3e8e-454a-be36-edb9e06a1966",
+        "timestamp": 1793511410259
+      },
+      {
+        "executionId": "01e561bc-dfa7-495e-b1f8-e9d2899067c7",
+        "chatSessionId": "sess_c58ddf90-3e8e-454a-be36-edb9e06a1966",
+        "timestamp": 1793511443036
+      }
+    ],
+    "Implement the `Signal` interface": [
+      {
+        "executionId": "0a4c32f3-00d0-492c-b65c-247e2af82ee5",
+        "chatSessionId": "sess_dfb6f1ef-43aa-4d78-902b-cda9f9289d9a",
+        "timestamp": 1793511461683
+      },
+      {
+        "executionId": "0a4c32f3-00d0-492c-b65c-247e2af82ee5",
+        "chatSessionId": "sess_dfb6f1ef-43aa-4d78-902b-cda9f9289d9a",
+        "timestamp": 1793511493294
+      }
+    ],
+    "Implement `createSignal(input)` factory with validation (REQ-SIG-01, REQ-SIG-02)": [
+      {
+        "executionId": "d78f886d-9b96-4c8a-80a1-6f33128c71ec",
+        "chatSessionId": "sess_5c1ebe34-eb4f-4070-bc36-b011264ccbf6",
+        "timestamp": 1793511544352
+      },
+      {
+        "executionId": "d78f886d-9b96-4c8a-80a1-6f33128c71ec",
+        "chatSessionId": "sess_5c1ebe34-eb4f-4070-bc36-b011264ccbf6",
+        "timestamp": 1793511578627
+      }
+    ],
+    "Write unit tests: valid signal, severity out of range, empty id/evidence/whyItMatters": [
+      {
+        "executionId": "f6f2ac3d-d777-4d79-bd55-f1e10fc2ddbf",
+        "chatSessionId": "sess_ad815b44-2f33-4778-9d28-94b24bff8e46",
+        "timestamp": 1793511588133
+      },
+      {
+        "executionId": "f6f2ac3d-d777-4d79-bd55-f1e10fc2ddbf",
+        "chatSessionId": "sess_ad815b44-2f33-4778-9d28-94b24bff8e46",
+        "timestamp": 1793511629371
+      }
+    ],
+    "Write property test PBT-05 (severity outside [0,1] always errors)": [
+      {
+        "executionId": "a64d0497-1a54-46ac-ae2c-5964f723986f",
+        "chatSessionId": "sess_36b36170-52a9-4c08-bb23-7307423ff857",
+        "timestamp": 1793511640903
+      },
+      {
+        "executionId": "a64d0497-1a54-46ac-ae2c-5964f723986f",
+        "chatSessionId": "sess_36b36170-52a9-4c08-bb23-7307423ff857",
+        "timestamp": 1793511690976
+      }
+    ],
+    "Implement `RiskLevel` type and `AggregationResult` interface in `src/core/aggregator.ts`": [
+      {
+        "executionId": "b85def30-20f1-4562-878e-ba23e37c3532",
+        "chatSessionId": "sess_50b54a2e-dfc2-480a-b0b7-4d537ce0bdf1",
+        "timestamp": 1793511752719
+      },
+      {
+        "executionId": "b85def30-20f1-4562-878e-ba23e37c3532",
+        "chatSessionId": "sess_50b54a2e-dfc2-480a-b0b7-4d537ce0bdf1",
+        "timestamp": 1793511788024
+      }
+    ],
+    "Implement `aggregate(signals)` using the noisy-or formula (REQ-AGG-01 through REQ-AGG-06)": [
+      {
+        "executionId": "871a8f2c-c473-4fb2-b6f2-798063fb816d",
+        "chatSessionId": "sess_596ce594-cde4-49e7-b8c0-8de022b5a2da",
+        "timestamp": 1793511797151
+      },
+      {
+        "executionId": "871a8f2c-c473-4fb2-b6f2-798063fb816d",
+        "chatSessionId": "sess_596ce594-cde4-49e7-b8c0-8de022b5a2da",
+        "timestamp": 1793511877325
+      }
+    ],
+    "Implement the score-to-level mapping function": [
+      {
+        "executionId": "3ceab3de-e08d-4846-98db-f987d92d1ea7",
+        "chatSessionId": "sess_920989d3-9d4e-49be-b6d8-b76e5365c472",
+        "timestamp": 1793511887830
+      },
+      {
+        "executionId": "3ceab3de-e08d-4846-98db-f987d92d1ea7",
+        "chatSessionId": "sess_920989d3-9d4e-49be-b6d8-b76e5365c472",
+        "timestamp": 1793511923338
+      }
+    ],
+    "Write unit tests: empty list, single severity=1, level boundary values (49/50, 79/80)": [
+      {
+        "executionId": "2e6ee2c2-bf5b-43ef-8c5b-54d7c5567039",
+        "chatSessionId": "sess_3eb13646-5a64-4f50-84eb-fb93f6e0d470",
+        "timestamp": 1793511932608
+      },
+      {
+        "executionId": "2e6ee2c2-bf5b-43ef-8c5b-54d7c5567039",
+        "chatSessionId": "sess_3eb13646-5a64-4f50-84eb-fb93f6e0d470",
+        "timestamp": 1793511965043
+      }
+    ],
+    "Write property tests PBT-01 (score always in [0,100]), PBT-02 (monotonicity), PBT-04 (level matches score)": [
+      {
+        "executionId": "8f62f38b-46d7-4128-be42-f6bcdb711f6c",
+        "chatSessionId": "sess_eb273ffb-593d-4b28-8d38-020a0ff44c28",
+        "timestamp": 1793511974790
+      },
+      {
+        "executionId": "8f62f38b-46d7-4128-be42-f6bcdb711f6c",
+        "chatSessionId": "sess_eb273ffb-593d-4b28-8d38-020a0ff44c28",
+        "timestamp": 1793512018905
+      }
+    ],
+    "Define the `Analyzer<TInput>` interface in `src/core/analyzer.ts`": [
+      {
+        "executionId": "8d6144c3-e5a3-4c1c-8577-cbed81874641",
+        "chatSessionId": "sess_543a2281-1a7c-463a-b3cb-6cbc1be57670",
+        "timestamp": 1793514669573
+      },
+      {
+        "executionId": "8d6144c3-e5a3-4c1c-8577-cbed81874641",
+        "chatSessionId": "sess_543a2281-1a7c-463a-b3cb-6cbc1be57670",
+        "timestamp": 1793514709477
+      },
+      {
+        "executionId": "e30633ab-cf78-43d5-b5d6-32e3754c2a0f",
+        "chatSessionId": "sess_2bdeb63f-f54a-4698-af88-7ae0a918106a",
+        "timestamp": 1793514716627
+      },
+      {
+        "executionId": "e30633ab-cf78-43d5-b5d6-32e3754c2a0f",
+        "chatSessionId": "sess_2bdeb63f-f54a-4698-af88-7ae0a918106a",
+        "timestamp": 1793514731103
+      }
+    ],
+    "Implement `AnalyzerRegistry` with `register` and `analyze` methods": [
+      {
+        "executionId": "39643648-fd59-4b92-89c8-7b0b1ec64c09",
+        "chatSessionId": "sess_7c53ee63-3996-4a12-bf55-28089f5e65cd",
+        "timestamp": 1793514741694
+      },
+      {
+        "executionId": "39643648-fd59-4b92-89c8-7b0b1ec64c09",
+        "chatSessionId": "sess_7c53ee63-3996-4a12-bf55-28089f5e65cd",
+        "timestamp": 1793514773753
+      }
+    ],
+    "Ensure `AnalyzerRegistry.analyze` never rejects (wraps individual analyzers)": [
+      {
+        "executionId": "8459645c-923a-4b31-ba7f-d0f18fab289d",
+        "chatSessionId": "sess_5feed3ac-e7df-4b5e-bce8-5cc9056ead1c",
+        "timestamp": 1793514787739
+      },
+      {
+        "executionId": "8459645c-923a-4b31-ba7f-d0f18fab289d",
+        "chatSessionId": "sess_5feed3ac-e7df-4b5e-bce8-5cc9056ead1c",
+        "timestamp": 1793514848454
+      }
+    ],
+    "Write unit tests: registry with zero analyzers, analyzer returning signals, analyzer that throws internally": [
+      {
+        "executionId": "0f759efe-29d5-4977-990f-98cbd01c527d",
+        "chatSessionId": "sess_f12f0f15-6759-4c5a-834b-a30fcefa4433",
+        "timestamp": 1793514857117
+      },
+      {
+        "executionId": "0f759efe-29d5-4977-990f-98cbd01c527d",
+        "chatSessionId": "sess_f12f0f15-6759-4c5a-834b-a30fcefa4433",
+        "timestamp": 1793514887913
+      }
+    ],
+    "Write property test PBT-03 using a passthrough analyzer with `fc.anything()` input": [
+      {
+        "executionId": "bb29d2dd-4020-448e-9231-ad23b2f7f38c",
+        "chatSessionId": "sess_acd857f7-9357-47a4-8236-2209a9ddc50e",
+        "timestamp": 1793514918464
+      },
+      {
+        "executionId": "bb29d2dd-4020-448e-9231-ad23b2f7f38c",
+        "chatSessionId": "sess_acd857f7-9357-47a4-8236-2209a9ddc50e",
+        "timestamp": 1793514967790
+      }
+    ],
+    "Re-export `Signal`, `createSignal`, `aggregate`, `AggregationResult`, `RiskLevel`, `Analyzer`, `AnalyzerRegistry` from `src/core/index.ts`": [
+      {
+        "executionId": "61a92f5f-adf5-47e2-a569-6951788aa413",
+        "chatSessionId": "sess_c6d4c29b-aaf0-4399-b860-9edde616eec8",
+        "timestamp": 1793514988330
+      },
+      {
+        "executionId": "61a92f5f-adf5-47e2-a569-6951788aa413",
+        "chatSessionId": "sess_c6d4c29b-aaf0-4399-b860-9edde616eec8",
+        "timestamp": 1793515024420
+      }
+    ],
+    "Write one integration test: create two signals, run through registry, aggregate, assert level is correct": [
+      {
+        "executionId": "662f9a85-d3ef-4521-97bf-8c339af5c073",
+        "chatSessionId": "sess_3b0fb749-eac3-407e-aa28-84f414a4c65f",
+        "timestamp": 1793515033776
+      },
+      {
+        "executionId": "662f9a85-d3ef-4521-97bf-8c339af5c073",
+        "chatSessionId": "sess_3b0fb749-eac3-407e-aa28-84f414a4c65f",
+        "timestamp": 1793515080262
+      }
+    ],
+    "Verify `vitest run` passes with zero failures": [
+      {
+        "executionId": "d56d7864-8f3c-4028-87f8-eb5cbf3c9eca",
+        "chatSessionId": "sess_00e0688b-418a-4c72-bd78-56c4146f9e45",
+        "timestamp": 1793515090294
+      },
+      {
+        "executionId": "d56d7864-8f3c-4028-87f8-eb5cbf3c9eca",
+        "chatSessionId": "sess_00e0688b-418a-4c72-bd78-56c4146f9e45",
+        "timestamp": 1793515125875
+      }
+    ]
+  }
+}
