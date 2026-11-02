@@ -1,0 +1,165 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "Create the directory `src/analyzers/`": [
+      {
+        "executionId": "d46a3d24-d704-4ea6-97df-7c1c0b2f5049",
+        "chatSessionId": "sess_75625bd0-59fe-4623-b836-be7098d6842d",
+        "timestamp": 1793625011090
+      },
+      {
+        "executionId": "d46a3d24-d704-4ea6-97df-7c1c0b2f5049",
+        "chatSessionId": "sess_75625bd0-59fe-4623-b836-be7098d6842d",
+        "timestamp": 1793625027574
+      }
+    ],
+    "Create `src/analyzers/url-analyzer.config.ts` with exported `KNOWN_BRANDS`": [
+      {
+        "executionId": "ca858a27-1e5a-4457-a543-d1f1e14b7f90",
+        "chatSessionId": "sess_631c3aba-0e88-4700-93d8-4c1cfe5eea0e",
+        "timestamp": 1793625136784
+      },
+      {
+        "executionId": "ca858a27-1e5a-4457-a543-d1f1e14b7f90",
+        "chatSessionId": "sess_631c3aba-0e88-4700-93d8-4c1cfe5eea0e",
+        "timestamp": 1793625176731
+      }
+    ],
+    "Verify `url-analyzer.config.ts` is importable without importing the": [
+      {
+        "executionId": "104f33fe-b2ba-4844-826e-45018b80f0d0",
+        "chatSessionId": "sess_89ef960c-9a11-4500-997c-d944e7cb45af",
+        "timestamp": 1793625210429
+      },
+      {
+        "executionId": "104f33fe-b2ba-4844-826e-45018b80f0d0",
+        "chatSessionId": "sess_89ef960c-9a11-4500-997c-d944e7cb45af",
+        "timestamp": 1793625242966
+      }
+    ],
+    "Implement `normalizeUrl(input: string): string | null` in": [
+      {
+        "executionId": "21ff0e27-62a5-4fdf-8243-6da6f69ffaf3",
+        "chatSessionId": "sess_3c4641e8-40e6-4089-842e-1629503a330f",
+        "timestamp": 1793625381559
+      },
+      {
+        "executionId": "21ff0e27-62a5-4fdf-8243-6da6f69ffaf3",
+        "chatSessionId": "sess_3c4641e8-40e6-4089-842e-1629503a330f",
+        "timestamp": 1793625443149
+      }
+    ],
+    "Write unit tests in `src/analyzers/url-analyzer.test.ts`:": [
+      {
+        "executionId": "ab483965-d749-4f54-8b4a-a45b191ad2e5",
+        "chatSessionId": "sess_d12c32e1-e5f5-4926-a42b-9873379802a4",
+        "timestamp": 1793625541540
+      },
+      {
+        "executionId": "ab483965-d749-4f54-8b4a-a45b191ad2e5",
+        "chatSessionId": "sess_d12c32e1-e5f5-4926-a42b-9873379802a4",
+        "timestamp": 1793625606611
+      }
+    ],
+    "Write property test PBT-06 in `src/analyzers/url-analyzer.property.test.ts`:": [
+      {
+        "executionId": "2bd1378d-d43b-41a7-b612-28133630c35e",
+        "chatSessionId": "sess_19b46b34-506d-4e1a-b213-488b88566644",
+        "timestamp": 1793625671891
+      },
+      {
+        "executionId": "2bd1378d-d43b-41a7-b612-28133630c35e",
+        "chatSessionId": "sess_19b46b34-506d-4e1a-b213-488b88566644",
+        "timestamp": 1793625720966
+      }
+    ],
+    "Implement `checkPunycodeHost` helper that emits `\"url.punycode-host\"`": [
+      {
+        "executionId": "afb8040f-87a3-468d-b602-1e0a8ca759d7",
+        "chatSessionId": "sess_88b1ab73-9777-4eb8-9d6e-4e8d766bfeb1",
+        "timestamp": 1793625857724
+      },
+      {
+        "executionId": "afb8040f-87a3-468d-b602-1e0a8ca759d7",
+        "chatSessionId": "sess_88b1ab73-9777-4eb8-9d6e-4e8d766bfeb1",
+        "timestamp": 1793625923659
+      }
+    ],
+    "Write unit tests:": [
+      {
+        "executionId": "60682e63-4cab-498d-b802-bf44f29d1073",
+        "chatSessionId": "sess_ef741e07-549b-4d9a-8779-5caf06139855",
+        "timestamp": 1793625957330
+      },
+      {
+        "executionId": "60682e63-4cab-498d-b802-bf44f29d1073",
+        "chatSessionId": "sess_ef741e07-549b-4d9a-8779-5caf06139855",
+        "timestamp": 1793625992450
+      },
+      {
+        "executionId": "abf615b8-5520-450c-b6ac-108c67976813",
+        "chatSessionId": "sess_2ffdce48-e720-4cbb-9114-d073ff0e055d",
+        "timestamp": 1793626172541
+      },
+      {
+        "executionId": "abf615b8-5520-450c-b6ac-108c67976813",
+        "chatSessionId": "sess_2ffdce48-e720-4cbb-9114-d073ff0e055d",
+        "timestamp": 1793626204360
+      },
+      {
+        "executionId": "a225e579-f10b-4f8f-aa60-ecf4b806498e",
+        "chatSessionId": "sess_15f9295c-054e-41f8-935a-16d56f71eabe",
+        "timestamp": 1793626229809
+      },
+      {
+        "executionId": "a225e579-f10b-4f8f-aa60-ecf4b806498e",
+        "chatSessionId": "sess_15f9295c-054e-41f8-935a-16d56f71eabe",
+        "timestamp": 1793626265112
+      },
+      {
+        "executionId": "9cc745c9-673d-4f1c-958f-0ecff04d5a14",
+        "chatSessionId": "sess_74aa6f35-12be-4b6e-a0aa-69f378700929",
+        "timestamp": 1793626308990
+      },
+      {
+        "executionId": "9cc745c9-673d-4f1c-958f-0ecff04d5a14",
+        "chatSessionId": "sess_74aa6f35-12be-4b6e-a0aa-69f378700929",
+        "timestamp": 1793626343984
+      },
+      {
+        "executionId": "3aef6229-1875-4fa2-a62a-c532163dacf8",
+        "chatSessionId": "sess_74aa6f35-12be-4b6e-a0aa-69f378700929",
+        "timestamp": 1793626487248
+      },
+      {
+        "executionId": "3aef6229-1875-4fa2-a62a-c532163dacf8",
+        "chatSessionId": "sess_74aa6f35-12be-4b6e-a0aa-69f378700929",
+        "timestamp": 1793626532902
+      }
+    ],
+    "Implement `checkIpAddressHost` helper that emits `\"url.ip-address-host\"`": [
+      {
+        "executionId": "c0dc9efb-d5f2-4f3f-991d-a0c940300e79",
+        "chatSessionId": "sess_d6f5c59c-06fa-4e4e-add5-1d41dd80390a",
+        "timestamp": 1793626109878
+      },
+      {
+        "executionId": "c0dc9efb-d5f2-4f3f-991d-a0c940300e79",
+        "chatSessionId": "sess_d6f5c59c-06fa-4e4e-add5-1d41dd80390a",
+        "timestamp": 1793626159788
+      }
+    ],
+    "Implement `checkAtInAuthority` helper that emits `\"url.at-in-authority\"`": [
+      {
+        "executionId": "96e1ec30-f08a-438b-b1bc-c98432eb0002",
+        "chatSessionId": "sess_11bcdf73-595d-46d5-bac9-e088c0b981ba",
+        "timestamp": 1793626351341
+      },
+      {
+        "executionId": "96e1ec30-f08a-438b-b1bc-c98432eb0002",
+        "chatSessionId": "sess_11bcdf73-595d-46d5-bac9-e088c0b981ba",
+        "timestamp": 1793626400723
+      }
+    ]
+  }
+}

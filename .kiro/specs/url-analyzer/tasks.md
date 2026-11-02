@@ -8,19 +8,19 @@
 
 ## Task 1 — Scaffold `src/analyzers/`
 
-- [ ] Create the directory `src/analyzers/`
-- [ ] Create `src/analyzers/url-analyzer.config.ts` with exported `KNOWN_BRANDS`
+- [x] Create the directory `src/analyzers/`
+- [x] Create `src/analyzers/url-analyzer.config.ts` with exported `KNOWN_BRANDS`
       and `SHORTENER_DOMAINS` arrays (REQ-URL-05, REQ-URL-06); seed each with
       at least 10 representative entries
-- [ ] Verify `url-analyzer.config.ts` is importable without importing the
+- [x] Verify `url-analyzer.config.ts` is importable without importing the
       analyzer (REQ-URL-07)
 
 ## Task 2 — URL normalization
 
-- [ ] Implement `normalizeUrl(input: string): string | null` in
+- [x] Implement `normalizeUrl(input: string): string | null` in
       `src/analyzers/url-analyzer.ts` following the 8-step procedure in §1.3
       (REQ-URL-01 through REQ-URL-04)
-- [ ] Write unit tests in `src/analyzers/url-analyzer.test.ts`:
+- [x] Write unit tests in `src/analyzers/url-analyzer.test.ts`:
   - Valid `https` URL returns canonical form
   - Valid `http` URL with default port 80 strips the port
   - `https` URL with default port 443 strips the port
@@ -28,21 +28,21 @@
   - Bare word with no scheme returns `null`
   - `ftp://` scheme returns `null`
   - Empty string returns `null`
-- [ ] Write property test PBT-06 in `src/analyzers/url-analyzer.property.test.ts`:
+- [x] Write property test PBT-06 in `src/analyzers/url-analyzer.property.test.ts`:
       `normalizeUrl(normalizeUrl(s)) === normalizeUrl(s)` for arbitrary strings
 
 ## Task 3 — Punycode / homoglyph check
 
-- [ ] Implement `checkPunycodeHost` helper that emits `"url.punycode-host"`
+- [x] Implement `checkPunycodeHost` helper that emits `"url.punycode-host"`
       (REQ-URL-08, REQ-URL-09, REQ-URL-10)
-- [ ] Write unit tests:
+- [x] Write unit tests:
   - `xn--` label in hostname triggers signal
   - Non-ASCII Unicode character in hostname triggers signal
   - Plain ASCII hostname produces no signal
 
 ## Task 4 — IP-address host check
 
-- [ ] Implement `checkIpAddressHost` helper that emits `"url.ip-address-host"`
+- [x] Implement `checkIpAddressHost` helper that emits `"url.ip-address-host"`
       (REQ-URL-11, REQ-URL-12, REQ-URL-13)
 - [ ] Write unit tests:
   - IPv4 address `http://192.168.1.1/` triggers signal
@@ -51,7 +51,7 @@
 
 ## Task 5 — At-sign in authority check
 
-- [ ] Implement `checkAtInAuthority` helper that emits `"url.at-in-authority"`
+- [x] Implement `checkAtInAuthority` helper that emits `"url.at-in-authority"`
       (REQ-URL-14, REQ-URL-15)
 - [ ] Write unit tests:
   - URL with `user@host` triggers signal
