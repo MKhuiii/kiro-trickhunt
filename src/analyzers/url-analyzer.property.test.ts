@@ -37,10 +37,10 @@ describe("PBT-06 â€” normalizeUrl idempotency (REQ-URL-01)", () => {
 });
 
 // ---------------------------------------------------------------------------
-// PBT-07 — analyze never rejects
+// PBT-07 ï¿½ analyze never rejects
 // ---------------------------------------------------------------------------
 
-describe("PBT-07 — UrlAnalyzer.analyze never rejects (REQ-URL-28)", () => {
+describe("PBT-07 ï¿½ UrlAnalyzer.analyze never rejects (REQ-URL-28)", () => {
   const analyzer = new UrlAnalyzer();
 
   it("resolves for any string", async () => {
@@ -71,10 +71,10 @@ describe("PBT-07 — UrlAnalyzer.analyze never rejects (REQ-URL-28)", () => {
 });
 
 // ---------------------------------------------------------------------------
-// PBT-08 — every returned signal is valid
+// PBT-08 ï¿½ every returned signal is valid
 // ---------------------------------------------------------------------------
 
-describe("PBT-08 — signals pass createSignal (REQ-URL-27)", () => {
+describe("PBT-08 ï¿½ signals pass createSignal (REQ-URL-27)", () => {
   const analyzer = new UrlAnalyzer();
 
   const allValid = async (s: string): Promise<boolean> => {
@@ -95,10 +95,10 @@ describe("PBT-08 — signals pass createSignal (REQ-URL-27)", () => {
 });
 
 // ---------------------------------------------------------------------------
-// PBT-09 — non-http/https input yields no signals
+// PBT-09 ï¿½ non-http/https input yields no signals
 // ---------------------------------------------------------------------------
 
-describe("PBT-09 — non-http/https input returns [] (REQ-URL-29)", () => {
+describe("PBT-09 ï¿½ non-http/https input returns [] (REQ-URL-29)", () => {
   const analyzer = new UrlAnalyzer();
   const scheme = fc.constantFrom("ftp", "file", "javascript", "data", "mailto", "ws", "ssh");
 
