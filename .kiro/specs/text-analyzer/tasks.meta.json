@@ -1,0 +1,226 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "Create `src/analyzers/text-analyzer.config.ts` with `MAX_EVIDENCE_CHARS`,": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233288285
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233294997
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233350215
+      }
+    ],
+    "Unit test: every pattern has weight in `[0, 1]`, non-empty": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233288407
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233356002
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233393865
+      }
+    ],
+    "Implement `normalizeText` in `src/analyzers/text-analyzer.ts`": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233288487
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233397020
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233447183
+      }
+    ],
+    "Implement boundary-aware phrase matching (REQ-TXT-04)": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233288575
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233450541
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233487997
+      }
+    ],
+    "Unit tests: `\"XAC MINH\"` and `\"xác minh\"` match the same phrase;": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233288683
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233491586
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233529721
+      }
+    ],
+    "Implement `TextAnalyzer` with one signal per matched group, evidence": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233288770
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233533258
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233581906
+      }
+    ],
+    "Unit tests: one example per group in English and Vietnamese; several": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233288849
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233586036
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233666346
+      }
+    ],
+    "Implement `extractEntities` (REQ-TXT-08, REQ-TXT-09, REQ-TXT-10)": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233288933
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233670779
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233991511
+      }
+    ],
+    "Unit tests: `https://` and `www.` URLs, trailing punctuation removed,": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233289019
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233995371
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234056662
+      }
+    ],
+    "Write PBT-10 through PBT-15 in": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233289095
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234060218
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234298313
+      }
+    ],
+    "Run `vitest run` and confirm zero failures": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233289172
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234302786
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234327323
+      }
+    ],
+    "Run `npx tsc --noEmit` and confirm no errors": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233289250
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234331838
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234357413
+      }
+    ],
+    "Verify no `import` in `src/analyzers/` references `next`, `react`,": [
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794233289337
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234362183
+      },
+      {
+        "executionId": "a00730b8-1199-44c3-a54e-873f5092f9ad",
+        "chatSessionId": "sess_f79ed474-0903-4a98-9d85-c5098c1dead1",
+        "timestamp": 1794234391241
+      }
+    ]
+  }
+}
