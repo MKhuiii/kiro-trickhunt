@@ -215,7 +215,6 @@ describe("checkPunycodeHost — xn-- Punycode label (REQ-URL-08)", () => {
 describe("checkPunycodeHost — non-ASCII Unicode homoglyphs (REQ-URL-09)", () => {
   it("emits a signal when the hostname contains a Cyrillic character", () => {
     // "раypal.com" — first 'р' is Cyrillic U+0440
-    const url = new URL("https://xn--aypal-uye.com");
     // Test via a raw Unicode hostname injected directly
     const fakeUrl = { hostname: "р\u0430ypal.com" } as unknown as URL;
     const signals = checkPunycodeHost(fakeUrl);
@@ -392,5 +391,211 @@ describe("checkAtInAuthority — no credentials (REQ-URL-15)", () => {
   it("returns no signal for a URL with query params but no credentials", () => {
     const url = new URL("https://example.com/search?q=hello@world");
     expect(checkAtInAuthority(url)).toHaveLength(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// checkExcessiveSubdomains (REQ-URL-16, REQ-URL-17)
+// ---------------------------------------------------------------------------
+
+import { checkExcessiveSubdomains } from "./url-analyzer";
+
+describe("checkExcessiveSubdomains", () => {
+  it("emits a signal for a 4-label hostname", () => {
+    const result = checkExcessiveSubdomains(new URL("https://a.b.example.com"));
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe("url.excessive-subdomains");
+    expect(result[0].source).toBe("url");
+    expect(result[0].severity).toBe(0.5);
+    expect(result[0].evidence).toContain("a.b.example.com");
+  });
+
+  it("emits a signal for a 6-label hostname", () => {
+    expect(
+      checkExcessiveSubdomains(new URL("https://a.b.c.d.example.com")),
+    ).toHaveLength(1);
+  });
+
+  it("returns no signal for exactly 3 labels", () => {
+    expect(checkExcessiveSubdomains(new URL("https://sub.example.com"))).toEqual([]);
+  });
+
+  it("returns no signal for an IPv4 address (REQ-URL-17)", () => {
+    expect(checkExcessiveSubdomains(new URL("http://192.168.1.1/"))).toEqual([]);
+  });
+
+  it("returns no signal for an IPv6 address (REQ-URL-17)", () => {
+    expect(checkExcessiveSubdomains(new URL("http://[::1]/"))).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// checkKnownShortener
+// ---------------------------------------------------------------------------
+
+import { checkKnownShortener } from "./url-analyzer";
+
+describe("checkKnownShortener (REQ-URL-18, REQ-URL-19)", () => {
+  it("emits a signal for bit.ly", () => {
+    const result = checkKnownShortener(new URL("https://bit.ly/abc123"));
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe("url.known-shortener");
+    expect(result[0].source).toBe("url");
+    expect(result[0].severity).toBe(0.4);
+    expect(result[0].evidence).toBe("bit.ly");
+  });
+  it("emits a signal for tinyurl.com", () => {
+    const result = checkKnownShortener(new URL("https://tinyurl.com/xyz"));
+    expect(result).toHaveLength(1);
+    expect(result[0].evidence).toBe("tinyurl.com");
+  });
+  it("returns no signal for example.com", () => {
+    expect(checkKnownShortener(new URL("https://example.com/"))).toEqual([]);
+  });
+  it("matches case-insensitively", () => {
+    const url = { hostname: "BIT.LY" } as unknown as URL;
+    const result = checkKnownShortener(url);
+    expect(result).toHaveLength(1);
+    expect(result[0].evidence).toBe("bit.ly");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// levenshtein (REQ-URL-23)
+// ---------------------------------------------------------------------------
+
+import { levenshtein } from "./url-analyzer";
+
+describe("levenshtein (REQ-URL-23)", () => {
+  it("returns 0 for identical strings", () => {
+    expect(levenshtein("paypal", "paypal")).toBe(0);
+  });
+
+  it("returns 3 for 'kitten' and 'sitting'", () => {
+    expect(levenshtein("kitten", "sitting")).toBe(3);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// checkBrandLookalike (REQ-URL-20, REQ-URL-21, REQ-URL-22)
+// ---------------------------------------------------------------------------
+
+import { checkBrandLookalike } from "./url-analyzer";
+
+describe("checkBrandLookalike", () => {
+  it("emits a signal for paypa1.com (REQ-URL-20)", () => {
+    const result = checkBrandLookalike(new URL("https://paypa1.com"));
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe("url.brand-lookalike");
+    expect(result[0].source).toBe("url");
+    expect(result[0].severity).toBe(0.75);
+    expect(result[0].evidence).toContain("paypa1");
+    expect(result[0].evidence).toContain("paypal");
+  });
+
+  it("emits a signal for amaz0n.com (REQ-URL-20)", () => {
+    const result = checkBrandLookalike(new URL("https://amaz0n.com"));
+    expect(result).toHaveLength(1);
+    expect(result[0].evidence).toContain("amazon");
+  });
+
+  it("returns no signal for the real paypal.com (REQ-URL-21)", () => {
+    expect(checkBrandLookalike(new URL("https://paypal.com"))).toEqual([]);
+  });
+
+  it("returns no signal for a stem far from every brand (REQ-URL-22)", () => {
+    expect(checkBrandLookalike(new URL("https://xyz123.com"))).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// checkCredentialKeywords (REQ-URL-24, REQ-URL-25, REQ-URL-26)
+// ---------------------------------------------------------------------------
+
+import { checkCredentialKeywords } from "./url-analyzer";
+
+describe("checkCredentialKeywords", () => {
+  it("emits a signal with 'login' in evidence for /login (REQ-URL-24)", () => {
+    const result = checkCredentialKeywords(new URL("https://example.com/login"));
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe("url.credential-keywords");
+    expect(result[0].source).toBe("url");
+    expect(result[0].severity).toBe(0.45);
+    expect(result[0].evidence).toContain("login");
+  });
+
+  it("emits one signal listing all matched keywords (REQ-URL-25)", () => {
+    const result = checkCredentialKeywords(
+      new URL("https://example.com/secure/account/update"),
+    );
+    expect(result).toHaveLength(1);
+    expect(result[0].evidence).toContain("secure");
+    expect(result[0].evidence).toContain("account");
+    expect(result[0].evidence).toContain("update");
+  });
+
+  it("returns no signal for /products/shoes (REQ-URL-26)", () => {
+    expect(
+      checkCredentialKeywords(new URL("https://example.com/products/shoes")),
+    ).toEqual([]);
+  });
+
+  it("matches keywords case-insensitively", () => {
+    const result = checkCredentialKeywords(new URL("https://example.com/LOGIN"));
+    expect(result).toHaveLength(1);
+    expect(result[0].evidence).toContain("login");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// UrlAnalyzer class (REQ-URL-27, 28, 29, 30)
+// ---------------------------------------------------------------------------
+
+import { UrlAnalyzer } from "./url-analyzer";
+import { createSignal } from "../core/signal";
+
+describe("UrlAnalyzer", () => {
+  const analyzer = new UrlAnalyzer();
+
+  it("has sourceType 'url'", () => {
+    expect(analyzer.sourceType).toBe("url");
+  });
+
+  it("returns [] for an empty string", async () => {
+    expect(await analyzer.analyze("")).toEqual([]);
+  });
+
+  it("returns [] for an unparseable string", async () => {
+    expect(await analyzer.analyze("not a url")).toEqual([]);
+  });
+
+  it("returns [] for a non-http scheme", async () => {
+    expect(await analyzer.analyze("ftp://example.com")).toEqual([]);
+  });
+
+  it("returns [] for a clean URL", async () => {
+    expect(await analyzer.analyze("https://example.com")).toEqual([]);
+  });
+
+  it("returns one signal per triggered check, in check order", async () => {
+    const signals = await analyzer.analyze("https://user@paypa1.com/login");
+    expect(signals.map((s) => s.id)).toEqual([
+      "url.at-in-authority",
+      "url.brand-lookalike",
+      "url.credential-keywords",
+    ]);
+  });
+
+  it("returns only valid signals (re-passes createSignal)", async () => {
+    const signals = await analyzer.analyze("http://user@192.168.0.1/login");
+    expect(signals.length).toBeGreaterThan(0);
+    for (const s of signals) {
+      expect(() => createSignal({ ...s })).not.toThrow();
+      expect(s.source).toBe("url");
+    }
+  });
+
+  it("never rejects for non-string input", async () => {
+    await expect(analyzer.analyze(undefined as unknown as string)).resolves.toEqual([]);
   });
 });

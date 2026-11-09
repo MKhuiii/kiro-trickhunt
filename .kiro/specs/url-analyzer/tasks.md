@@ -18,7 +18,7 @@
 ## Task 2 — URL normalization
 
 - [x] Implement `normalizeUrl(input: string): string | null` in
-      `src/analyzers/url-analyzer.ts` following the 8-step procedure in §1.3
+      `src/analyzers/url-analyzer.ts` following the 8-step procedure in Â§1.3
       (REQ-URL-01 through REQ-URL-04)
 - [x] Write unit tests in `src/analyzers/url-analyzer.test.ts`:
   - Valid `https` URL returns canonical form
@@ -44,7 +44,7 @@
 
 - [x] Implement `checkIpAddressHost` helper that emits `"url.ip-address-host"`
       (REQ-URL-11, REQ-URL-12, REQ-URL-13)
-- [ ] Write unit tests:
+- [x] Write unit tests:
   - IPv4 address `http://192.168.1.1/` triggers signal
   - IPv6 address `http://[::1]/` triggers signal
   - Regular hostname `example.com` produces no signal
@@ -53,16 +53,16 @@
 
 - [x] Implement `checkAtInAuthority` helper that emits `"url.at-in-authority"`
       (REQ-URL-14, REQ-URL-15)
-- [ ] Write unit tests:
+- [x] Write unit tests:
   - URL with `user@host` triggers signal
   - URL with `user:pass@host` triggers signal
   - URL without credentials produces no signal
 
 ## Task 6 — Excessive subdomains check
 
-- [ ] Implement `checkExcessiveSubdomains` helper that emits
+- [x] Implement `checkExcessiveSubdomains` helper that emits
       `"url.excessive-subdomains"` (REQ-URL-16, REQ-URL-17)
-- [ ] Write unit tests:
+- [x] Write unit tests:
   - Hostname with 4 labels triggers signal
   - Hostname with 6 labels triggers signal
   - Hostname with exactly 3 labels produces no signal
@@ -70,9 +70,9 @@
 
 ## Task 7 — Known URL shortener check
 
-- [ ] Implement `checkKnownShortener` helper that emits `"url.known-shortener"`
+- [x] Implement `checkKnownShortener` helper that emits `"url.known-shortener"`
       (REQ-URL-18, REQ-URL-19)
-- [ ] Write unit tests:
+- [x] Write unit tests:
   - `bit.ly` hostname matches and triggers signal
   - `tinyurl.com` hostname matches and triggers signal
   - `example.com` hostname produces no signal
@@ -80,24 +80,24 @@
 
 ## Task 8 — Brand lookalike check (edit distance)
 
-- [ ] Implement pure `levenshtein(a: string, b: string): number` function
+- [x] Implement pure `levenshtein(a: string, b: string): number` function
       (REQ-URL-23)
-- [ ] Implement `checkBrandLookalike` helper that extracts the registered domain
+- [x] Implement `checkBrandLookalike` helper that extracts the registered domain
       stem and applies edit distance against `KNOWN_BRANDS`, emitting
       `"url.brand-lookalike"` (REQ-URL-20 through REQ-URL-22)
-- [ ] Write unit tests:
+- [x] Write unit tests:
   - `paypa1.com` (edit distance 1 from `paypal`) triggers signal
   - `amaz0n.com` (edit distance 1 from `amazon`) triggers signal
   - `paypal.com` (exact match, distance 0) produces no signal
   - `xyz123.com` (distance > 2 from all brands) produces no signal
-- [ ] Write unit test for `levenshtein` directly: distance between identical
+- [x] Write unit test for `levenshtein` directly: distance between identical
       strings is 0; distance between `"kitten"` and `"sitting"` is 3
 
 ## Task 9 — Login/verify keywords check
 
-- [ ] Implement `checkCredentialKeywords` helper that emits
+- [x] Implement `checkCredentialKeywords` helper that emits
       `"url.credential-keywords"` (REQ-URL-24 through REQ-URL-26)
-- [ ] Write unit tests:
+- [x] Write unit tests:
   - Path `/login` triggers signal with `login` in evidence
   - Path `/secure/account/update` triggers one signal listing all matched keywords
   - Path `/products/shoes` produces no signal
@@ -105,21 +105,21 @@
 
 ## Task 10 — Assemble `UrlAnalyzer` class
 
-- [ ] Implement `UrlAnalyzer` class that implements `Analyzer<string>` with
+- [x] Implement `UrlAnalyzer` class that implements `Analyzer<string>` with
       `sourceType: "url"` and calls all check helpers in order
       (REQ-URL-27, REQ-URL-28, REQ-URL-29, REQ-URL-30)
-- [ ] Wrap the entire `analyze` body in a try/catch that returns `[]` on any
+- [x] Wrap the entire `analyze` body in a try/catch that returns `[]` on any
       unexpected error (REQ-URL-28)
-- [ ] Write unit tests:
+- [x] Write unit tests:
   - `analyze("")` resolves to `[]`
   - `analyze("not a url")` resolves to `[]`
   - A URL with multiple suspicious traits returns one signal per triggered check
   - All returned signals pass `createSignal` validation
-- [ ] Write property tests PBT-07, PBT-08, PBT-09
+- [x] Write property tests PBT-07, PBT-08, PBT-09
 
 ## Task 11 — Verification
 
-- [ ] Run `vitest run` and confirm all new tests pass with zero failures
-- [ ] Confirm no TypeScript errors with `npx tsc --noEmit`
-- [ ] Verify no `import` in `src/analyzers/` references `next`, `react`,
+- [x] Run `vitest run` and confirm all new tests pass with zero failures
+- [x] Confirm no TypeScript errors with `npx tsc --noEmit`
+- [x] Verify no `import` in `src/analyzers/` references `next`, `react`,
       `window`, `document`, or `process`
