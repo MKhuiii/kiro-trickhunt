@@ -56,7 +56,13 @@ describe("PBT-07 — UrlAnalyzer.analyze never rejects (REQ-URL-28)", () => {
   it("resolves for any value coerced to string", async () => {
     await fc.assert(
       fc.asyncProperty(fc.anything(), async (v) => {
-        const result = await analyzer.analyze(String(v));
+        let s: string;
+        try {
+          s = String(v);
+        } catch {
+          return true; // value can't be coerced; nothing to pass to analyze
+        }
+        const result = await analyzer.analyze(s);
         return Array.isArray(result);
       }),
       { numRuns: 500 }
