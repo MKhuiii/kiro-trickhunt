@@ -4,7 +4,7 @@
  * Pure TypeScript module. No framework, browser, or Node.js imports.
  */
 
-export type SignalSource = "url" | "text" | "image" | "qr";
+export type SignalSource = "url" | "text" | "image" | "qr" | "semantic";
 
 /**
  * A plain, immutable value object describing one detected indicator of
