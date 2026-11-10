@@ -53,8 +53,8 @@ describe("createSignal — valid input", () => {
     expect(signal.severity).toBe(1);
   });
 
-  it("accepts all four SignalSource values", () => {
-    const sources = ["url", "text", "image", "qr"] as const;
+  it("accepts all five SignalSource values", () => {
+    const sources = ["url", "text", "image", "qr", "semantic"] as const;
     for (const source of sources) {
       const signal = createSignal({ ...validInput, source });
       expect(signal.source).toBe(source);
