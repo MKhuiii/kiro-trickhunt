@@ -1,0 +1,328 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "Add `\"semantic\"` to `SignalSource` in `src/core/signal.ts`; run the": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779156
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276789094
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276834641
+      }
+    ],
+    "Create `src/analyzers/semantic-analyzer.config.ts` (REQ-SEM-01 to": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779290
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276838140
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276885041
+      }
+    ],
+    "Create `src/analyzers/llm-client.ts` and `fake-llm-client.ts`": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779386
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276888422
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276923775
+      }
+    ],
+    "Unit test: six ids exactly, non-empty `whyItMatters`, every": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779486
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276927225
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276963991
+      }
+    ],
+    "Implement `redactSensitive` (REQ-SEM-06 to REQ-SEM-10)": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779613
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276967575
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277040970
+      }
+    ],
+    "Unit tests: OTP `482913`, `+84 912 345 678`, `0912345678`, 16-digit card,": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779717
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277045156
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277087605
+      }
+    ],
+    "Property tests PBT-18, PBT-19": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779807
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277093790
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277491547
+      }
+    ],
+    "Implement `buildPrompt` and delimiter constants (REQ-SEM-11 to": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779893
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277495366
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277547097
+      }
+    ],
+    "Unit tests: system prompt mentions untrusted data and every id; input": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276779982
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277550808
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277595322
+      }
+    ],
+    "Property test PBT-20": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780081
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277600494
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277649854
+      }
+    ],
+    "Implement `parseEnvelope` and `parseLlmResponse` (REQ-SEM-16 to": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780171
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277653678
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277715545
+      }
+    ],
+    "Unit tests: code fence, injected `verdict` field ignored, made-up id": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780266
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794277719034
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794278264672
+      }
+    ],
+    "Property test PBT-21": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780360
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794278268936
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794278323809
+      }
+    ],
+    "Implement `analyzeSemantic` with truncation, redaction, single call,": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780446
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794278327858
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794278388538
+      }
+    ],
+    "Unit tests: normal response gives `ok`; timeout gives `degraded/timeout`;": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780538
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794278393774
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794278456318
+      }
+    ],
+    "Property tests PBT-16, PBT-17, PBT-22": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780643
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794278461121
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794279290239
+      }
+    ],
+    "Implement `SemanticAnalyzer` with optional `onResult` (REQ-SEM-29 to": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780751
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794279294599
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794279354831
+      }
+    ],
+    "Unit tests: register in `AnalyzerRegistry` and run via": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780858
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794279359409
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794279418017
+      }
+    ],
+    "Verify `src/analyzers/semantic-analyzer*.ts` imports nothing from": [
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794276780961
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794279423154
+      },
+      {
+        "executionId": "b3a39ce2-8f56-49cf-8d72-b7d98fce80f5",
+        "chatSessionId": "sess_bf468f36-f0e0-4db7-b10b-ee963380e3ba",
+        "timestamp": 1794279461662
+      }
+    ]
+  }
+}
