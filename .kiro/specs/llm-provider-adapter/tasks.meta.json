@@ -1,0 +1,311 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "In `.gitignore`, replace the `.env` line with `.env*` and add": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282984647
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282991855
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283020309
+      }
+    ],
+    "Write `.env.example` with placeholders and comments for all six": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282984749
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283023475
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283051386
+      }
+    ],
+    "Move `zod` to `dependencies`; add exact-pinned `tsx` to": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282984900
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283054451
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283094592
+      }
+    ],
+    "Create `src/server/llm/llm-config.ts` (REQ-LLM-01 to REQ-LLM-06)": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282984994
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283098700
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283150982
+      }
+    ],
+    "Unit tests: valid env, missing key, missing model, blank values, bad": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985062
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283154293
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283206826
+      }
+    ],
+    "Property tests PBT-26": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985142
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283210542
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283259900
+      }
+    ],
+    "Create `src/server/llm/llm-client-error.ts` (REQ-LLM-15)": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985215
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283263645
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283301324
+      }
+    ],
+    "Create `src/server/llm/openai-compatible-client.ts` (REQ-LLM-07 to": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985289
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283304802
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283360137
+      }
+    ],
+    "Unit tests: 200 returns text; 401 gives `http-status`; wrong shape,": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985361
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283364767
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283416372
+      }
+    ],
+    "Property tests PBT-23, PBT-24, PBT-25": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985442
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283420644
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283496644
+      }
+    ],
+    "Create `src/server/llm/create-llm-client.ts` and `index.ts` (REQ-LLM-17": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985521
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283501666
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283550911
+      }
+    ],
+    "Unit tests: returns `null` without key, model or base URL; returns a": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985595
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283555203
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283615786
+      }
+    ],
+    "Property test PBT-27": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985675
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283619618
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283661490
+      }
+    ],
+    "Create `scripts/smoke-llm.ts` (REQ-LLM-22, REQ-LLM-23)": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985746
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283669116
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283744101
+      }
+    ],
+    "Add a README section with the run command": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985849
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283749649
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283778532
+      }
+    ],
+    "Verify `vitest run` does not execute the script": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282985937
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794283782304
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794284043171
+      }
+    ],
+    "`grep` confirms: no `process.env` outside `llm-config.ts` in": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282986023
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794284047599
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794284082239
+      }
+    ],
+    "Run `vitest run`, `tsc --noEmit` and `npm run lint`; confirm": [
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794282986097
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794284087476
+      },
+      {
+        "executionId": "019926dd-84c8-40c4-b819-50d0e71e5dd5",
+        "chatSessionId": "sess_347fe2e1-630e-4bdb-990d-1acb34cca7a1",
+        "timestamp": 1794284129977
+      }
+    ]
+  }
+}
