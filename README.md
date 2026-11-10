@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
@@ -19,6 +19,25 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## LLM Smoke Test
+
+TrickHunt can use an OpenAI-compatible LLM to add semantic signals. To check that your provider settings work:
+
+1. Copy `.env.example` to `.env` and fill in your own values (key, model, base URL). Never commit `.env`.
+2. Run the smoke script:
+
+```bash
+npx tsx --env-file=.env scripts/smoke-llm.ts
+```
+
+**Warning:** this makes one real request to the configured provider. The request uses a fixed, harmless sample text, not user content. It may use a small amount of your provider quota.
+
+The script prints only a status, an optional reason and signal ids. It never prints the sample, the raw response or your key.
+
+If the key, model or base URL is missing or invalid, the app runs rules-only, without an LLM. In that case the script prints `rules-only (no LLM configured)`. This is a normal state, not an error.
+
+To switch provider, change the environment variables in `.env` (`LLM_API_KEY`, `LLM_MODEL`, `LLM_BASE_URL`). No code changes are needed.
 
 ## Learn More
 
