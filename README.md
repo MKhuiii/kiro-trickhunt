@@ -39,6 +39,98 @@ If the key, model or base URL is missing or invalid, the app runs rules-only, wi
 
 To switch provider, change the environment variables in `.env` (`LLM_API_KEY`, `LLM_MODEL`, `LLM_BASE_URL`). No code changes are needed.
 
+## Analyze API
+
+`POST /api/analyze` checks a message and/or links and returns a `Verdict` (risk level, evidence signals, next actions). Nothing you send is stored or logged. The only log line per request is a fixed event with status, duration and semantic mode.
+
+### Request
+
+Send `Content-Type: application/json` (parameters such as `charset` are allowed). The body is strict: unknown keys are rejected.
+
+| Field | Type | Limit |
+|---|---|---|
+| `text` | string, optional | at most 4000 characters |
+| `urls` | string[], optional | at most 10 items, each at most 2048 characters |
+
+At least one non-blank `text` or a non-empty `urls` is required. There is no `locale` field.
+
+```json
+{
+  "text": "Your bank account is locked. Verify now at the link below.",
+  "urls": ["http://example.com/verify"]
+}
+```
+
+### Response
+
+A `200` returns the pipeline `Verdict` and a `meta` object. Field names in `verdict` follow the `Verdict` type in `src/pipeline/verdict.ts`; the example is shortened.
+
+```json
+{
+  "verdict": {
+    "riskScore": 72,
+    "level": "high",
+    "monster": "bank",
+    "signals": [],
+    "actions": [],
+    "limitations": [],
+    "semantic": { "status": "ok", "skipped": false },
+    "inputTruncated": false,
+    "urlsAnalyzed": 1,
+    "urlsSkipped": 0
+  },
+  "meta": { "semanticMode": "used" }
+}
+```
+
+`meta.semanticMode` tells you how the LLM was handled:
+
+- `used`: an LLM is configured and budget was available, so the pipeline received it. It does not promise the LLM was called or succeeded; see `verdict.semantic` for that.
+- `budget-exhausted`: an LLM is configured but the call budget is spent. You still get a rule-based verdict.
+- `not-configured`: no LLM is configured. You get a rule-based verdict.
+
+### Errors
+
+Errors always have the body `{ "error": { "code": "<code>" } }` with no message or details.
+
+| Status | Code | Cause |
+|---|---|---|
+| 400 | `invalid-input` | Bad JSON or UTF-8, unknown keys, wrong types, limits exceeded, or no text and no URLs |
+| 413 | `payload-too-large` | Body larger than 150 KiB (declared or actual) |
+| 415 | `invalid-content-type` | Not `application/json` |
+| 429 | `rate-limited` | Too many requests; see the `Retry-After` header (seconds) |
+| 500 | `internal-error` | Any unexpected failure |
+
+Other methods get `405` from Next.js. Every response carries `Cache-Control: no-store` and `X-Content-Type-Options: nosniff`. No CORS headers are sent, so other origins cannot read responses from a browser.
+
+### Example (PowerShell)
+
+```powershell
+$body = @{
+  text = "Your bank account is locked. Verify now at the link below."
+  urls = @("http://example.com/verify")
+} | ConvertTo-Json
+
+Invoke-RestMethod -Method Post -Uri "http://localhost:3000/api/analyze" `
+  -ContentType "application/json" -Body $body
+```
+
+### Limits
+
+| Setting | Default | Bounds | Scope |
+|---|---|---|---|
+| `RATE_LIMIT_PER_MINUTE` | 10 | 1 to 600 | requests per client per minute |
+| `LLM_CALLS_PER_MINUTE` | 4 | 0 to 60 | LLM calls per minute, all clients |
+| `LLM_CALLS_PER_DAY` | 200 | 0 to 10000 | LLM calls per 24 hours, all clients |
+
+Set these in `.env` (see `.env.example`). Missing or invalid values fall back to the default; out-of-range values are clamped. A value of `0` for an LLM limit turns the LLM off (always `budget-exhausted`). Body and field size limits are fixed constants, not settings.
+
+**Best effort only.** The rate limiter and the LLM budget live in memory, per server instance. On serverless platforms each warm instance has its own counters, and a cold start resets them, so the real total can be higher than the configured numbers. The client is identified by the first `x-forwarded-for` entry, which is only trustworthy behind a proxy that sets it (Vercel does). Keep the LLM defaults below your provider quota; the provider limit is the final backstop.
+
+**Rules-only fallback.** If the LLM is not configured, the budget is spent, or the provider fails or times out, the API still answers with the rule-based verdict. This is a normal state, not an error.
+
+**Duration.** The route sets `maxDuration = 15` seconds. Your hosting plan may cap this lower. If the cap is below about 10 seconds, the platform could cut a slow LLM call before the pipeline's own timeout.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
