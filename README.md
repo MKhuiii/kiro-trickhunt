@@ -51,13 +51,17 @@ Send `Content-Type: application/json` (parameters such as `charset` are allowed)
 |---|---|---|
 | `text` | string, optional | at most 4000 characters |
 | `urls` | string[], optional | at most 10 items, each at most 2048 characters |
+| `locale` | string, optional | exactly `"vi"` or `"en"` |
 
-At least one non-blank `text` or a non-empty `urls` is required. There is no `locale` field.
+At least one non-blank `text` or a non-empty `urls` is required. A body with only `locale` is rejected.
+
+`locale` chooses the language of `actions` and `limitations` in the verdict. Any other value or type (for example `"fr"`, `"VI"`, `""`, `null` or a number) gives `400 invalid-input`. When `locale` is absent, the pipeline default language is used.
 
 ```json
 {
   "text": "Your bank account is locked. Verify now at the link below.",
-  "urls": ["http://example.com/verify"]
+  "urls": ["http://example.com/verify"],
+  "locale": "en"
 }
 ```
 
@@ -85,9 +89,12 @@ A `200` returns the pipeline `Verdict` and a `meta` object. Field names in `verd
 
 `meta.semanticMode` tells you how the LLM was handled:
 
-- `used`: an LLM is configured and budget was available, so the pipeline received it. It does not promise the LLM was called or succeeded; see `verdict.semantic` for that.
-- `budget-exhausted`: an LLM is configured but the call budget is spent. You still get a rule-based verdict.
+- `used`: an LLM is configured and the pipeline really called it. It does not promise the LLM answered successfully; see `verdict.semantic` for that.
+- `budget-exhausted`: an LLM is configured, the pipeline tried to call it, and the call budget was spent. You still get a rule-based verdict.
 - `not-configured`: no LLM is configured. You get a rule-based verdict.
+- `skipped`: an LLM is configured, but the pipeline never called it (for example, only URLs were sent, the text was blank, or the rules already found a critical level). No budget is used.
+
+**Lazy budget.** The LLM budget is spent only when the LLM is really called, not at the start of a request. Requests that never reach the LLM do not use up the quota.
 
 ### Errors
 
@@ -95,7 +102,7 @@ Errors always have the body `{ "error": { "code": "<code>" } }` with no message 
 
 | Status | Code | Cause |
 |---|---|---|
-| 400 | `invalid-input` | Bad JSON or UTF-8, unknown keys, wrong types, limits exceeded, or no text and no URLs |
+| 400 | `invalid-input` | Bad JSON or UTF-8, unknown keys, wrong types, `locale` other than `"vi"` or `"en"`, limits exceeded, or no text and no URLs |
 | 413 | `payload-too-large` | Body larger than 150 KiB (declared or actual) |
 | 415 | `invalid-content-type` | Not `application/json` |
 | 429 | `rate-limited` | Too many requests; see the `Retry-After` header (seconds) |
@@ -123,7 +130,7 @@ Invoke-RestMethod -Method Post -Uri "http://localhost:3000/api/analyze" `
 | `LLM_CALLS_PER_MINUTE` | 4 | 0 to 60 | LLM calls per minute, all clients |
 | `LLM_CALLS_PER_DAY` | 200 | 0 to 10000 | LLM calls per 24 hours, all clients |
 
-Set these in `.env` (see `.env.example`). Missing or invalid values fall back to the default; out-of-range values are clamped. A value of `0` for an LLM limit turns the LLM off (always `budget-exhausted`). Body and field size limits are fixed constants, not settings.
+Set these in `.env` (see `.env.example`). Missing or invalid values fall back to the default; out-of-range values are clamped. A value of `0` for an LLM limit turns the LLM off (`budget-exhausted` whenever the pipeline would call it). Body and field size limits are fixed constants, not settings.
 
 **Best effort only.** The rate limiter and the LLM budget live in memory, per server instance. On serverless platforms each warm instance has its own counters, and a cold start resets them, so the real total can be higher than the configured numbers. The client is identified by the first `x-forwarded-for` entry, which is only trustworthy behind a proxy that sets it (Vercel does). Keep the LLM defaults below your provider quota; the provider limit is the final backstop.
 
@@ -140,7 +147,7 @@ TrickHunt can read a screenshot or a QR code image. All image work happens in yo
 | Where | What |
 |---|---|
 | Browser | Decode the file, redraw it through a canvas (drops metadata, downscales), read the QR code with [`zxing-wasm`](https://www.npmjs.com/package/zxing-wasm), and run OCR with [`tesseract.js`](https://www.npmjs.com/package/tesseract.js) in Vietnamese and English (`vie`, `eng`) |
-| Server | `POST /api/analyze` with `text` and `urls` only (see [Analyze API](#analyze-api)) |
+| Server | `POST /api/analyze` whose body carries `text`, `urls` and an optional `locale` (`"vi"` or `"en"`), never image data (see [Analyze API](#analyze-api)) |
 
 ### Privacy
 
