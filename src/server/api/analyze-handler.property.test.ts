@@ -4,10 +4,10 @@
  * Feature: analyze-api, Property 1: Handler total (PBT-38)
  * Feature: analyze-api, Property 2: Fixed error bodies, no leaks (PBT-39)
  * Feature: analyze-api, Property 6: Pipeline failure maps to 500 (PBT-43)
- * Feature: analyze-api, Property 7: Budget denial degrades, not fails (PBT-44)
+ * Feature: analyze-api-locale-budget: PBT-59, PBT-60, PBT-61, PBT-63 (PBT-44 replaced by PBT-63)
  * Feature: analyze-api, Property 8: Valid inputs pass validation (PBT-45)
  * **Validates: Requirements REQ-API-01, REQ-API-05, REQ-API-11, REQ-API-12,
- * REQ-API-16, REQ-API-19, REQ-API-29**
+ * REQ-API-16, REQ-API-19, REQ-API-43 to REQ-API-47, REQ-API-52, REQ-API-54, REQ-API-55**
  *
  * No network: FakeLlmClient, fake clock, standard Request/Response.
  */
@@ -16,6 +16,16 @@ import { describe, it, expect } from "vitest";
 import * as fc from "fast-check";
 import { FakeLlmClient } from "../../analyzers/fake-llm-client";
 import { createPipeline } from "../../pipeline";
+import {
+  ACTIONS_BY_MONSTER,
+  ACTIONS_BY_SIGNAL,
+  ACTIONS_FALLBACK,
+  LIMITATIONS_DEGRADED,
+  LIMITATIONS_FIXED,
+  LIMITATIONS_NO_SIGNALS,
+  LIMITATIONS_UNAVAILABLE,
+} from "../../pipeline/messages.config";
+import type { Locale } from "../../pipeline/verdict";
 import type { Pipeline, PipelineOptions } from "../../pipeline";
 import { createAnalyzeHandler } from "./analyze-handler";
 import type { AnalyzeHandlerDeps } from "./analyze-handler";
@@ -281,26 +291,115 @@ describe("Feature: analyze-api, Property 6 — Pipeline failure maps to 500 (PBT
   });
 });
 
-describe("Feature: analyze-api, Property 7 — Budget denial degrades, not fails (PBT-44)", () => {
-  it("denied budget gives 200 with the rules-only verdict and no client call", async () => {
+const BENIGN_WORDS = [
+  "hello", "friend", "dinner", "tomorrow", "garden", "weather", "meeting",
+  "thanks", "family", "holiday", "picture", "coffee", "weekend", "library",
+] as const;
+
+const benignTextArb = fc
+  .array(fc.constantFrom(...BENIGN_WORDS), { minLength: 3, maxLength: 12 })
+  .map((words) => words.join(" "));
+
+interface CountingBudget {
+  readonly attempts: () => number;
+  readonly acquired: () => number;
+  readonly tryAcquire: () => boolean;
+}
+
+function countingBudget(decide: () => boolean): CountingBudget {
+  let attempts = 0;
+  let acquired = 0;
+  return {
+    attempts: () => attempts,
+    acquired: () => acquired,
+    tryAcquire: () => {
+      attempts += 1;
+      const ok = decide();
+      if (ok) acquired += 1;
+      return ok;
+    },
+  };
+}
+
+describe("Feature: analyze-api-locale-budget, Property 59 � Locale acceptance and fixed error bodies (PBT-59)", () => {
+  /**
+   * **Validates: Requirements REQ-API-43, REQ-API-44, REQ-API-45**
+   */
+  it("only vi and en are accepted as locale; errors are exactly { error: { code } }", async () => {
+    const localeArb = fc.oneof(
+      fc.anything(),
+      fc.string(),
+      fc.constantFrom("vi", "en", "VI", "en ", "", "fr"),
+    );
+    await fc.assert(
+      fc.asyncProperty(localeArb, fc.boolean(), async (locale, withText) => {
+        const h = makeHarness();
+        const payload = withText ? { text: "hello friend", locale } : { locale };
+        const wire = JSON.stringify(payload);
+        const sent = (JSON.parse(wire) as { locale?: unknown }).locale;
+        const localeOk = sent === undefined || sent === "vi" || sent === "en";
+
+        const res = await h.handler(post(wire, { "content-type": "application/json" }));
+        expect(ALLOWED_STATUSES.has(res.status)).toBe(true);
+        expectFixedHeaders(res);
+        const errorBody: unknown = res.status !== 200 ? JSON.parse(await res.text()) : null;
+        if (res.status !== 200) {
+          expect(errorBody).toEqual({ error: { code: ERROR_CODES_BY_STATUS[res.status] } });
+        }
+        if (!withText) {
+          // A locale alone (or nothing) is never a request.
+          expect(res.status).toBe(400);
+          expect(h.events).toHaveLength(1);
+          return;
+        }
+        if (localeOk) {
+          expect(res.status).toBe(200);
+        } else {
+          expect(res.status).toBe(400);
+          expect(errorBody).toEqual({ error: { code: "invalid-input" } });
+        }
+      }),
+      { numRuns: NUM_RUNS },
+    );
+  });
+});
+
+describe("Feature: analyze-api-locale-budget, Property 60 � Locale texts (PBT-60)", () => {
+  /**
+   * **Validates: Requirements REQ-API-46, REQ-API-47**
+   */
+  function localeTexts(locale: Locale): Set<string> {
+    const out = new Set<string>();
+    for (const list of Object.values(ACTIONS_BY_MONSTER[locale])) for (const s of list) out.add(s);
+    for (const list of Object.values(ACTIONS_BY_SIGNAL[locale])) for (const s of list) out.add(s);
+    for (const s of ACTIONS_FALLBACK[locale]) out.add(s);
+    for (const s of LIMITATIONS_FIXED[locale]) out.add(s);
+    for (const s of LIMITATIONS_DEGRADED[locale]) out.add(s);
+    for (const s of LIMITATIONS_UNAVAILABLE[locale]) out.add(s);
+    for (const s of LIMITATIONS_NO_SIGNALS[locale]) out.add(s);
+    return out;
+  }
+
+  it("actions and limitations equal the pipeline output for that locale and belong to its texts", async () => {
     await fc.assert(
       fc.asyncProperty(
-        fc.string({ minLength: 1, maxLength: 500 }).filter((s) => s.trim().length > 0),
+        fc.constantFrom<Locale>("vi", "en"),
+        fc.string({ minLength: 1, maxLength: 300 }).filter((s) => s.trim().length > 0),
         fc.array(fc.string({ maxLength: 60 }), { maxLength: 3 }),
-        async (text, urls) => {
-          const h = makeHarness({ budget: () => false });
-          const res = await h.handler(jsonPost({ text, urls }));
+        async (locale, text, urls) => {
+          const h = makeHarness({ withClient: false });
+          const res = await h.handler(jsonPost({ text, urls, locale }));
           expect(res.status).toBe(200);
           const body = (await res.json()) as {
-            verdict: unknown;
-            meta: { semanticMode: string };
+            verdict: { actions: string[]; limitations: string[] };
           };
-          expect(body.meta).toEqual({ semanticMode: "budget-exhausted" });
-          expect(h.client.callCount).toBe(0);
-
-          const expected = await createPipeline({ llmClient: null }).run({ text, urls });
-          expect(body.verdict).toEqual(JSON.parse(JSON.stringify(expected)));
-          expect(h.events[0]?.semanticMode).toBe("budget-exhausted");
+          const expected = await createPipeline({ llmClient: null, locale }).run({ text, urls });
+          expect(body.verdict.actions).toEqual(expected.actions);
+          expect(body.verdict.limitations).toEqual(expected.limitations);
+          const allowed = localeTexts(locale);
+          for (const s of [...body.verdict.actions, ...body.verdict.limitations]) {
+            expect(allowed.has(s)).toBe(true);
+          }
         },
       ),
       { numRuns: NUM_RUNS },
@@ -308,6 +407,65 @@ describe("Feature: analyze-api, Property 7 — Budget denial degrades, not fails
   });
 });
 
+describe("Feature: analyze-api-locale-budget, Property 61 � Blank text never acquires (PBT-61)", () => {
+  /**
+   * **Validates: Requirements REQ-API-52, REQ-API-54**
+   */
+  it("blank or absent text with urls never calls tryAcquire and reports skipped", async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.constantFrom<string | undefined>(undefined, "", "  \n"),
+        fc.array(urlArb, { minLength: 1, maxLength: MAX_URLS_IN }),
+        async (text, urls) => {
+          const budget = countingBudget(() => true);
+          const h = makeHarness({ budget: budget.tryAcquire });
+          const payload = text === undefined ? { urls } : { text, urls };
+          const res = await h.handler(jsonPost(payload));
+          expect(res.status).toBe(200);
+          const body = (await res.json()) as { meta: { semanticMode: string } };
+          expect(body.meta).toEqual({ semanticMode: "skipped" });
+          expect(budget.attempts()).toBe(0);
+          expect(h.client.callCount).toBe(0);
+          expect(h.events[0]?.semanticMode).toBe("skipped");
+        },
+      ),
+      { numRuns: NUM_RUNS },
+    );
+  });
+});
+
+describe("Feature: analyze-api-locale-budget, Property 63 � Denying budget degrades (PBT-63)", () => {
+  /**
+   * **Validates: Requirements REQ-API-52, REQ-API-54, REQ-API-55**
+   */
+  it("denied budget gives 200 with the rules-only verdict, budget-exhausted, and no real call", async () => {
+    await fc.assert(
+      fc.asyncProperty(benignTextArb, async (text) => {
+        const expected = await createPipeline({ llmClient: null }).run({ text });
+        fc.pre(expected.level !== "critical");
+
+        const budget = countingBudget(() => false);
+        const h = makeHarness({ budget: budget.tryAcquire });
+        const res = await h.handler(jsonPost({ text }));
+        expect(res.status).toBe(200);
+        const body = (await res.json()) as {
+          verdict: Record<string, unknown>;
+          meta: { semanticMode: string };
+        };
+        expect(body.meta).toEqual({ semanticMode: "budget-exhausted" });
+        expect(h.client.callCount).toBe(0);
+        expect(budget.acquired()).toBe(0);
+
+        const plain = JSON.parse(JSON.stringify(expected)) as Record<string, unknown>;
+        for (const key of ["riskScore", "level", "monster", "signals"]) {
+          expect(body.verdict[key]).toEqual(plain[key]);
+        }
+        expect(h.events[0]?.semanticMode).toBe("budget-exhausted");
+      }),
+      { numRuns: NUM_RUNS },
+    );
+  });
+});
 describe("Feature: analyze-api, Property 8 — Valid inputs pass validation (PBT-45)", () => {
   it("bodies within all limits are never answered with 400, 413 or 415", async () => {
     await fc.assert(

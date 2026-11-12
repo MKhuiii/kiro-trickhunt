@@ -23,6 +23,8 @@ function build(overrides: Partial<AnalyzeHandlerDeps> & {
   client?: LlmClient | null;
   budgetAllows?: boolean;
   limit?: number;
+  /** When set, use a deterministic stub pipeline that calls `complete` this many times. */
+  stubCalls?: number;
 } = {}): Harness {
   const events: AnalyzeLogEvent[] = [];
   const pipelineOptions: PipelineOptions[] = [];
@@ -40,7 +42,22 @@ function build(overrides: Partial<AnalyzeHandlerDeps> & {
     getLlmClient: () => client,
     createPipeline: (options: PipelineOptions): Pipeline => {
       pipelineOptions.push(options);
-      return createPipeline(options);
+      const calls = overrides.stubCalls;
+      if (calls === undefined) return createPipeline(options);
+      // Stub: calls the client a fixed number of times, then returns the
+      // rules-only verdict (same locale), independent of the rules level.
+      return {
+        run: async (input) => {
+          for (let i = 0; i < calls; i += 1) {
+            try {
+              await options.llmClient?.complete({ system: "s", user: "u" });
+            } catch {
+              // A denial surfaces as an error; the pipeline degrades.
+            }
+          }
+          return createPipeline({ ...options, llmClient: null }).run(input);
+        },
+      };
     },
     rateLimiter: createRateLimiter({ limit: overrides.limit ?? 100, now: () => 1_000_000 }),
     llmBudget: budget,
@@ -66,7 +83,7 @@ function validRequest(text = `Your account is locked ${SECRET}`): Request {
 
 describe("analyze handler responses", () => {
   it("returns 200 with verdict and meta for valid text", async () => {
-    const h = build();
+    const h = build({ stubCalls: 1 });
     const res = await h.handler(validRequest());
     expect(res.status).toBe(200);
     const body = (await res.json()) as { verdict?: unknown; meta?: { semanticMode: string } };
@@ -140,25 +157,133 @@ describe("analyze handler semantic mode", () => {
     expect(h.events[0]?.semanticMode).toBe("not-configured");
   });
 
-  it("reports budget-exhausted and passes llmClient null when denied", async () => {
-    const h = build({ budgetAllows: false });
+  it("reports budget-exhausted and passes the Lazy_Client when denied", async () => {
+    const client = FakeLlmClient.responding("");
+    const h = build({ client, budgetAllows: false, stubCalls: 1 });
     const res = await h.handler(validRequest());
     const body = (await res.json()) as { meta: { semanticMode: string } };
     expect(res.status).toBe(200);
     expect(body.meta.semanticMode).toBe("budget-exhausted");
-    expect(h.pipelineOptions[0]?.llmClient).toBeNull();
+    const passed = h.pipelineOptions[0]?.llmClient;
+    expect(passed).not.toBeNull();
+    expect(passed).not.toBe(client);
+    expect(client.callCount).toBe(0);
+    expect(h.acquireCalls.count).toBe(1);
     expect(h.events[0]?.semanticMode).toBe("budget-exhausted");
   });
 
-  it("reports used and passes the client when the budget is acquired", async () => {
+  it("reports used and passes the Lazy_Client when the budget is acquired", async () => {
     const client = FakeLlmClient.responding("");
-    const h = build({ client });
+    const h = build({ client, stubCalls: 1 });
     const res = await h.handler(validRequest());
     const body = (await res.json()) as { meta: { semanticMode: string } };
     expect(body.meta.semanticMode).toBe("used");
     expect(h.acquireCalls.count).toBe(1);
-    expect(h.pipelineOptions[0]?.llmClient).toBe(client);
+    expect(client.callCount).toBe(1);
+    const passed = h.pipelineOptions[0]?.llmClient;
+    expect(passed).not.toBeNull();
+    expect(passed).not.toBe(client);
     expect(h.events[0]?.semanticMode).toBe("used");
+  });
+
+  it("acquires only when the stub calls complete (no call, no acquisition)", async () => {
+    const h = build({ stubCalls: 0 });
+    const res = await h.handler(validRequest());
+    const body = (await res.json()) as { meta: { semanticMode: string } };
+    expect(body.meta.semanticMode).toBe("skipped");
+    expect(h.acquireCalls.count).toBe(0);
+    expect(h.events[0]?.semanticMode).toBe("skipped");
+  });
+
+  it("reports skipped for critical text under when-not-critical, without tryAcquire", async () => {
+    const client = FakeLlmClient.responding("");
+    const h = build({ client });
+    const res = await h.handler(
+      post(
+        JSON.stringify({
+          text: "Urgent: your account has been locked. Enter your OTP now to unlock it.",
+          urls: ["http://paypa1.com/verify"],
+        }),
+      ),
+    );
+    const body = (await res.json()) as {
+      verdict: { level: string };
+      meta: { semanticMode: string };
+    };
+    expect(body.verdict.level).toBe("critical");
+    expect(body.meta.semanticMode).toBe("skipped");
+    expect(h.acquireCalls.count).toBe(0);
+    expect(client.callCount).toBe(0);
+    expect(h.events[0]?.semanticMode).toBe("skipped");
+  });
+
+  it("reports skipped for blank text with urls, without tryAcquire", async () => {
+    const client = FakeLlmClient.responding("");
+    const h = build({ client });
+    const res = await h.handler(
+      post(JSON.stringify({ text: "  \n", urls: ["http://192.168.1.1/login"] })),
+    );
+    const body = (await res.json()) as { meta: { semanticMode: string } };
+    expect(res.status).toBe(200);
+    expect(body.meta.semanticMode).toBe("skipped");
+    expect(h.acquireCalls.count).toBe(0);
+    expect(client.callCount).toBe(0);
+  });
+
+  it("logs the true mode when the pipeline run rejects after a denial", async () => {
+    const h = build({
+      budgetAllows: false,
+      createPipeline: (options: PipelineOptions) =>
+        ({
+          run: async () => {
+            try {
+              await options.llmClient?.complete({ system: "s", user: "u" });
+            } catch {
+              // denied
+            }
+            throw new Error(SECRET);
+          },
+        }) as unknown as Pipeline,
+    });
+    const res = await h.handler(validRequest());
+    expect(res.status).toBe(500);
+    expect(h.events[0]?.semanticMode).toBe("budget-exhausted");
+  });
+});
+
+describe("analyze handler locale", () => {
+  it("gives Vietnamese actions for locale vi and forwards locale", async () => {
+    const h = build({ client: null });
+    const res = await h.handler(
+      post(JSON.stringify({ text: "Act now, this is urgent", locale: "vi" })),
+    );
+    const body = (await res.json()) as { verdict: { actions: string[] } };
+    expect(res.status).toBe(200);
+    expect(h.pipelineOptions[0]?.locale).toBe("vi");
+    const expected = await createPipeline({ llmClient: null, locale: "vi" }).run({
+      text: "Act now, this is urgent",
+    });
+    expect(body.verdict.actions).toEqual(expected.actions);
+    const english = await createPipeline({ llmClient: null, locale: "en" }).run({
+      text: "Act now, this is urgent",
+    });
+    expect(body.verdict.actions).not.toEqual(english.actions);
+  });
+
+  it("passes no locale key to createPipeline when locale is absent", async () => {
+    const h = build();
+    await h.handler(validRequest());
+    expect(h.pipelineOptions[0]).toBeDefined();
+    expect("locale" in (h.pipelineOptions[0] as object)).toBe(false);
+  });
+
+  it("rejects locale alone and invalid locale values with 400", async () => {
+    const h = build();
+    for (const body of [{ locale: "vi" }, { text: "hi", locale: "fr" }]) {
+      const res = await h.handler(post(JSON.stringify(body)));
+      expect(res.status).toBe(400);
+      expect(await res.json()).toEqual({ error: { code: "invalid-input" } });
+    }
   });
 });
 

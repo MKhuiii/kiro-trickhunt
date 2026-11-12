@@ -13,6 +13,8 @@ import type { LlmClient } from "../../analyzers/llm-client";
 import type { Pipeline, PipelineOptions } from "../../pipeline";
 import { errorResponse, jsonResponse } from "./analyze-response";
 import { readAnalyzeRequest } from "./analyze-request";
+import { createLazyLlmClient } from "./lazy-llm-client";
+import type { LazyLlmClient } from "./lazy-llm-client";
 import type { LlmBudget } from "./llm-budget";
 import type { AnalyzeLogEvent, LogSemanticMode, LogStatus } from "./log-event";
 import { extractClientKey } from "./rate-limiter";
@@ -29,6 +31,15 @@ export interface AnalyzeHandlerDeps {
 }
 
 const LOG_STATUSES: ReadonlySet<number> = new Set([200, 400, 413, 415, 429, 500]);
+
+function deriveMode(lazy: LazyLlmClient | null): LogSemanticMode {
+  if (lazy === null) return "not-configured";
+  try {
+    return lazy.outcome();
+  } catch {
+    return "skipped";
+  }
+}
 
 export function createAnalyzeHandler(
   deps: AnalyzeHandlerDeps,
@@ -56,20 +67,31 @@ export function createAnalyzeHandler(
         if (!parsed.ok) {
           response = errorResponse(parsed.code);
         } else {
-          const client = deps.getLlmClient();
-          let llmClient: LlmClient | null = null;
-          if (client === null || client === undefined) {
-            mode = "not-configured";
-          } else if (deps.llmBudget.tryAcquire()) {
-            mode = "used";
-            llmClient = client;
-          } else {
-            mode = "budget-exhausted";
-          }
+          const real = deps.getLlmClient();
+          const lazy: LazyLlmClient | null =
+            real === null || real === undefined
+              ? null
+              : createLazyLlmClient(real, deps.llmBudget);
+          const llmClient = lazy === null ? null : lazy.client;
+          const options: PipelineOptions =
+            parsed.input.locale !== undefined
+              ? { llmClient, locale: parsed.input.locale }
+              : { llmClient };
+          // Locale is not part of the pipeline input.
+          const input: { text?: string; urls?: string[] } = {};
+          if (parsed.input.text !== undefined) input.text = parsed.input.text;
+          if (parsed.input.urls !== undefined) input.urls = parsed.input.urls;
 
-          const pipeline = deps.createPipeline({ llmClient });
-          const verdict = await pipeline.run(parsed.input);
-          response = jsonResponse({ verdict, meta: { semanticMode: mode } }, 200);
+          try {
+            const pipeline = deps.createPipeline(options);
+            const verdict = await pipeline.run(input);
+            // Derived after the run: budget is acquired at call time.
+            mode = deriveMode(lazy);
+            response = jsonResponse({ verdict, meta: { semanticMode: mode } }, 200);
+          } finally {
+            // Also covers a throwing run: log the true mode.
+            mode = deriveMode(lazy);
+          }
         }
       }
     } catch {
