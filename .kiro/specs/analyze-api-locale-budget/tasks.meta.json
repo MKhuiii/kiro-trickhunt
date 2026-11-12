@@ -1,0 +1,276 @@
+{
+  "pbtResults": {
+    "5.2 Update client tests (changes listed in the requirements)": {
+      "status": "passed",
+      "lastRunTimestamp": 1794457552889
+    },
+    "2.3 Property test PBT-62 in `lazy-llm-client.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794457610651
+    },
+    "3.3 Replace PBT-44 with PBT-63; add PBT-59, PBT-60, PBT-61 in `analyze-handler.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794457723761
+    }
+  },
+  "executionHistory": {
+    "1.1 Add optional `locale` to `analyze-request.ts`; add `\"skipped\"` to `LogSemanticMode`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449255
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457458033
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457497410
+      }
+    ],
+    "1.2 Extend `analyze-request.test.ts`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449399
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457500922
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457564558
+      }
+    ],
+    "2.1 Create `src/server/api/lazy-llm-client.ts`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449479
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457501659
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457563851
+      }
+    ],
+    "2.2 Unit tests `lazy-llm-client.test.ts`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449554
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457568232
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457620004
+      }
+    ],
+    "2.3 Property test PBT-62 in `lazy-llm-client.property.test.ts`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449634
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457569038
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457619470
+      }
+    ],
+    "3.1 Update `analyze-handler.ts`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449710
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457569761
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457620676
+      }
+    ],
+    "3.2 Update `analyze-handler.test.ts` (changes listed in the requirements)": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449788
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457624397
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457734852
+      }
+    ],
+    "3.3 Replace PBT-44 with PBT-63; add PBT-59, PBT-60, PBT-61 in `analyze-handler.property.test.ts`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449872
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457625195
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457735909
+      }
+    ],
+    "4. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457449944
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457846643
+      }
+    ],
+    "5.1 Update `types.ts`, `analyze-input.ts`, `analyze-client.ts`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457450023
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457458612
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457496868
+      }
+    ],
+    "5.2 Update client tests (changes listed in the requirements)": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457450099
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457502238
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457563055
+      }
+    ],
+    "6.1 Update `README.md`": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457450171
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457625850
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457736601
+      }
+    ],
+    "7.1 Run checks": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457450250
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457745676
+      },
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457845849
+      }
+    ],
+    "5. Client": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457563157
+      }
+    ],
+    "1. Server request and log types": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457564642
+      }
+    ],
+    "2. Lazy client": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457620088
+      }
+    ],
+    "3. Handler": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457736000
+      }
+    ],
+    "6. Documentation": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457736695
+      }
+    ],
+    "7. Final verification": [
+      {
+        "executionId": "a9c1d958-472e-4bed-90d9-21ec1e1e8caf",
+        "chatSessionId": "sess_bbd859ba-91bb-40ea-b0e8-634f0d7debd8",
+        "timestamp": 1794457845940
+      }
+    ]
+  }
+}
