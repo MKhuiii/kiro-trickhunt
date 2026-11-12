@@ -16,7 +16,7 @@ Anything the user provides as input:
 
 ## Data flow rules
 
-1. **OCR and QR decoding run in the browser.** Tesseract.js and jsQR operate
+1. **OCR and QR decoding run in the browser.** Tesseract.js and zxing-wasm operate
    entirely client-side. Raw image bytes never leave the device.
 
 2. **Only derived signals reach the server.** The tRPC layer may receive
@@ -60,7 +60,7 @@ contributor and explanation generator only.
 
 ## Dependency hygiene
 
-- Browser-side packages (Tesseract.js, jsQR) MUST be pinned to exact versions.
+- Browser-side packages (Tesseract.js, zxing-wasm) MUST be pinned to exact versions.
 - Any new dependency that makes outbound network requests from the browser
   requires explicit justification before it is added.
 - Server-side code MUST NOT import browser-only packages, and vice versa.

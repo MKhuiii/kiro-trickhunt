@@ -9,8 +9,8 @@
 | Styling | Tailwind CSS |
 | API layer | tRPC (end-to-end type safety) |
 | Validation | Zod (all external inputs) |
-| OCR | Tesseract.js v5 (WASM, browser-only) |
-| QR decode | jsQR (browser-only) |
+| OCR | Tesseract.js 7.0.0 (WASM, browser-only) |
+| QR decode | zxing-wasm 3.1.6 (WASM, browser-only) |
 | Unit / integration tests | Vitest |
 | Property-based tests | fast-check |
 | E2E tests | Playwright |
