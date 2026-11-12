@@ -11,7 +11,10 @@ import {
 } from "./api-limits.config";
 
 export type ParsedRequest =
-  | { readonly ok: true; readonly input: { text?: string; urls?: string[] } }
+  | {
+      readonly ok: true;
+      readonly input: { text?: string; urls?: string[]; locale?: "vi" | "en" };
+    }
   | {
       readonly ok: false;
       readonly code: "invalid-content-type" | "payload-too-large" | "invalid-input";
@@ -21,6 +24,7 @@ const bodySchema = z
   .strictObject({
     text: z.string().max(MAX_TEXT_CHARS).optional(),
     urls: z.array(z.string().max(MAX_URL_CHARS)).max(MAX_URLS_IN).optional(),
+    locale: z.enum(["vi", "en"]).optional(),
   })
   .refine(
     (value) =>
@@ -111,9 +115,10 @@ export async function readAnalyzeRequest(req: Request): Promise<ParsedRequest> {
       return { ok: false, code: "invalid-input" };
     }
 
-    const input: { text?: string; urls?: string[] } = {};
+    const input: { text?: string; urls?: string[]; locale?: "vi" | "en" } = {};
     if (parsed.data.text !== undefined) input.text = parsed.data.text;
     if (parsed.data.urls !== undefined) input.urls = parsed.data.urls;
+    if (parsed.data.locale !== undefined) input.locale = parsed.data.locale;
     return { ok: true, input };
   } catch {
     return { ok: false, code: "invalid-input" };

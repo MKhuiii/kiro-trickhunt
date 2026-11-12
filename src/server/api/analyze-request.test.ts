@@ -178,3 +178,35 @@ describe("readAnalyzeRequest schema", () => {
     expect(await code(jsonRequest({ text: "  ", urls: ["http://a.example"] }))).toBe("ok");
   });
 });
+
+describe("readAnalyzeRequest locale", () => {
+  it.each(["vi", "en"])("accepts locale %s and keeps it in the input", async (locale) => {
+    expect(await readAnalyzeRequest(jsonRequest({ text: "hi", locale }))).toEqual({
+      ok: true,
+      input: { text: "hi", locale },
+    });
+    expect(
+      await readAnalyzeRequest(jsonRequest({ urls: ["http://a.example"], locale })),
+    ).toEqual({ ok: true, input: { urls: ["http://a.example"], locale } });
+  });
+
+  it.each([
+    ["fr", "fr"],
+    ["uppercase VI", "VI"],
+    ["null", null],
+    ["number", 1],
+    ["empty string", ""],
+  ])("rejects invalid locale: %s", async (_name, locale) => {
+    expect(await code(jsonRequest({ text: "hi", locale }))).toBe("invalid-input");
+  });
+
+  it.each(["vi", "en"])("rejects a body with only locale %s", async (locale) => {
+    expect(await code(jsonRequest({ locale }))).toBe("invalid-input");
+  });
+
+  it("still rejects unknown keys next to a valid locale", async () => {
+    expect(await code(jsonRequest({ text: "hi", locale: "en", extra: 1 }))).toBe(
+      "invalid-input",
+    );
+  });
+});

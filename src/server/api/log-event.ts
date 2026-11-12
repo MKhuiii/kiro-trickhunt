@@ -3,6 +3,7 @@ export type LogSemanticMode =
   | "used"
   | "budget-exhausted"
   | "not-configured"
+  | "skipped"
   | "none";
 
 /** Closed shape: no field can carry user-provided strings (REQ-API-37). */
