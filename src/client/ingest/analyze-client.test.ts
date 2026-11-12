@@ -122,6 +122,34 @@ describe("analyzeRequest", () => {
     expect(JSON.parse(String(init?.body))).toEqual({ text: "hello", urls: ["https://a.example"] });
   });
 
+  it("accepts the skipped semantic mode", async () => {
+    const body = { verdict: VERDICT, meta: { semanticMode: "skipped" } };
+    const r = await analyzeRequest(REQ, depsFor(response(200, body)));
+    expect(r).toEqual({ ok: true, verdict: VERDICT, semanticMode: "skipped" });
+  });
+
+  async function sentBody(input: unknown): Promise<Record<string, unknown>> {
+    let body = "";
+    await analyzeRequest(input as AnalyzeRequest, {
+      fetch: async (_u, i) => {
+        body = String(i.body);
+        return response(200, OK_BODY);
+      },
+    });
+    return JSON.parse(body) as Record<string, unknown>;
+  }
+
+  it.each(["vi", "en"])("sends locale %s when valid", async (locale) => {
+    expect(await sentBody({ text: "t", locale })).toEqual({ text: "t", locale });
+  });
+
+  it.each([["fr"], ["VI"], [""], [null], [5], [undefined]])(
+    "omits invalid locale %s",
+    async (locale) => {
+      expect(await sentBody({ text: "t", locale })).toEqual({ text: "t" });
+    },
+  );
+
   it("sends only text and urls when the input has extra properties", async () => {
     let body = "";
     const input = { text: "t", urls: ["https://b.example"], image: "BYTES", extra: 1 };

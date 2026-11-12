@@ -20,6 +20,19 @@ describe("buildAnalyzeRequest", () => {
     expect(r.request).toEqual({ text: "a\n\nb" });
   });
 
+  it.each(["vi", "en"])("sets locale %s when valid", (locale) => {
+    const r = buildAnalyzeRequest({ userText: "a", locale });
+    expect(r.request).toEqual({ text: "a", locale });
+  });
+
+  it.each([["fr"], ["VI"], [""], [null], [5]])("ignores invalid locale %s", (locale) => {
+    expect(buildAnalyzeRequest({ userText: "a", locale }).request).toEqual({ text: "a" });
+  });
+
+  it("a locale alone is not a request", () => {
+    expect(buildAnalyzeRequest({ locale: "vi" }).request).toBeNull();
+  });
+
   it("Wi-Fi only gives null request with wifi-qr", () => {
     const r = buildAnalyzeRequest({ qrResults: [{ kind: "wifi" }] });
     expect(r.request).toBeNull();

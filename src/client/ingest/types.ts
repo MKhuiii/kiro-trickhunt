@@ -27,7 +27,10 @@ export interface QrClassification {
   readonly url?: string;
 }
 
+export type AnalyzeLocale = "vi" | "en";
+
 export interface AnalyzeRequest {
   text?: string;
   urls?: string[];
+  locale?: AnalyzeLocale;
 }

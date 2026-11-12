@@ -41,7 +41,20 @@ const inputArb = fc.record({
   userText: fc.oneof(textArb, fc.anything()),
   ocrText: fc.oneof(textArb, fc.anything()),
   qrResults: fc.oneof(fc.array(classificationArb, { maxLength: 25 }), fc.anything()),
+  // Optional locale: valid, invalid, or arbitrary. Absent half the time.
+  locale: fc.oneof(
+    fc.constantFrom("vi", "en"),
+    fc.constantFrom("VI", "fr", "", "en ", null, 5),
+    fc.anything(),
+  ),
 });
+const inputWithOptionalLocaleArb = fc
+  .tuple(inputArb, fc.boolean())
+  .map(([input, withLocale]) => {
+    if (withLocale) return input;
+    const { locale: _locale, ...rest } = input;
+    return rest;
+  });
 
 function isHttp(u: string): boolean {
   try {
@@ -83,11 +96,14 @@ describe("buildAnalyzeRequest properties", () => {
    */
   it("PBT-49: never throws and respects text/url bounds", () => {
     fc.assert(
-      fc.property(inputArb, (input) => {
+      fc.property(inputWithOptionalLocaleArb, (input) => {
         const { request, notices } = buildAnalyzeRequest(input);
         expect(Array.isArray(notices)).toBe(true);
         if (request === null) return;
-        expect(Object.keys(request).every((k) => k === "text" || k === "urls")).toBe(true);
+        expect(
+          Object.keys(request).every((k) => k === "text" || k === "urls" || k === "locale"),
+        ).toBe(true);
+        if (request.locale !== undefined) expect(["vi", "en"]).toContain(request.locale);
         expect(request.text !== undefined || request.urls !== undefined).toBe(true);
         if (request.text !== undefined) {
           expect(request.text.length).toBeGreaterThan(0);
@@ -131,7 +147,7 @@ describe("buildAnalyzeRequest properties", () => {
    */
   it("PBT-50: non-null requests are accepted by readAnalyzeRequest and fit MAX_BODY_BYTES", async () => {
     await fc.assert(
-      fc.asyncProperty(inputArb, async (input) => {
+      fc.asyncProperty(inputWithOptionalLocaleArb, async (input) => {
         const { request } = buildAnalyzeRequest(input);
         fc.pre(request !== null);
         const body = JSON.stringify(request);

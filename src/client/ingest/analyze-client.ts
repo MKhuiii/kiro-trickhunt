@@ -23,7 +23,7 @@ export type AnalyzeClientCode =
   | "bad-response"
   | "unexpected-status";
 
-export type SemanticMode = "used" | "budget-exhausted" | "not-configured";
+export type SemanticMode = "used" | "budget-exhausted" | "not-configured" | "skipped";
 
 export type AnalyzeClientResult =
   | { ok: true; verdict: Verdict; semanticMode: SemanticMode }
@@ -58,7 +58,7 @@ const CODE_BY_STATUS: Readonly<Record<number, AnalyzeClientCode>> = {
 };
 
 const LEVELS: readonly string[] = ["no_signals", "suspicious", "high", "critical"];
-const MODES: readonly string[] = ["used", "budget-exhausted", "not-configured"];
+const MODES: readonly string[] = ["used", "budget-exhausted", "not-configured", "skipped"];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -72,7 +72,7 @@ function defaultDeps(): AnalyzeClientDeps {
 }
 
 function buildBody(request: unknown): string {
-  const body: { text?: string; urls?: string[] } = {};
+  const body: { text?: string; urls?: string[]; locale?: "vi" | "en" } = {};
   if (isRecord(request)) {
     const text = request.text;
     if (typeof text === "string") body.text = text;
@@ -80,6 +80,8 @@ function buildBody(request: unknown): string {
     if (Array.isArray(urls)) {
       body.urls = urls.filter((u): u is string => typeof u === "string");
     }
+    const locale = request.locale;
+    if (locale === "vi" || locale === "en") body.locale = locale;
   }
   return JSON.stringify(body);
 }

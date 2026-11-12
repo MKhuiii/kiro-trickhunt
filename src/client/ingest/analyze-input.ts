@@ -12,6 +12,7 @@ export interface BuildAnalyzeInput {
   readonly userText?: unknown;
   readonly ocrText?: unknown;
   readonly qrResults?: unknown;
+  readonly locale?: unknown;
 }
 
 export interface BuildAnalyzeResult {
@@ -137,6 +138,8 @@ export function buildAnalyzeRequest(input: unknown): BuildAnalyzeResult {
     const request: AnalyzeRequest = {};
     if (text !== null) request.text = text;
     if (urls.length > 0) request.urls = urls;
+    const locale = readProp(input, "locale");
+    if (locale === "vi" || locale === "en") request.locale = locale;
     return { request, notices };
   } catch {
     return { request: null, notices: [] };
