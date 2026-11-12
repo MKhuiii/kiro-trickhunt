@@ -131,6 +131,56 @@ Set these in `.env` (see `.env.example`). Missing or invalid values fall back to
 
 **Duration.** The route sets `maxDuration = 15` seconds. Your hosting plan may cap this lower. If the cap is below about 10 seconds, the platform could cut a slow LLM call before the pipeline's own timeout.
 
+## Image and QR input (browser)
+
+TrickHunt can read a screenshot or a QR code image. All image work happens in your browser. Code lives in `src/client/ingest/`.
+
+### What runs where
+
+| Where | What |
+|---|---|
+| Browser | Decode the file, redraw it through a canvas (drops metadata, downscales), read the QR code with [`zxing-wasm`](https://www.npmjs.com/package/zxing-wasm), and run OCR with [`tesseract.js`](https://www.npmjs.com/package/tesseract.js) in Vietnamese and English (`vie`, `eng`) |
+| Server | `POST /api/analyze` with `text` and `urls` only (see [Analyze API](#analyze-api)) |
+
+### Privacy
+
+- Images never leave the browser. The only network call is the same-origin `POST /api/analyze`, and its body never contains image data.
+- Only `http` and `https` URLs from a QR code are forwarded. Other QR payloads (Wi-Fi, payment, contact, anything else) are never sent to the server.
+- Nothing is saved in `localStorage`, `sessionStorage` or IndexedDB.
+
+### Limits and caveats
+
+- **One QR code per image.** Only the first valid QR code is read.
+- **OCR is not exact.** Blurry, small or low-contrast text, and text that mixes scripts, may be misread or missed. The result is a hint, not a transcript.
+- **Formats:** PNG, JPEG and WebP.
+- **Size limits:** 10 MiB per file, 2400 px on the longest side (larger images are scaled down), and at most 50 MP decoded.
+- Client text and URL limits equal the server limits (a test checks this).
+
+### Self-hosted assets
+
+The OCR worker, OCR engine, language data and QR wasm are served from this app, not from a CDN. They are copied from `node_modules` into `public/tesseract/` and `public/zxing/` by `npm run prepare:assets`. The `predev` and `prebuild` scripts run it, so `npm run dev` and `npm run build` do it for you. The script skips files that already match and stops with an error if a source is missing or a hash differs. The generated folders are git-ignored.
+
+```powershell
+npm run prepare:assets
+```
+
+### First-use download
+
+The first scan downloads the assets for the feature it uses. Sizes are gzip estimates measured locally, and your host may compress differently.
+
+| Feature | Approx. download |
+|---|---|
+| OCR (worker, one engine file, `vie` and `eng` data) | 5.6 MiB |
+| QR (wasm) | 0.4 MiB |
+
+### Licenses
+
+Licenses and sources of the shipped components are listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) at the repository root. License files are also copied next to the assets.
+
+### The `/try` page
+
+`/try` is a temporary developer page for checking this flow in a real browser. It is not linked from other pages and will be replaced by the real UI.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
