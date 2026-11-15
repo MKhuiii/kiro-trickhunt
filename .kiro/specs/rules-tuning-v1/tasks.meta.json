@@ -1,0 +1,321 @@
+{
+  "pbtResults": {
+    "2.5 Property tests PBT-75, PBT-77, PBT-78 in `text-analyzer.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794630341311
+    },
+    "3.3 Property tests PBT-76 and PBT-80 in `eval.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794630470003
+    }
+  },
+  "executionHistory": {
+    "1.1 Create `src/pipeline/eval/samples.ts` with the 43 samples from the design": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629960551
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629967983
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630025210
+      }
+    ],
+    "1.2 Create `samples.test.ts` (counts, unique ids, `.example` rule, no real brand list) and `eval.test.ts` (one test per sample, REQ-PIPE-46)": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629960728
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630028712
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630116546
+      }
+    ],
+    "2.1 Edit `text-analyzer.config.ts` phrase lists as written in the design (otp-request, urgency, payment-request, off-platform, threat)": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629960811
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630120584
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630178762
+      }
+    ],
+    "2.2 Add groups `text.job-offer` (0.45) and `text.financial-institution` (0.2) with `whyItMatters`, English and Vietnamese phrases": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629960895
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630182533
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630213100
+      }
+    ],
+    "2.3 Update `text-analyzer.config.test.ts` and `text-analyzer.test.ts` (8 to 10 groups, two ids added)": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629960977
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630216753
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630253942
+      }
+    ],
+    "2.4 Add example tests: \"It will ship in 24 hours\" gives no signals; \"locked in 24 hours\" gives `text.urgency`; \"Do not share your OTP\" gives no `text.otp-request`; \"reply with the OTP\" gives it; a plain job posting gives no `text.job-offer`": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961067
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630258005
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630292343
+      }
+    ],
+    "2.5 Property tests PBT-75, PBT-77, PBT-78 in `text-analyzer.property.test.ts`": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961165
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630296185
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630352862
+      }
+    ],
+    "3.1 Edit `monsters.config.ts` weights and `overlap.config.ts` as in the design; leave `MONSTER_THRESHOLD` and `MONSTER_ORDER`": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961243
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630357044
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630396447
+      }
+    ],
+    "3.2 Update `monster.test.ts`: replace the third tie case with `text.off-platform` + `text.payment-request` (expects `job-bait`, update the comment); add `text.job-offer` alone gives `job-bait`": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961319
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630400358
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630422732
+      }
+    ],
+    "3.3 Property tests PBT-76 and PBT-80 in `eval.property.test.ts`": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961401
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630426433
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630482850
+      }
+    ],
+    "4.1 Add the two ids to `KNOWN_SIGNAL_IDS` and fix its comment; add the four dictionary entries (en and vi)": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961478
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630486941
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630524505
+      }
+    ],
+    "4.2 Property test PBT-79 (extend `dictionary.property.test.ts`: ids from `TEXT_PATTERNS` are all in `KNOWN_SIGNAL_IDS`)": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961560
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630528385
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630574555
+      }
+    ],
+    "5. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961638
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630578879
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630617128
+      }
+    ],
+    "6.1 Re-measure the \"Before and after\" table with a temporary script (print level, monster, fired signals, monster totals per sample); copy the real \"After\" numbers and per-sample results into `design.md`; delete the script": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961720
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630621651
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630925810
+      }
+    ],
+    "6.2 Run `vitest run`, `npx tsc --noEmit` and `npm run lint`": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961796
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630929546
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630994819
+      }
+    ],
+    "6.3 Verify with `git diff --stat` that no file outside the \"Files\" list in the design changed, that `text-analyzer.ts`, `monster.ts`, `reduce.ts`, `combine.ts` and `src/core/` are untouched, and that no temporary file remains (`git status`)": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794629961888
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630998704
+      },
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794631027975
+      }
+    ],
+    "1. Evaluation set (measure before changing)": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630116654
+      }
+    ],
+    "2. Text rule configuration": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630352948
+      }
+    ],
+    "3. Pipeline configuration": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630482950
+      }
+    ],
+    "4. UI dictionary": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794630574656
+      }
+    ],
+    "6. Report and verification": [
+      {
+        "executionId": "6c1afcaa-402d-4d6d-b726-67ca1ff3003a",
+        "chatSessionId": "sess_72fc5b9a-67b4-4ea2-9eda-1e266f632034",
+        "timestamp": 1794631028068
+      }
+    ]
+  }
+}
