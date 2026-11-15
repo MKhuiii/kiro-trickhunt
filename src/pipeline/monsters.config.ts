@@ -17,10 +17,9 @@ export const MONSTERS: readonly MonsterDef[] = [
   {
     id: "bank",
     weights: {
-      "text.otp-request": 3,
+      "text.otp-request": 1,
       "text.sensitive-data-request": 2,
       "url.brand-lookalike": 2,
-      "text.authority-impersonation": 1,
       "url.credential-keywords": 1,
       "semantic.impersonation-tone": 1,
       "text.threat": 1,
@@ -31,15 +30,15 @@ export const MONSTERS: readonly MonsterDef[] = [
     id: "prize",
     weights: {
       "text.prize-reward": 3,
-      "semantic.too-good-to-be-true": 2,
+      "semantic.too-good-to-be-true": 1,
       "text.payment-request": 1,
     },
   },
   {
     id: "job-bait",
     weights: {
-      "semantic.relationship-or-job-bait": 3,
-      "text.job-offer": 3,
+      "semantic.relationship-or-job-bait": 1,
+      "text.job-offer": 1,
       "text.off-platform": 1,
       "semantic.isolation-secrecy": 1,
       "semantic.too-good-to-be-true": 1,
@@ -49,8 +48,9 @@ export const MONSTERS: readonly MonsterDef[] = [
   {
     id: "authority",
     weights: {
-      "text.authority-impersonation": 2,
-      "text.threat": 2,
+      "text.authority-impersonation": 1,
+      "text.threat": 1,
+      "semantic.pressure-escalation": 1,
       "text.off-platform": 1,
       "semantic.impersonation-tone": 1,
       "text.payment-request": 1,

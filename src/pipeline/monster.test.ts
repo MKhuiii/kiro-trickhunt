@@ -41,11 +41,14 @@ describe("selectMonster", () => {
   });
 
   it("breaks ties by MONSTER_ORDER", () => {
-    // bank 3 vs prize 3
+    // bank 2, prize 1, job-bait 1: bank wins on total (not a tie any more)
     expect(
-      selectMonster("high", [sig("text.otp-request"), sig("text.prize-reward")]),
+      selectMonster("high", [
+        sig("text.sensitive-data-request"),
+        sig("semantic.too-good-to-be-true"),
+      ]),
     ).toBe("bank");
-    // prize 3 vs job-bait 3
+    // prize 3 vs job-bait 1: prize wins on total (not a tie any more)
     expect(
       selectMonster("high", [
         sig("text.prize-reward"),
@@ -59,12 +62,31 @@ describe("selectMonster", () => {
     ).toBe("job-bait");
   });
 
-  it("text.job-offer alone gives job-bait", () => {
-    expect(selectMonster("suspicious", [sig("text.job-offer")])).toBe("job-bait");
+  it("text.job-offer alone gives generic; with text.off-platform it gives job-bait", () => {
+    expect(selectMonster("suspicious", [sig("text.job-offer")])).toBe("generic");
+    expect(
+      selectMonster("suspicious", [sig("text.job-offer"), sig("text.off-platform")]),
+    ).toBe("job-bait");
+  });
+
+  it("two signals of one overlap group at suspicious give generic (REQ-PIPE-67)", () => {
+    expect(
+      selectMonster("suspicious", [
+        sig("text.job-offer"),
+        sig("semantic.relationship-or-job-bait"),
+      ]),
+    ).toBe("generic");
+    // the same pair at high keeps the specific monster
+    expect(
+      selectMonster("high", [
+        sig("text.job-offer"),
+        sig("semantic.relationship-or-job-bait"),
+      ]),
+    ).toBe("job-bait");
   });
 
   it("a higher total beats an earlier monster in order", () => {
-    // authority 2+2 = 4 beats bank 1
+    // authority 1 + 1 = 2 beats bank 1
     expect(
       selectMonster("high", [sig("text.authority-impersonation"), sig("text.threat")]),
     ).toBe("authority");

@@ -40,4 +40,46 @@ export const COMBINATION_RULES: readonly CombinationRule[] = [
     allOf: [["text.sensitive-data-request"], ["url.*"]],
     minLevel: "high",
   },
+  {
+    id: "otp-with-context",
+    allOf: [
+      ["text.otp-request"],
+      [
+        "text.financial-institution",
+        "text.urgency",
+        "text.threat",
+        "url.*",
+      ],
+    ],
+    minLevel: "critical",
+  },
+  {
+    id: "payment-with-pressure",
+    allOf: [
+      ["text.payment-request"],
+      [
+        "text.off-platform",
+        "text.urgency",
+        "text.threat",
+        "text.authority-impersonation",
+        "text.prize-reward",
+      ],
+    ],
+    minLevel: "critical",
+  },
+  {
+    id: "authority-with-threat",
+    allOf: [["text.authority-impersonation"], ["text.threat"]],
+    minLevel: "critical",
+  },
+  {
+    id: "job-offer-with-payment",
+    allOf: [["text.job-offer"], ["text.payment-request"]],
+    minLevel: "critical",
+  },
+  {
+    id: "job-offer-off-platform",
+    allOf: [["text.job-offer"], ["text.off-platform"]],
+    minLevel: "high",
+  },
 ];

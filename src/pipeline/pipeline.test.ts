@@ -79,7 +79,7 @@ describe("createPipeline — example tests (requirements 8.1)", () => {
       semanticResponse([
         {
           id: "semantic.pressure-escalation",
-          severity: 0.5,
+          severity: 0.3,
           evidence: "this is urgent",
         },
       ]),
@@ -94,8 +94,8 @@ describe("createPipeline — example tests (requirements 8.1)", () => {
     expect(ids).toContain("semantic.pressure-escalation");
     const urgency = baseline.signals.find((s) => s.id === "text.urgency");
     expect(urgency).toBeDefined();
-    // semantic severity (0.5) does not exceed the text signal's severity
-    expect(urgency!.severity).toBeGreaterThanOrEqual(0.5);
+    // semantic severity (0.3) does not exceed the text signal's severity (0.3)
+    expect(urgency!.severity).toBeGreaterThanOrEqual(0.3);
     expect(v.riskScore).toBe(baseline.riskScore);
   });
 

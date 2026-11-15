@@ -86,7 +86,8 @@ describe("applyRules", () => {
     it("needs all three groups", () => {
       const a = sig("text.urgency");
       const b = sig("text.authority-impersonation");
-      expect(run([otp, "text.urgency"].map((i) => sig(i))).level).toBe("suspicious");
+      // otp + urgency is critical through the otp-with-context rule
+      expect(run([otp, "text.urgency"].map((i) => sig(i))).level).toBe("critical");
       expect(run([sig(otp), b]).level).toBe("suspicious");
       expect(run([a, b]).level).toBe("suspicious");
     });
