@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
+/* Default tokens match NORMAL_PALETTE. App overrides them inline from the active palette. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --th-bg: #1b1230;
+  --th-surface: #2a1b47;
+  --th-raised: #3a2762;
+  --th-text: #f6f0ff;
+  --th-muted: #cdbfea;
+  --th-accent: #ffa94d;
+  --th-on-accent: #1b1230;
+  --th-focus: #ffd27a;
+  --th-border: #9c88cc;
+  --th-level-none: #a9c4ff;
+  --th-level-suspicious: #ffd166;
+  --th-level-high: #ff9a52;
+  --th-level-critical: #ff8097;
+  --th-monster-bank: #7fd1ff;
+  --th-monster-prize: #ff8ad8;
+  --th-monster-job-bait: #9be58f;
+  --th-monster-authority: #ffb3a7;
+  --th-monster-generic: #cdbfea;
+  --th-monster-neutral: #ffd27a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  font-size: 100%;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--th-bg);
+  color: var(--th-text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Visible focus ring for every focusable element. */
+:focus-visible {
+  outline: 0.25rem solid var(--th-focus);
+  outline-offset: 0.125rem;
+}
+
+/* Reduced motion: system setting or the in-page preference. No animation, no flashing. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+:root[data-reduce-motion="true"] *,
+:root[data-reduce-motion="true"] *::before,
+:root[data-reduce-motion="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
 }
