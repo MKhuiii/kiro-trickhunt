@@ -240,3 +240,31 @@ describe("signal id coverage (PBT-79)", () => {
     );
   });
 });
+
+describe("ui-page keys (PBT-80)", () => {
+  const NEW_KEYS = [
+    "result.aiNote.unavailable",
+    "result.noSignals.reminderStrong",
+    "result.limitsNote",
+  ];
+
+  /**
+   * **Validates: Requirements REQ-PAGE-08, REQ-PAGE-10, REQ-PAGE-13**
+   */
+  it("new keys exist in both languages with equal placeholders and short sentences", () => {
+    fc.assert(
+      fc.property(fc.constantFrom(...NEW_KEYS), fc.constantFrom("en", "vi"), (key, lang) => {
+        expect(Object.hasOwn(enTable, key)).toBe(true);
+        expect(Object.hasOwn(viTable, key)).toBe(true);
+        expect(placeholders(viTable[key])).toEqual(placeholders(enTable[key]));
+        const text = (lang === "en" ? enTable : viTable)[key];
+        const sentences = text.split(/(?<=[.!?])\s+/).filter((s) => s.trim() !== "");
+        expect(sentences.length).toBeGreaterThan(0);
+        for (const s of sentences) {
+          expect(s.trim().split(/\s+/).length).toBeLessThanOrEqual(25);
+        }
+      }),
+      { numRuns: 100 },
+    );
+  });
+});

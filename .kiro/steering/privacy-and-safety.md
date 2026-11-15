@@ -40,7 +40,7 @@ Anything the user provides as input:
 | Level | What to say | What never to say |
 |---|---|---|
 | `no_signals` | "Nothing detected yet" | "Safe", "Clean", "No threats found" |
-| `suspicious` | "Some warning signs present" | "Probably fine", "Likely safe" |
+| `suspicious` | "A few things to double-check" | "Probably fine", "Likely safe" |
 | `high` | "Multiple warning signs — be cautious" | "Dangerous" (without evidence) |
 | `critical` | "Strong indicators of a scam" | "100% a scam", "Definitely malicious" |
 

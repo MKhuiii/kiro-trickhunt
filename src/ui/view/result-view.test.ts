@@ -85,7 +85,9 @@ describe("buildResultView: neutral state", () => {
     const v = await createPipeline({ llmClient: null }).run({
       text: "Hi team, the meeting is moved to 3pm tomorrow in room B.",
     });
-    const view = ready(v, "text");
+    const view = ready(v, "text", { semanticMode: "used" });
+    expect(view.aiNote).toBeNull();
+    expect(view.limitsNoteKey).toBe("result.limitsNote");
     expect(view.state).toBe("neutral");
     expect(view.monster.id).toBe("neutral");
     expect(view.signalGroups).toEqual([]);
@@ -95,6 +97,70 @@ describe("buildResultView: neutral state", () => {
       reminderKey: "result.noSignals.reminder",
     });
     expect(view.riskMeter.percent).toBe(0);
+  });
+
+  it("uses the strong reminder and an aiNote when the AI check was unavailable", async () => {
+    const v = await createPipeline({ llmClient: null }).run({
+      text: "Hi team, the meeting is moved to 3pm tomorrow in room B.",
+    });
+    const view = ready(v, "text", { semanticMode: "not-configured" });
+    expect(view.aiNote).toEqual({
+      headingKey: "result.aiNote.heading",
+      textKey: "result.aiNote.unavailable",
+    });
+    expect(view.noSignals?.reminderKey).toBe("result.noSignals.reminderStrong");
+  });
+});
+
+describe("buildResultView: ui-page examples", () => {
+  const LIMITS_EN = "TrickHunt looks for warning signs. It cannot prove that a message is genuine.";
+  const noSignals = () => verdict({ level: "no_signals", monster: null, signals: [], riskScore: 0 });
+
+  it("suspicious with a bank monster gives generic; high with bank gives bank (REQ-PAGE-03)", () => {
+    const s = ready(verdict({ level: "suspicious", monster: "bank" }));
+    expect(s.state).toBe("monster");
+    expect(s.monster.id).toBe("generic");
+    expect(ready(verdict({ level: "high", monster: "bank" })).monster.id).toBe("bank");
+  });
+
+  it("aiNote cases (REQ-PAGE-07)", () => {
+    const suspicious = verdict({ level: "suspicious" });
+    const exhausted = ready(suspicious, "", { semanticMode: "budget-exhausted" });
+    expect(exhausted.aiNote?.textKey).toBe("result.aiNote.unavailable");
+    expect(ready(suspicious, "", { semanticMode: "used" }).aiNote).toBeNull();
+    expect(ready(suspicious, "", { semanticMode: "skipped" }).aiNote).toBeNull();
+    const degraded = verdict({
+      level: "suspicious",
+      semantic: { status: "degraded", reason: "timeout", skipped: false },
+    });
+    expect(ready(degraded).aiNote).not.toBeNull();
+    expect(ready(suspicious).aiNote).toBeNull();
+  });
+
+  it("no_signals reminder: strong for not-configured, normal for used (REQ-PAGE-10)", () => {
+    expect(ready(noSignals(), "", { semanticMode: "not-configured" }).noSignals?.reminderKey).toBe(
+      "result.noSignals.reminderStrong",
+    );
+    expect(ready(noSignals(), "", { semanticMode: "used" }).noSignals?.reminderKey).toBe(
+      "result.noSignals.reminder",
+    );
+  });
+
+  it("ready and withheld views carry the limits note (REQ-PAGE-13)", () => {
+    const r = ready(verdict());
+    expect(r.limitsNoteKey).toBe("result.limitsNote");
+    expect(t("en", r.limitsNoteKey)).toBe(LIMITS_EN);
+    const w = buildResultView(null as unknown as Verdict, "", "en");
+    expect(w.kind).toBe("withheld");
+    if (w.kind === "withheld") {
+      expect(w.limitsNoteKey).toBe("result.limitsNote");
+      expect(t("en", w.limitsNoteKey)).toBe(LIMITS_EN);
+    }
+  });
+
+  it("English level.suspicious and actions heading texts (REQ-PAGE-01, REQ-PAGE-05)", () => {
+    expect(t("en", "level.suspicious")).toBe("A few things to double-check");
+    expect(t("en", "result.actions.heading")).toBe("What to do now");
   });
 });
 

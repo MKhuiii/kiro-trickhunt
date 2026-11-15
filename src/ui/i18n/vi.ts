@@ -52,7 +52,18 @@ export const vi: Record<MessageKey, string> = {
   "result.severity.low": "Mức nhẹ",
   "result.severity.medium": "Mức vừa",
   "result.severity.high": "Mức nặng",
-  "result.actions.heading": "Bạn nên làm gì",
+  "result.actions.heading": "Bạn nên làm ngay",
+  "result.aiNote.heading": "Bước kiểm tra bổ sung không khả dụng",
+  "result.aiNote.unavailable":
+    "Bước kiểm tra AI bổ sung không khả dụng, nên kết quả này có thể bỏ sót các kiểu lừa đảo mới hoặc hiếm gặp. Hãy thận trọng với mọi yêu cầu bất ngờ.",
+  "result.monster.heading": "Kiểu chiêu trò mà tin nhắn này giống",
+  "result.evidence.heading": "Chúng tôi thấy gì",
+  "result.limitsNote":
+    "TrickHunt tìm các dấu hiệu cảnh báo. Công cụ không thể chứng minh một tin nhắn là thật.",
+  "result.noSignals.reminderStrong":
+    "Chưa thấy dấu hiệu nào, nhưng bước kiểm tra AI bổ sung không chạy nên kết quả này yếu hơn. Đừng chỉ dựa vào nó. Nếu tin nhắn đòi tiền, mã xác nhận hoặc thông tin cá nhân, hãy tự gọi số điện thoại chính thức.",
+  "settings.open": "Tùy chỉnh",
+  "input.paste.hint": "Mẹo: bạn có thể dán ảnh chụp màn hình bằng Ctrl+V.",
   "result.limitations.heading": "Điều cần nhớ",
   "result.tips.heading": "Cách nhận ra",
   "result.tech.summary": "Chi tiết kỹ thuật",
@@ -63,7 +74,7 @@ export const vi: Record<MessageKey, string> = {
   "result.noSignals.reminder":
     "Nếu tin nhắn đòi tiền, mã xác nhận hoặc thông tin cá nhân, hãy tự gọi số điện thoại chính thức để hỏi lại.",
   "level.no_signals": "Chưa phát hiện dấu hiệu nào",
-  "level.suspicious": "Có vài dấu hiệu cần để ý",
+  "level.suspicious": "Có vài điều cần kiểm tra lại",
   "level.high": "Nhiều dấu hiệu cảnh báo, hãy cẩn thận",
   "level.critical": "Dấu hiệu rất mạnh của lừa đảo",
   "source.text": "Trong nội dung tin nhắn",

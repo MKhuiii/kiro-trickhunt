@@ -1,5 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { semanticNoteKey } from "./semantic-note";
+import { aiUnavailable, semanticNoteKey } from "./semantic-note";
+
+describe("aiUnavailable (REQ-PAGE-07)", () => {
+  const rows: [string, unknown, unknown, boolean][] = [
+    ["budget-exhausted mode", "ok", "budget-exhausted", true],
+    ["not-configured mode", "ok", "not-configured", true],
+    ["used mode", "ok", "used", false],
+    ["skipped mode", "ok", "skipped", false],
+    ["degraded status, no mode", "degraded", undefined, true],
+    ["degraded status, used mode", "degraded", "used", true],
+    ["unavailable status, no mode", "unavailable", undefined, true],
+    ["unavailable status, used mode", "unavailable", "used", false],
+    ["ok status, no mode", "ok", undefined, false],
+    ["junk input", 42, {}, false],
+  ];
+  for (const [name, status, mode, expected] of rows) {
+    it(`${name} gives ${expected}`, () => {
+      expect(aiUnavailable(status, mode)).toBe(expected);
+    });
+  }
+});
 
 const ok = { status: "ok", skipped: false } as const;
 const okSkipped = { status: "ok", skipped: true } as const;

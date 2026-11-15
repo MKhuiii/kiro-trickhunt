@@ -12,13 +12,14 @@ import { computeHighlights } from "./highlights";
 import type { HighlightSegment } from "./highlights";
 import { buildNotices } from "./notices";
 import type { NoticeView, ResultExtras } from "./notices";
-import { semanticNoteKey } from "./semantic-note";
+import { aiUnavailable, semanticNoteKey } from "./semantic-note";
 
 export type { NoticeView, ResultExtras };
 
 export interface WithheldResultView {
   readonly kind: "withheld";
   readonly messageKey: "result.withheld";
+  readonly limitsNoteKey: "result.limitsNote";
   readonly notices: readonly NoticeView[];
 }
 
@@ -48,6 +49,11 @@ export interface ReadyResultView {
     readonly artKey: string;
   };
   readonly levelKey: MessageKey;
+  readonly aiNote: {
+    readonly headingKey: "result.aiNote.heading";
+    readonly textKey: "result.aiNote.unavailable";
+  } | null;
+  readonly limitsNoteKey: "result.limitsNote";
   readonly riskMeter: {
     readonly percent: number;
     readonly labelKey: MessageKey;
@@ -109,7 +115,12 @@ const MONSTER_TEXT: Readonly<
 };
 
 function withheld(notices: readonly NoticeView[]): WithheldResultView {
-  return { kind: "withheld", messageKey: "result.withheld", notices };
+  return {
+    kind: "withheld",
+    messageKey: "result.withheld",
+    limitsNoteKey: "result.limitsNote",
+    notices,
+  };
 }
 
 function isLevel(x: unknown): x is LevelKey {
@@ -122,6 +133,17 @@ function isMonsterId(x: unknown): x is MonsterId {
     x !== "neutral" &&
     Object.hasOwn(MONSTER_PRESENTATION, x)
   );
+}
+
+/**
+ * Picks the monster for a level (REQ-PAGE-02, REQ-PAGE-03).
+ * suspicious is always generic; no_signals is neutral; high and critical use
+ * the verdict monster when known, else generic.
+ */
+export function chooseMonster(level: LevelKey, id: unknown): MonsterKey {
+  if (level === "no_signals") return "neutral";
+  if (level === "suspicious") return "generic";
+  return isMonsterId(id) ? id : "generic";
 }
 
 function percentOf(score: unknown): number {
@@ -189,14 +211,19 @@ export function buildResultView(
     if (level !== "no_signals" && signalGroups.length === 0) return withheld(notices);
 
     const neutral = level === "no_signals";
-    const monsterKey: MonsterKey = neutral
-      ? "neutral"
-      : isMonsterId(verdict.monster)
-        ? verdict.monster
-        : "generic";
+    const monsterKey: MonsterKey = chooseMonster(level, verdict.monster);
     const mp = MONSTER_PRESENTATION[monsterKey];
     const mt = MONSTER_TEXT[monsterKey];
     const lp = LEVEL_PRESENTATION[level];
+    const sem: unknown = verdict.semantic;
+    const semStatus: unknown =
+      typeof sem === "object" && sem !== null ? (sem as { status?: unknown }).status : undefined;
+    const aiNote = aiUnavailable(semStatus, extras?.semanticMode)
+      ? ({
+          headingKey: "result.aiNote.heading",
+          textKey: "result.aiNote.unavailable",
+        } as const)
+      : null;
 
     const needles = signals.flatMap((s) => evidenceNeedles(s));
     const text = typeof inputText === "string" ? inputText : "";
@@ -214,6 +241,8 @@ export function buildResultView(
         artKey: mp.artKey,
       },
       levelKey: lp.labelKey,
+      aiNote,
+      limitsNoteKey: "result.limitsNote",
       riskMeter: {
         percent: percentOf(verdict.riskScore),
         labelKey: lp.labelKey,
@@ -224,7 +253,8 @@ export function buildResultView(
         ? {
             summaryKey: "result.noSignals.summary",
             notSafeKey: "result.noSignals.notSafeNote",
-            reminderKey: "result.noSignals.reminder",
+            reminderKey:
+              aiNote !== null ? "result.noSignals.reminderStrong" : "result.noSignals.reminder",
           }
         : null,
       highlights: computeHighlights(text, needles),

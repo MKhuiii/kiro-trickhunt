@@ -50,7 +50,18 @@ export const en = {
   "result.severity.low": "Minor",
   "result.severity.medium": "Moderate",
   "result.severity.high": "Serious",
-  "result.actions.heading": "What to do next",
+  "result.actions.heading": "What to do now",
+  "result.aiNote.heading": "Extra check not available",
+  "result.aiNote.unavailable":
+    "The extra AI check was not available, so this result may miss newer or unusual scams. Treat unexpected requests with care.",
+  "result.monster.heading": "The kind of trick this looks like",
+  "result.evidence.heading": "What we found",
+  "result.limitsNote":
+    "TrickHunt looks for warning signs. It cannot prove that a message is genuine.",
+  "result.noSignals.reminderStrong":
+    "Nothing was found, but the extra AI check did not run, so this result is weaker. Do not rely on it alone. If a message asks for money, a code or personal details, call the official number yourself.",
+  "settings.open": "Settings",
+  "input.paste.hint": "Tip: you can paste a screenshot with Ctrl+V.",
   "result.limitations.heading": "Good to know",
   "result.tips.heading": "How to spot it",
   "result.tech.summary": "Technical details",
@@ -61,7 +72,7 @@ export const en = {
   "result.noSignals.reminder":
     "If a message asks for money, a code or personal details, call the official number yourself to check.",
   "level.no_signals": "Nothing detected yet",
-  "level.suspicious": "Some warning signs present",
+  "level.suspicious": "A few things to double-check",
   "level.high": "Multiple warning signs, be cautious",
   "level.critical": "Strong indicators of a scam",
   "source.text": "In the message text",
