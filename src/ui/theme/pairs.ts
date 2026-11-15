@@ -58,4 +58,7 @@ export const DECLARED_PAIRS: readonly DeclaredPair[] = [
   { fg: "accent", bg: "raised", use: "ui" },
   // Limits note: muted text on the page background.
   { fg: "muted", bg: "bg", use: "text" },
+  // Bag panel (REQ-HUNT-47).
+  { fg: "parchment-text", bg: "parchment", use: "text" },
+  { fg: "parchment-border", bg: "parchment", use: "ui" },
 ];

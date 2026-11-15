@@ -21,6 +21,17 @@
   --th-monster-authority: #ffb3a7;
   --th-monster-generic: #cdbfea;
   --th-monster-neutral: #ffd27a;
+  --th-sky: #120a24;
+  --th-fog: #3b2a63;
+  --th-moon: #f3e9c6;
+  --th-lantern: #ffb347;
+  --th-ground: #1c1326;
+  --th-foliage: #1f3b2d;
+  --th-stone: #4b4260;
+  --th-water: #1e3a52;
+  --th-parchment: #2e2014;
+  --th-parchment-text: #f5e6c8;
+  --th-parchment-border: #c9a66b;
 }
 
 html {
@@ -60,4 +71,164 @@ body {
   animation: none !important;
   transition: none !important;
   scroll-behavior: auto !important;
+}
+
+/* High contrast: hide the fine art details so the main shapes stay clear. */
+[data-high-contrast="true"] [data-part$="-detail"] {
+  display: none;
+}
+
+/*
+ * Home animations (hunter-ui B5). Only transform and opacity change.
+ * The base style of each element is its final, readable state; keyframes
+ * describe only the start (`from`). The reduced-motion rules above use `*`
+ * with `animation: none !important`, so they already cover these classes.
+ */
+.th-fog-drift,
+.th-sway,
+.th-flicker,
+.th-fly {
+  transform-box: fill-box;
+}
+
+.th-sway {
+  transform-origin: 50% 100%;
+}
+
+.th-fog-drift,
+.th-flicker,
+.th-fly {
+  transform-origin: 50% 50%;
+}
+
+@keyframes th-fog-drift {
+  from {
+    transform: translateX(-3%);
+  }
+}
+
+@keyframes th-sway {
+  from {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes th-flicker {
+  from {
+    opacity: 0.85;
+  }
+}
+
+@keyframes th-fly {
+  from {
+    transform: translate(-4%, 3%);
+  }
+}
+
+.th-fog-drift {
+  animation: th-fog-drift 40s ease-in-out infinite alternate;
+}
+
+.th-sway {
+  animation: th-sway 9s ease-in-out infinite alternate;
+}
+
+.th-flicker {
+  animation: th-flicker 3s ease-in-out infinite alternate;
+}
+
+.th-fly {
+  animation: th-fly 16s ease-in-out infinite alternate;
+}
+
+.th-fly-slow {
+  animation-duration: 20s;
+}
+
+.th-fly-fast {
+  animation-duration: 12s;
+}
+
+/*
+ * Hunt animations (hunter-ui B5). Only transform and opacity change; the base
+ * style is the final state and keyframes hold only `from`. Loops alternate so
+ * nothing jumps or flashes. Reduced motion is covered by the `*` rules above.
+ */
+.th-parallax {
+  transform-box: fill-box;
+  animation: th-parallax 8s linear infinite alternate;
+}
+
+/* Far layers move least, near layers most. */
+.th-parallax[data-part="layer-far"] {
+  --th-px: -0.5%;
+}
+
+.th-parallax[data-part="layer-mid"] {
+  --th-px: -1.5%;
+}
+
+.th-parallax[data-part="layer-near"] {
+  --th-px: -3%;
+}
+
+.th-parallax[data-part="layer-front"] {
+  --th-px: -4.5%;
+}
+
+@keyframes th-parallax {
+  from {
+    transform: translateX(var(--th-px, -1%));
+  }
+}
+
+.th-walk {
+  animation: th-walk 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes th-walk {
+  from {
+    transform: translate(-1.5%, -2.5%);
+  }
+}
+
+.th-shade-run {
+  animation: th-shade-run 5s linear infinite alternate;
+}
+
+@keyframes th-shade-run {
+  from {
+    transform: translateX(-8%);
+  }
+}
+
+.th-leg-in {
+  animation: th-leg-in 1s ease-out 1;
+}
+
+@keyframes th-leg-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.th-reveal {
+  animation: th-reveal 1s ease-out 1;
+}
+
+@keyframes th-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.th-lost-fade {
+  animation: th-lost-fade 1.2s ease-out 1;
+}
+
+@keyframes th-lost-fade {
+  from {
+    opacity: 0;
+  }
 }

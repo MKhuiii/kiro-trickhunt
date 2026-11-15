@@ -23,6 +23,17 @@ export const COLOR_TOKENS = [
   "monster-authority",
   "monster-generic",
   "monster-neutral",
+  "sky",
+  "fog",
+  "moon",
+  "lantern",
+  "ground",
+  "foliage",
+  "stone",
+  "water",
+  "parchment",
+  "parchment-text",
+  "parchment-border",
 ] as const;
 
 export type ColorToken = (typeof COLOR_TOKENS)[number];
@@ -49,6 +60,17 @@ export const NORMAL_PALETTE: Palette = {
   "monster-authority": "#FFB3A7",
   "monster-generic": "#CDBFEA",
   "monster-neutral": "#FFD27A",
+  sky: "#120A24",
+  fog: "#3B2A63",
+  moon: "#F3E9C6",
+  lantern: "#FFB347",
+  ground: "#1C1326",
+  foliage: "#1F3B2D",
+  stone: "#4B4260",
+  water: "#1E3A52",
+  parchment: "#2E2014",
+  "parchment-text": "#F5E6C8",
+  "parchment-border": "#C9A66B",
 };
 
 export const HIGH_CONTRAST_PALETTE: Palette = {
@@ -71,4 +93,15 @@ export const HIGH_CONTRAST_PALETTE: Palette = {
   "monster-authority": "#FFC8BF",
   "monster-generic": "#EDE6FA",
   "monster-neutral": "#FFE08F",
+  sky: "#000000",
+  fog: "#160D26",
+  moon: "#FFF6C2",
+  lantern: "#FFC266",
+  ground: "#000000",
+  foliage: "#0B1A12",
+  stone: "#2A2340",
+  water: "#0A1A2A",
+  parchment: "#0A0612",
+  "parchment-text": "#FFFFFF",
+  "parchment-border": "#E3D9FF",
 };
