@@ -6,7 +6,15 @@ import { join, basename, resolve } from "node:path";
 
 const ROOT = resolve(__dirname, "..", "..", "..");
 const UI_DIR = join(ROOT, "src", "ui");
-const SCAN_DIRS = [join(ROOT, "src", "client"), join(ROOT, "src", "app", "try"), UI_DIR];
+const COMPONENTS_DIR = join(ROOT, "src", "components");
+const PAGE_FILE = join(ROOT, "src", "app", "page.tsx");
+const SCAN_DIRS = [
+  join(ROOT, "src", "client"),
+  join(ROOT, "src", "app", "try"),
+  UI_DIR,
+  COMPONENTS_DIR,
+];
+const SCAN_FILES = [PAGE_FILE];
 
 function walk(dir: string): string[] {
   if (!existsSync(dir)) return [];
@@ -20,7 +28,8 @@ function walk(dir: string): string[] {
 }
 
 function sources(): { file: string; name: string; text: string }[] {
-  return SCAN_DIRS.flatMap(walk).map((file) => ({
+  const files = [...SCAN_DIRS.flatMap(walk), ...SCAN_FILES.filter((f) => existsSync(f))];
+  return files.map((file) => ({
     file,
     name: basename(file),
     text: readFileSync(file, "utf8"),
@@ -101,6 +110,29 @@ describe("client ingest boundaries", () => {
     expect(offenders(/\b(window|document|navigator|fetch|process)\b/, (n) => PURE.includes(n))).toEqual(
       [],
     );
+  });
+
+  describe("src/components and src/app/page.tsx sources", () => {
+    const isPage = (f: string) => f === PAGE_FILE || f.startsWith(COMPONENTS_DIR);
+    const ui = () => sources().filter((s) => isPage(s.file));
+
+    it("scans components and the page", () => {
+      const files = ui().map((s) => s.file);
+      expect(files).toContain(PAGE_FILE);
+      expect(files.length).toBeGreaterThan(10);
+    });
+
+    it("imports pipeline only as types", () => {
+      const bad: string[] = [];
+      const re = /^[ \t]*(import|export)\b([^;]*?)\bfrom\s*["']([^"']+)["']/gm;
+      for (const s of ui()) {
+        for (const m of s.text.matchAll(re)) {
+          if (/pipeline/.test(m[3]) && !/^\s*type\b/.test(m[2])) bad.push(`${s.name}: ${m[3]}`);
+        }
+        if (/\bimport\s*\(\s*["'][^"']*pipeline/.test(s.text)) bad.push(`${s.name}: dynamic`);
+      }
+      expect(bad).toEqual([]);
+    });
   });
 
   describe("src/ui sources", () => {
