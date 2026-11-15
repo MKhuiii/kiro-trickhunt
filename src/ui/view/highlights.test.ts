@@ -27,7 +27,7 @@ describe("computeHighlights examples", () => {
     const hits = marked(text, all);
     expect(hits).toContain("URGENT");
     expect(hits).toContain("account has been LOCKED");
-    expect(hits).toContain("send money");
+    expect(hits).toContain("send money now");
   });
 
   it("highlights accent-free Vietnamese evidence", () => {

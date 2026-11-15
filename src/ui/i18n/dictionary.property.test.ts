@@ -1,5 +1,6 @@
 ﻿import fc from "fast-check";
 import { describe, expect, it } from "vitest";
+import { TEXT_PATTERNS } from "../../analyzers/text-analyzer.config";
 import { MONSTERS } from "../../pipeline/monsters.config";
 import { en, t, vi, type MessageKey } from "./dictionary";
 import { KNOWN_SIGNAL_IDS } from "./signal-ids";
@@ -204,3 +205,38 @@ describe("t property tests (PBT-73)", () => {
   });
 });
 
+
+describe("signal id coverage (PBT-79)", () => {
+  const known: ReadonlySet<string> = new Set<string>(KNOWN_SIGNAL_IDS);
+
+  /**
+   * **Validates: Requirements REQ-UI-45**
+   */
+  it("every known signal id has an explain key in both languages", () => {
+    for (const id of KNOWN_SIGNAL_IDS) {
+      expect(Object.hasOwn(enTable, `signal.${id}.explain`)).toBe(true);
+      expect(Object.hasOwn(viTable, `signal.${id}.explain`)).toBe(true);
+    }
+    fc.assert(
+      fc.property(fc.constantFrom(...KNOWN_SIGNAL_IDS), (id) => {
+        const key = `signal.${id}.explain`;
+        expect(enTable[key]?.trim().length).toBeGreaterThan(0);
+        expect(viTable[key]?.trim().length).toBeGreaterThan(0);
+      }),
+      { numRuns: 100 },
+    );
+  });
+
+  /**
+   * **Validates: Requirements REQ-UI-46**
+   */
+  it("every id emitted by TEXT_PATTERNS is a known signal id", () => {
+    for (const p of TEXT_PATTERNS) expect(known.has(p.id)).toBe(true);
+    fc.assert(
+      fc.property(fc.constantFrom(...TEXT_PATTERNS.map((p) => p.id)), (id) => {
+        expect(known.has(id)).toBe(true);
+      }),
+      { numRuns: 100 },
+    );
+  });
+});

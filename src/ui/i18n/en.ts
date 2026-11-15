@@ -96,6 +96,10 @@ export const en = {
     "The message asks you to move to another app or keep it secret. This stops others from warning you. Talk to someone you trust.",
   "signal.text.sensitive-data-request.explain":
     "The message asks for card numbers, ID details or bank logins. A scammer can use them to take your money. Do not send them.",
+  "signal.text.job-offer.explain":
+    "The message offers easy pay for little work or asks for a fee to start. Real employers do not charge you to begin. Check the company on its official website.",
+  "signal.text.financial-institution.explain":
+    "The message asks you to verify or unlock a bank or wallet account. Scammers use this to steal logins. Open your bank's own app or site yourself instead.",
   "signal.url.punycode-host.explain":
     "The web address uses unusual characters to look like a real site. Do not open it.",
   "signal.url.ip-address-host.explain":

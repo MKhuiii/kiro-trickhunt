@@ -121,3 +121,157 @@ describe("PBT-15 — evidence length bounded", () => {
     );
   });
 });
+
+// ---------------------------------------------------------------------------
+// rules-tuning-v1: PBT-75, PBT-77, PBT-78
+// **Validates: Requirements REQ-TXT-21**
+// ---------------------------------------------------------------------------
+
+/** Phrases added by rules-tuning-v1 (design.md, "Changes > text-analyzer.config.ts"). */
+const ADDED_PHRASES: Readonly<Record<string, { en: string[]; vi: string[] }>> = {
+  "text.otp-request": {
+    en: [
+      "send me the otp", "send me your otp", "send me your code", "send us the code",
+      "send us the otp", "send us your otp", "send us your code", "send the otp",
+      "enter the otp", "reply with the otp", "reply with your otp", "reply with otp",
+      "reply with the code", "reply with your code", "text me the code",
+      "tell me the code", "read me the code",
+    ],
+    vi: [
+      "vui lòng cung cấp mã otp", "vui lòng gửi mã otp", "vui lòng nhập mã otp",
+      "hãy cung cấp mã otp", "hãy gửi mã otp", "và cung cấp mã otp", "và gửi mã otp",
+      "gửi lại mã otp", "trả lời mã otp",
+    ],
+  },
+  "text.urgency": {
+    en: [
+      "within 72 hours", "within 12 hours", "within 2 hours", "within 1 hour",
+      "within an hour", "locked in 24 hours", "locked in 48 hours",
+      "suspended in 24 hours", "suspended in 48 hours", "blocked in 24 hours",
+      "closed in 24 hours",
+    ],
+    vi: [
+      "trong 24h", "trong 48h", "trong 48 giờ", "trong 1 giờ", "trong vòng 1 giờ",
+      "trong vòng 2 giờ",
+    ],
+  },
+  "text.payment-request": {
+    en: [
+      "pay a small fee", "pay a shipping fee", "pay a small shipping fee",
+      "pay the shipping fee", "pay a handling fee", "pay a small handling fee",
+      "pay a registration fee", "pay the registration fee", "pay a small deposit",
+      "pay a training deposit", "pay a training fee", "pay the release fee",
+      "pay the clearance fee",
+    ],
+    vi: [
+      "trả phí vận chuyển", "đóng phí vận chuyển", "đóng phí đăng ký", "nộp phí đăng ký",
+      "đóng tiền cọc", "nộp tiền cọc",
+    ],
+  },
+  "text.off-platform": {
+    en: [
+      "message us on telegram", "contact us on telegram", "message us on whatsapp",
+      "contact us on whatsapp", "add me on whatsapp",
+    ],
+    vi: ["nhắn tin qua telegram"],
+  },
+  "text.threat": {
+    en: ["you are under investigation"],
+    vi: ["đang bị điều tra"],
+  },
+  "text.job-offer": {
+    en: [
+      "easy tasks", "simple tasks", "no experience needed", "no experience required",
+      "hiring online", "earn money online", "earn money from home", "make money online",
+      "easy money", "liking videos",
+    ],
+    vi: [
+      "nhiệm vụ đơn giản", "việc nhẹ lương cao", "không cần kinh nghiệm",
+      "tuyển nhân viên làm việc online", "tuyển nhân viên online", "kiếm tiền online",
+      "kiếm tiền tại nhà", "thu nhập mỗi ngày",
+    ],
+  },
+  "text.financial-institution": {
+    en: [
+      "verify your account", "account verification", "confirm your account",
+      "unlock your account", "e-wallet", "digital wallet",
+    ],
+    vi: ["xác minh tài khoản", "xác thực tài khoản", "mở khóa tài khoản", "ví điện tử"],
+  },
+};
+
+const ADDED_ALL: string[] = Object.values(ADDED_PHRASES).flatMap((g) => [...g.en, ...g.vi]);
+const ADDED_VI: string[] = Object.values(ADDED_PHRASES).flatMap((g) => g.vi);
+
+describe("rules-tuning-v1 fixtures match the config", () => {
+  it("every added phrase exists in TEXT_PATTERNS under its group", () => {
+    for (const [id, group] of Object.entries(ADDED_PHRASES)) {
+      const cfg = TEXT_PATTERNS.find((p) => p.id === id);
+      expect(cfg, id).toBeDefined();
+      for (const p of group.en) expect(cfg!.phrases.en, `${id}: ${p}`).toContain(p);
+      for (const p of group.vi) expect(cfg!.phrases.vi, `${id}: ${p}`).toContain(p);
+    }
+  });
+});
+
+describe("PBT-75 — one signal per group and bounded evidence", () => {
+  for (const pattern of TEXT_PATTERNS) {
+    it(`${pattern.id}: any subset of phrases plus filler gives at most one signal and bounded evidence`, async () => {
+      const groupPhrases = [...pattern.phrases.en, ...pattern.phrases.vi];
+      const text = fc
+        .tuple(fc.subarray(groupPhrases), fc.string())
+        .map(([subset, fill]) => `${fill} ${subset.join(` ${fill} `)} ${fill}`);
+      await fc.assert(
+        fc.asyncProperty(text, async (s) => {
+          const signals = await analyzer.analyze(s);
+          const own = signals.filter((x) => x.id === pattern.id);
+          return (
+            own.length <= 1 &&
+            signals.every((x) => x.evidence.length <= MAX_EVIDENCE_CHARS)
+          );
+        }),
+        { numRuns: 100 },
+      );
+    });
+  }
+});
+
+describe("PBT-77 — added phrases are invariant under case and diacritics", () => {
+  it("upper-case, lower-case and diacritic-stripped text give the same signal ids", async () => {
+    const text = fc
+      .tuple(fc.constantFrom(...ADDED_ALL), fc.string(), fc.string())
+      .map(([phrase, a, b]) => `${a} ${phrase} ${b}`);
+    await fc.assert(
+      fc.asyncProperty(text, async (s) => {
+        const base = ids(await analyzer.analyze(s));
+        expect(base.length).toBeGreaterThan(0);
+        expect(ids(await analyzer.analyze(s.toUpperCase()))).toEqual(base);
+        expect(ids(await analyzer.analyze(s.toLowerCase()))).toEqual(base);
+        expect(ids(await analyzer.analyze(stripDiacritics(s)))).toEqual(base);
+        return true;
+      }),
+      { numRuns: 300 },
+    );
+  });
+});
+
+describe("PBT-78 — Vietnamese phrases without diacritics match like the accented form", () => {
+  it("unaccented phrase (đ as d) gives the same signal ids as the accented phrase", async () => {
+    const vi = fc.oneof(
+      fc.constantFrom(...ADDED_VI),
+      fc.constantFrom(
+        ...TEXT_PATTERNS.filter((p) => p.id in ADDED_PHRASES).flatMap((p) => p.phrases.vi),
+      ),
+    );
+    await fc.assert(
+      fc.asyncProperty(vi, filler, async (phrase, fill) => {
+        const accented = ids(await analyzer.analyze(`${fill} ${phrase} ${fill}`));
+        const plain = ids(await analyzer.analyze(`${fill} ${stripDiacritics(phrase)} ${fill}`));
+        expect(accented.length).toBeGreaterThan(0);
+        expect(plain).toEqual(accented);
+        return true;
+      }),
+      { numRuns: 200 },
+    );
+  });
+});

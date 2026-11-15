@@ -98,6 +98,10 @@ export const vi: Record<MessageKey, string> = {
     "Tin nhắn rủ bạn sang ứng dụng khác hoặc giữ bí mật. Như vậy sẽ không ai kịp cảnh báo bạn. Hãy nói chuyện với người bạn tin.",
   "signal.text.sensitive-data-request.explain":
     "Tin nhắn xin số thẻ, giấy tờ hoặc mật khẩu ngân hàng. Kẻ xấu có thể dùng chúng để lấy tiền của bạn. Đừng gửi.",
+  "signal.text.job-offer.explain":
+    "Tin nhắn hứa trả công cao cho việc nhẹ hoặc đòi phí để bắt đầu. Nhà tuyển dụng thật không thu phí để bạn đi làm. Hãy kiểm tra công ty trên trang web chính thức.",
+  "signal.text.financial-institution.explain":
+    "Tin nhắn yêu cầu bạn xác minh hoặc mở khóa tài khoản ngân hàng hoặc ví. Kẻ lừa đảo dùng cách này để lấy thông tin đăng nhập. Hãy tự mở ứng dụng hoặc trang web chính thức của ngân hàng.",
   "signal.url.punycode-host.explain":
     "Địa chỉ web dùng ký tự lạ để trông giống một trang thật. Đừng mở nó.",
   "signal.url.ip-address-host.explain":

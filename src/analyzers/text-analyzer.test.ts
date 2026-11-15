@@ -85,8 +85,8 @@ describe("TextAnalyzer", () => {
     expect(analyzer.sourceType).toBe("text");
   });
 
-  it("covers all 8 groups", () => {
-    expect(TEXT_PATTERNS).toHaveLength(8);
+  it("covers all 10 groups", () => {
+    expect(TEXT_PATTERNS).toHaveLength(10);
   });
 
   it.each(cases)("%s (%s): '%s' yields that group's signal", async (id, _lang, phrase, weight) => {
@@ -136,6 +136,33 @@ describe("TextAnalyzer", () => {
     const b = await analyzer.analyze(text);
     expect(a.length).toBeGreaterThan(0);
     expect(b).toEqual(a);
+  });
+});
+
+describe("TextAnalyzer rules tuning", () => {
+  const analyzer = new TextAnalyzer();
+  const ids = async (text: string) => (await analyzer.analyze(text)).map((s) => s.id);
+
+  it("'It will ship in 24 hours' gives no signals", async () => {
+    expect(await analyzer.analyze("It will ship in 24 hours")).toEqual([]);
+  });
+
+  it("'Your account will be locked in 24 hours' gives text.urgency", async () => {
+    expect(await ids("Your account will be locked in 24 hours")).toContain("text.urgency");
+  });
+
+  it("'Do not share your OTP with anyone' gives no text.otp-request", async () => {
+    expect(await ids("Do not share your OTP with anyone")).not.toContain("text.otp-request");
+  });
+
+  it("'reply with the OTP' gives text.otp-request", async () => {
+    expect(await ids("reply with the OTP")).toContain("text.otp-request");
+  });
+
+  it("a plain job posting gives no text.job-offer", async () => {
+    const text =
+      "We are hiring a sales assistant. The job is full time and the salary is paid monthly. Apply on our company website.";
+    expect(await ids(text)).not.toContain("text.job-offer");
   });
 });
 

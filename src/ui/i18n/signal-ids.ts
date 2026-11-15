@@ -1,6 +1,6 @@
 import type { MessageKey } from "./en";
 
-/** The 21 signal ids emitted by the analyzers (8 text, 7 url, 6 semantic). */
+/** The 23 signal ids emitted by the analyzers (10 text, 7 url, 6 semantic). */
 export const KNOWN_SIGNAL_IDS = [
   "text.otp-request",
   "text.urgency",
@@ -10,6 +10,8 @@ export const KNOWN_SIGNAL_IDS = [
   "text.authority-impersonation",
   "text.off-platform",
   "text.sensitive-data-request",
+  "text.job-offer",
+  "text.financial-institution",
   "url.punycode-host",
   "url.ip-address-host",
   "url.at-in-authority",

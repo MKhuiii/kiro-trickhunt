@@ -18,10 +18,12 @@ const EXPECTED_IDS = [
   "text.authority-impersonation",
   "text.off-platform",
   "text.sensitive-data-request",
+  "text.job-offer",
+  "text.financial-institution",
 ];
 
 describe("TEXT_PATTERNS", () => {
-  it("contains exactly the 8 expected ids", () => {
+  it("contains exactly the 10 expected ids", () => {
     const ids = TEXT_PATTERNS.map((p) => p.id);
     for (const id of EXPECTED_IDS) {
       expect(ids).toContain(id);
