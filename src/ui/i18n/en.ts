@@ -12,7 +12,7 @@ export const en = {
   "input.image.hint": "You can also drop an image here or paste one.",
   "input.image.selected": "One image selected.",
   "input.image.remove": "Remove the selected image",
-  "input.submit": "Check",
+  "input.submit": "Start the hunt",
   "input.reset": "Check another message",
   "input.empty": "Paste a message or choose an image to start.",
   "progress.preparing": "Getting the image ready…",
@@ -89,6 +89,30 @@ export const en = {
     "The extra language check is switched off, so only the built-in checks were used.",
   "semantic.degraded":
     "The extra language check did not finish, so only the built-in checks were used.",
+
+  // Hunter scene, bag and home
+  "scene.home.caption": "Tap the hunter to open his bag.",
+  "scene.bag.caption":
+    "What shall the hunter track? Put a message, a picture, or both in the bag.",
+  "scene.hunt.forest": "The hunter slips into the dark forest…",
+  "scene.hunt.mountain": "He climbs the mountain pass, lantern held high…",
+  "scene.hunt.swamp": "He wades through the swamp, reading the strange marks…",
+  "scene.hunt.ruins": "The ruins ahead. He takes aim at the shadow…",
+  "scene.reveal.found": "The shadow was a {name}.",
+  "scene.reveal.nothing":
+    "The trail is quiet. No warning signs found, but still check through official channels.",
+  "scene.lost.caption": "The trail went cold. Please try again.",
+  "home.hunter.action": "Open the hunter's bag",
+  "bag.heading": "The hunter's bag",
+  "bag.text.label": "Written message",
+  "bag.image.label": "Picture",
+  "bag.slot.on": "In the bag",
+  "bag.slot.off": "Not in the bag",
+  "bag.needOne": "Put a message or a picture in the bag first.",
+  "bag.enter.hint": "Press Enter to start. Shift and Enter make a new line.",
+  "bag.close": "Close the bag",
+  "hunt.again": "Hunt again",
+  "result.frame.label": "Hunt report",
 
   // Signal explanations
   "signal.text.otp-request.explain":

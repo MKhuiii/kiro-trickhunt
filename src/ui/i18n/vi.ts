@@ -14,7 +14,7 @@ export const vi: Record<MessageKey, string> = {
   "input.image.hint": "Bạn cũng có thể kéo ảnh vào đây hoặc dán ảnh.",
   "input.image.selected": "Đã chọn một ảnh.",
   "input.image.remove": "Bỏ ảnh đã chọn",
-  "input.submit": "Kiểm tra",
+  "input.submit": "Bắt đầu săn",
   "input.reset": "Kiểm tra tin khác",
   "input.empty": "Hãy dán tin nhắn hoặc chọn một ảnh để bắt đầu.",
   "progress.preparing": "Đang chuẩn bị ảnh…",
@@ -91,6 +91,30 @@ export const vi: Record<MessageKey, string> = {
     "Bước đọc hiểu ngôn ngữ hiện chưa bật, nên chỉ dùng các bước kiểm tra có sẵn.",
   "semantic.degraded":
     "Bước đọc hiểu ngôn ngữ không hoàn tất, nên chỉ dùng các bước kiểm tra có sẵn.",
+
+  // Hunter scene, bag and home
+  "scene.home.caption": "Chạm vào bác thợ săn để mở túi của ông.",
+  "scene.bag.caption":
+    "Bác thợ săn sẽ lần theo gì? Hãy bỏ tin nhắn, hình ảnh hoặc cả hai vào túi.",
+  "scene.hunt.forest": "Bác thợ săn lách vào khu rừng tối…",
+  "scene.hunt.mountain": "Ông leo lên đèo núi, giơ cao ngọn đèn…",
+  "scene.hunt.swamp": "Ông lội qua đầm lầy, xem kỹ những ký hiệu lạ…",
+  "scene.hunt.ruins": "Tàn tích phía trước. Ông nhắm vào cái bóng…",
+  "scene.reveal.found": "Cái bóng ấy là {name}.",
+  "scene.reveal.nothing":
+    "Dấu vết im ắng. Chưa thấy dấu hiệu cảnh báo, nhưng vẫn nên kiểm tra qua kênh chính thức.",
+  "scene.lost.caption": "Dấu vết đã nguội. Hãy thử lại.",
+  "home.hunter.action": "Mở túi của bác thợ săn",
+  "bag.heading": "Túi của bác thợ săn",
+  "bag.text.label": "Tin nhắn chữ",
+  "bag.image.label": "Hình ảnh",
+  "bag.slot.on": "Đã bỏ vào túi",
+  "bag.slot.off": "Chưa bỏ vào túi",
+  "bag.needOne": "Hãy bỏ tin nhắn hoặc hình ảnh vào túi trước.",
+  "bag.enter.hint": "Nhấn Enter để bắt đầu. Shift và Enter để xuống dòng.",
+  "bag.close": "Đóng túi",
+  "hunt.again": "Săn tiếp",
+  "result.frame.label": "Báo cáo cuộc săn",
 
   // Signal explanations
   "signal.text.otp-request.explain":
