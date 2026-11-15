@@ -20,7 +20,7 @@ export const TIMEOUT_MS = 8000;
 export const MAX_SIGNALS = 4;
 
 /** Hard ceiling on any semantic severity; strictly below 1 (REQ-SEM-03). */
-export const SEVERITY_CAP = 0.8;
+export const SEVERITY_CAP = 0.45;
 
 export interface SemanticSignalDef {
   /** Signal id, e.g. "semantic.isolation-secrecy". */
@@ -34,37 +34,37 @@ export interface SemanticSignalDef {
 export const SEMANTIC_SIGNALS: readonly SemanticSignalDef[] = [
   {
     id: "semantic.impersonation-tone",
-    maxSeverity: 0.7,
+    maxSeverity: 0.45,
     whyItMatters:
       "The message sounds like it comes from a bank, agency or company, but the wording does not quite fit. Check by contacting the real organisation using a number you look up yourself.",
   },
   {
     id: "semantic.emotional-manipulation",
-    maxSeverity: 0.6,
+    maxSeverity: 0.45,
     whyItMatters:
       "The message plays on fear, guilt or sympathy to make you act before thinking. Scammers use strong feelings to stop you from checking.",
   },
   {
     id: "semantic.too-good-to-be-true",
-    maxSeverity: 0.6,
+    maxSeverity: 0.45,
     whyItMatters:
       "The offer promises much more than seems realistic for so little effort. Real opportunities rarely arrive unasked and without a catch.",
   },
   {
     id: "semantic.isolation-secrecy",
-    maxSeverity: 0.7,
+    maxSeverity: 0.45,
     whyItMatters:
       "You are asked to keep this private or not talk to family, friends or the bank. Scammers do this so nobody can warn you.",
   },
   {
     id: "semantic.relationship-or-job-bait",
-    maxSeverity: 0.6,
+    maxSeverity: 0.45,
     whyItMatters:
       "A sudden friendly contact, romance or easy job offer can be a way to earn your trust before asking for money or details.",
   },
   {
     id: "semantic.pressure-escalation",
-    maxSeverity: 0.5,
+    maxSeverity: 0.45,
     whyItMatters:
       "The message pushes you to hurry or keeps raising the stakes. Real organisations usually give you time and other ways to confirm.",
   },
