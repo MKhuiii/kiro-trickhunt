@@ -10,4 +10,5 @@ export const OVERLAP_GROUPS: readonly (readonly string[])[] = [
   ["text.urgency", "semantic.pressure-escalation"],
   ["text.prize-reward", "semantic.too-good-to-be-true"],
   ["text.off-platform", "semantic.isolation-secrecy"],
+  ["text.job-offer", "semantic.relationship-or-job-bait"],
 ];

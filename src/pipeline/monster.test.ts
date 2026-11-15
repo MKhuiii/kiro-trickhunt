@@ -52,10 +52,15 @@ describe("selectMonster", () => {
         sig("semantic.relationship-or-job-bait"),
       ]),
     ).toBe("prize");
-    // job-bait 2 vs authority 2 (bank gets 1 from impersonation)
+    // job-bait 2 (off-platform 1 + payment-request 1) vs authority 2
+    // (off-platform 1 + payment-request 1): tie won by MONSTER_ORDER
     expect(
-      selectMonster("high", [sig("text.off-platform"), sig("text.threat")]),
+      selectMonster("high", [sig("text.off-platform"), sig("text.payment-request")]),
     ).toBe("job-bait");
+  });
+
+  it("text.job-offer alone gives job-bait", () => {
+    expect(selectMonster("suspicious", [sig("text.job-offer")])).toBe("job-bait");
   });
 
   it("a higher total beats an earlier monster in order", () => {

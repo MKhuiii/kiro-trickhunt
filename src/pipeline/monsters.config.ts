@@ -23,6 +23,8 @@ export const MONSTERS: readonly MonsterDef[] = [
       "text.authority-impersonation": 1,
       "url.credential-keywords": 1,
       "semantic.impersonation-tone": 1,
+      "text.threat": 1,
+      "text.financial-institution": 1,
     },
   },
   {
@@ -37,7 +39,8 @@ export const MONSTERS: readonly MonsterDef[] = [
     id: "job-bait",
     weights: {
       "semantic.relationship-or-job-bait": 3,
-      "text.off-platform": 2,
+      "text.job-offer": 3,
+      "text.off-platform": 1,
       "semantic.isolation-secrecy": 1,
       "semantic.too-good-to-be-true": 1,
       "text.payment-request": 1,
@@ -48,6 +51,7 @@ export const MONSTERS: readonly MonsterDef[] = [
     weights: {
       "text.authority-impersonation": 2,
       "text.threat": 2,
+      "text.off-platform": 1,
       "semantic.impersonation-tone": 1,
       "text.payment-request": 1,
     },
