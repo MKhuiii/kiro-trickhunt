@@ -1,0 +1,506 @@
+{
+  "pbtResults": {
+    "5.2 `src/analyzers/text-analyzer.v3.property.test.ts`: PBT-84 and the fixture test": {
+      "status": "passed",
+      "lastRunTimestamp": 1794731946964
+    },
+    "5.1 `src/pipeline/precision.property.test.ts`: PBT-81, PBT-82, PBT-83, PBT-85": {
+      "status": "passed",
+      "lastRunTimestamp": 1794733228496
+    }
+  },
+  "executionHistory": {
+    "2.1 Append the twenty-two `b3-ben-01` to `b3-ben-22` samples to `samples.ts` (texts from the design)": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298222
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731307091
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731344432
+      }
+    ],
+    "2.2 Update `samples.test.ts` counts (75 / 26 / 49, 22 `b3-` ids); add the `b3-` block to `eval.test.ts`": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298358
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731347951
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731388888
+      }
+    ],
+    "3.1 Edit `text-analyzer.config.ts` weights and phrases as in the design (otp-request, urgency, threat, payment-request, authority-impersonation, off-platform, job-offer)": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298438
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731392693
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731435840
+      }
+    ],
+    "3.2 Add `text-analyzer.v3.test.ts` (example tests from the requirements)": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298512
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731440721
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731468820
+      }
+    ],
+    "3.3 Fix the fixture `ADDED_PHRASES` in `text-analyzer.property.test.ts`; remove three inputs from `text-analyzer.v2.test.ts`": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298587
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731469558
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731517540
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732344293
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732797779
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732803563
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732928363
+      }
+    ],
+    "4.1 Edit `monsters.config.ts` (bank, job-bait, authority, and the three semantic weights) and `rules.config.ts` (five rules) as in the design; leave `MONSTER_THRESHOLD`, `MONSTER_ORDER`, `overlap.config.ts`": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298663
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731518378
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731548795
+      }
+    ],
+    "4.2 Update `combine.test.ts` (\"needs all three groups\"), `monster.test.ts` (tie case, job-offer case, one comment) and `pipeline.test.ts` (\"overlapping urgency ...\") as in the requirements table; add `combine.v3.test.ts`": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298729
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731549667
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731602076
+      }
+    ],
+    "4.3 (amendment) Edit `semantic-analyzer.config.ts`: `SEVERITY_CAP` 0.45, every `maxSeverity` 0.45; add `semantic-monster.test.ts` with `FakeLlmClient` (REQ-PIPE-69)": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298808
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731602824
+      },
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731643453
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731904495
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732344667
+      }
+    ],
+    "4.4 (amendment, BLOCKED) `selectMonster` gating by overlap group: do NOT start until the maintainer answers option A or B in `design.md` \"Decision needed\". If A: implement the change in `monster.ts`, update the tests it breaks, add the same-group test; if B: add the gap to \"Known limits\" only": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298871
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731763645
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731893402
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732345986
+      }
+    ],
+    "5.1 `src/pipeline/precision.property.test.ts`: PBT-81, PBT-82, PBT-83, PBT-85": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731298940
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731908944
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731986468
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732347041
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732798044
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733198443
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733242734
+      }
+    ],
+    "5.2 `src/analyzers/text-analyzer.v3.property.test.ts`: PBT-84 and the fixture test": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731299052
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731909048
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731986733
+      }
+    ],
+    "6. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731299122
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731989996
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732023240
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732348137
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732798113
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733243683
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733288695
+      }
+    ],
+    "7.1 Re-measure the before and after tables with a temporary test (level, monster, fired signals, monster totals per sample); copy real numbers into `design.md` (if they differ from the prototype, update the design text, not the samples); delete the test": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731299182
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732024160
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732139452
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732349180
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732798184
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733290310
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733362759
+      }
+    ],
+    "7.2 Run `vitest run`, `npx tsc --noEmit` and `npm run lint`": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731299252
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732140211
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732201001
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732350240
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732798252
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733363720
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733446994
+      }
+    ],
+    "7.3 `git diff --stat`: only the files in the design \"Files\" list changed; `src/core/`, `monster.ts`, `reduce.ts`, `combine.ts`, `overlap.config.ts` untouched; no temporary file remains": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731299320
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732202050
+      },
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732236454
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732351159
+      }
+    ],
+    "2. Evaluation set (measure before changing)": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731389011
+      }
+    ],
+    "3. Text rule configuration": [
+      {
+        "executionId": "493d2929-17d6-41bb-8eb7-70ad2cbf2b9f",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731517646
+      }
+    ],
+    "4. Pipeline configuration": [
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731904633
+      }
+    ],
+    "5. Property tests": [
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794731986820
+      }
+    ],
+    "7. Report and verification": [
+      {
+        "executionId": "fdf22eb3-9063-4b76-a02d-e326ff2d94a4",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732236588
+      }
+    ],
+    "4.3 (amendment) Edit `semantic-analyzer.config.ts`: `SEVERITY_CAP` 0.45, every `maxSeverity` 0.45; add `semantic-monster.test.ts` with `FakeLlmClient` (REQ-PIPE-69, REQ-PIPE-70)": [
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732797864
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732804974
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732929911
+      }
+    ],
+    "4.4 (amendment) `selectMonster` gating by overlap group. The maintainer chose option A (design, \"Decision: gate `selectMonster` by overlap group\"). Constraints: change only `selectMonster` in `src/pipeline/monster.ts` and the tests it breaks (`monster.test.ts`); the gate applies only at level `suspicious`; at `high` and `critical` the behaviour is exactly as before, proven by a property test against a copy of the old logic kept inside the test file; `MONSTER_THRESHOLD` and `MONSTER_ORDER` unchanged; signals in the same overlap group count once; a specific monster at `suspicious` needs two different overlap groups that both support it": [
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732797977
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732936179
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733197246
+      }
+    ],
+    "7.3 `git diff --stat` (and `git status --short` for new files): only these files changed or were added, plus the spec files under `.kiro/specs/rules-tuning-v3/`: `text-analyzer.config.ts`, `semantic-analyzer.config.ts`, `monsters.config.ts`, `rules.config.ts`, `monster.ts` (`selectMonster` only), `samples.ts`, and the tests `text-analyzer.property.test.ts`, `text-analyzer.v2.test.ts`, `combine.test.ts`, `monster.test.ts`, `pipeline.test.ts`, `eval.test.ts`, `samples.test.ts`, plus the new tests `text-analyzer.v3.test.ts`, `text-analyzer.v3.property.test.ts`, `pipeline/precision.property.test.ts`, `pipeline/combine.v3.test.ts`, `pipeline/semantic-monster.test.ts`, `pipeline/monster.gate.property.test.ts`, and `README.md` (task 7.4). `reduce.ts`, `combine.ts`, `overlap.config.ts` and `src/core/` untouched; no temporary file remains. Run after 7.4 so that `README.md` is already in the diff": [
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732798323
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733625774
+      }
+    ],
+    "7.4 Add a \"Known limits\" section to `README.md` (repo root): rules-only mode has low recall on unfamiliar scam wording and the AI layer is needed for those; the evaluation set was used for tuning and is not an accuracy estimate; the accepted recall losses, if any (currently none, per `design.md`). Documentation only: do not edit any source or test file": [
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732798392
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733291826
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733361154
+      }
+    ],
+    "7.5 (manual, maintainer) Manual: performed by the maintainer, not by an agent. Do not dispatch. The maintainer re-runs six previously seen scam messages with the real LLM model (not `FakeLlmClient`) and fills the table in `design.md` \"Manual check\": message id or description, level, monster, fired signals. Acceptance criterion: level at least `high` for each of the six": [
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794732798458
+      },
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733698096
+      }
+    ],
+    "7.3 `git diff --stat` (and `git status --short` for new files): only these files changed or were added, plus the spec files under `.kiro/specs/rules-tuning-v3/`: `text-analyzer.config.ts`, `semantic-analyzer.config.ts`, `monsters.config.ts`, `rules.config.ts`, `monster.ts` (`selectMonster` only), `samples.ts`, and the tests `text-analyzer.property.test.ts`, `text-analyzer.v2.test.ts`, `combine.test.ts`, `monster.test.ts`, `pipeline.test.ts`, `eval.test.ts`, `samples.test.ts`, plus the new tests `text-analyzer.v3.test.ts`, `text-analyzer.v3.property.test.ts`, `pipeline/precision.property.test.ts`, `pipeline/combine.v3.test.ts`, `pipeline/semantic-monster.test.ts`, `pipeline/monster.gate.property.test.ts`, `README.md` (task 7.4), and `.gitignore` (maintainer-approved: ignore `.vitest/` cache). `reduce.ts`, `combine.ts`, `overlap.config.ts` and `src/core/` untouched; no temporary file remains. Run after 7.4 so that `README.md` is already in the diff": [
+      {
+        "executionId": "9d601c71-f20e-4775-aaa7-51bc55834843",
+        "chatSessionId": "sess_0841ef3d-cfaf-4b4a-8c04-9f11676e9a20",
+        "timestamp": 1794733696394
+      }
+    ]
+  }
+}
