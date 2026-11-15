@@ -10,6 +10,7 @@ import { LimitsNote } from "./LimitsNote";
 import { MonsterCard } from "./MonsterCard";
 import { Notices } from "./Notices";
 import { TechnicalDetails } from "./TechnicalDetails";
+import { FOCUS_RING } from "./styles";
 
 interface ResultPanelProps {
   readonly view: ResultView;
@@ -18,7 +19,7 @@ interface ResultPanelProps {
   readonly headingRef?: Ref<HTMLHeadingElement>;
 }
 
-function renderSection(
+export function renderSection(
   id: SectionId,
   view: ResultView,
   locale: Locale,
@@ -29,7 +30,7 @@ function renderSection(
       <h2
         ref={headingRef}
         tabIndex={-1}
-        className="text-3xl font-bold text-[color:var(--th-text)]"
+        className={`rounded-xl text-3xl font-bold text-[color:var(--th-text)] ${FOCUS_RING}`}
       >
         {t(locale, "result.heading")}
       </h2>
@@ -39,7 +40,10 @@ function renderSection(
     return <LimitsNote messageKey={view.limitsNoteKey} locale={locale} />;
   }
   if (id === "notices") return <Notices notices={view.notices} locale={locale} />;
-  if (id === "technical") return <TechnicalDetails view={view} locale={locale} />;
+  if (id === "technical") {
+    // Nothing to show for a withheld view: skip the node so no empty wrapper is made.
+    return view.kind === "ready" ? <TechnicalDetails view={view} locale={locale} /> : null;
+  }
 
   if (view.kind === "withheld") return null;
   switch (id) {

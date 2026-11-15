@@ -1,42 +1,27 @@
 import type { ReactElement } from "react";
 import type { Locale } from "../pipeline";
 import { t } from "../ui";
-import type { MessageKey, ResultView } from "../ui";
+import type { ResultView } from "../ui";
+import { FOCUS_RING } from "./styles";
 
 interface TechnicalDetailsProps {
   readonly view: ResultView;
   readonly locale: Locale;
 }
 
-/** Collapsed by default. Only place that shows the semantic note, codes and ids. */
-export function TechnicalDetails({ view, locale }: TechnicalDetailsProps): ReactElement {
-  const semanticKey: MessageKey | null = view.kind === "ready" ? view.semanticNoteKey : null;
-  const signalIds =
-    view.kind === "ready"
-      ? view.signalGroups.flatMap((g) => g.cards.map((c) => c.signalId)).filter((id) => id !== "")
-      : [];
-  const noticeKinds = view.notices.map((n) => n.kind);
+/**
+ * Collapsed by default. Shows only dictionary text (the semantic note).
+ * Never renders signal ids or notice kinds (REQ-HUNT-37). Returns null when empty.
+ */
+export function TechnicalDetails({ view, locale }: TechnicalDetailsProps): ReactElement | null {
+  if (view.kind !== "ready") return null;
   return (
     <details className="rounded-xl border border-[var(--th-border)] bg-[var(--th-surface)] p-4 text-[color:var(--th-text)]">
-      <summary className="cursor-pointer text-lg font-semibold">
+      <summary className={`cursor-pointer text-lg font-semibold ${FOCUS_RING}`}>
         {t(locale, "result.tech.summary")}
       </summary>
       <div className="mt-3 space-y-2 text-base">
-        {semanticKey !== null ? <p>{t(locale, semanticKey)}</p> : null}
-        {signalIds.length > 0 ? (
-          <ul className="list-disc pl-6 font-mono text-sm break-all">
-            {signalIds.map((id, i) => (
-              <li key={`${id}-${i}`}>{id}</li>
-            ))}
-          </ul>
-        ) : null}
-        {noticeKinds.length > 0 ? (
-          <ul className="list-disc pl-6 font-mono text-sm break-all">
-            {noticeKinds.map((kind) => (
-              <li key={kind}>{kind}</li>
-            ))}
-          </ul>
-        ) : null}
+        <p>{t(locale, view.semanticNoteKey)}</p>
       </div>
     </details>
   );
