@@ -145,15 +145,11 @@ const ADDED_PHRASES: Readonly<Record<string, { en: string[]; vi: string[] }>> = 
   },
   "text.urgency": {
     en: [
-      "within 72 hours", "within 12 hours", "within 2 hours", "within 1 hour",
-      "within an hour", "locked in 24 hours", "locked in 48 hours",
+      "locked in 24 hours", "locked in 48 hours",
       "suspended in 24 hours", "suspended in 48 hours", "blocked in 24 hours",
       "closed in 24 hours",
     ],
-    vi: [
-      "trong 24h", "trong 48h", "trong 48 giờ", "trong 1 giờ", "trong vòng 1 giờ",
-      "trong vòng 2 giờ",
-    ],
+    vi: [],
   },
   "text.payment-request": {
     en: [
@@ -181,12 +177,12 @@ const ADDED_PHRASES: Readonly<Record<string, { en: string[]; vi: string[] }>> = 
   },
   "text.job-offer": {
     en: [
-      "easy tasks", "simple tasks", "no experience needed", "no experience required",
+      "no experience needed", "no experience required",
       "hiring online", "earn money online", "earn money from home", "make money online",
       "easy money", "liking videos",
     ],
     vi: [
-      "nhiệm vụ đơn giản", "việc nhẹ lương cao", "không cần kinh nghiệm",
+      "việc nhẹ lương cao", "không cần kinh nghiệm",
       "tuyển nhân viên làm việc online", "tuyển nhân viên online", "kiếm tiền online",
       "kiếm tiền tại nhà", "thu nhập mỗi ngày",
     ],

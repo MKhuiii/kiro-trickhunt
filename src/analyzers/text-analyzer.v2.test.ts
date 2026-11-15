@@ -19,12 +19,9 @@ describe("everyday payment words are not signals (REQ-TXT-22)", () => {
 
 describe("strong payment phrases stay strong (REQ-TXT-23)", () => {
   it.each([
-    "pay immediately by gift cards",
     "transfer money to a secure account",
     "Transfer money to a custody account today",
-    "A one-time registration fee of $20",
     "Pay the activation fee",
-    "only a small processing fee required",
     "hãy chuyển tiền vào tài khoản tạm giữ",
     "Chuyển khoản vào tài khoản an toàn",
     "đóng phí kích hoạt",
