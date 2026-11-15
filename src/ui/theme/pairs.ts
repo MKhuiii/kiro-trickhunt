@@ -53,4 +53,9 @@ export const DECLARED_PAIRS: readonly DeclaredPair[] = [
   ...cross(LEVEL_TOKENS, CARD_SURFACES, "text"),
   ...cross(MONSTER_TOKENS, CARD_SURFACES, "text"),
   ...cross(["focus", "border"], SURFACES, "ui"),
+  // AI note (REQ-PAGE-34): text on raised, accent border on raised.
+  { fg: "text", bg: "raised", use: "text" },
+  { fg: "accent", bg: "raised", use: "ui" },
+  // Limits note: muted text on the page background.
+  { fg: "muted", bg: "bg", use: "text" },
 ];

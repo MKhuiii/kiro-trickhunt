@@ -10,7 +10,7 @@ export {
 } from "./i18n/messages";
 export type { MessageRef } from "./i18n/messages";
 
-export { buildResultView } from "./view/result-view";
+export { buildResultView, chooseMonster } from "./view/result-view";
 export type {
   ResultView,
   ReadyResultView,
@@ -20,6 +20,24 @@ export type {
   NoticeView,
   ResultExtras,
 } from "./view/result-view";
+
+export { resultSections } from "./view/page-layout";
+export type { SectionId } from "./view/page-layout";
+
+export { aiUnavailable } from "./view/semantic-note";
+
+export { runCheck } from "./run-check";
+export type {
+  CheckDeps,
+  CheckInput,
+  CheckStatus,
+  CheckOutcome,
+  NoticeInput,
+  CheckLocale,
+} from "./run-check";
+
+export { paletteToCssVars } from "./theme/css-vars";
+export type { CssVarName } from "./theme/css-vars";
 
 export { computeHighlights } from "./view/highlights";
 export type { HighlightSegment } from "./view/highlights";
