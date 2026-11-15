@@ -1,0 +1,375 @@
+{
+  "pbtResults": {
+    "1.6 Property tests PBT-75, PBT-76, PBT-77, PBT-80 in `result-view.page.property.test.ts` and `dictionary.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794735780697
+    },
+    "3.3 Property test PBT-78 in `run-check.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794736002925
+    }
+  },
+  "executionHistory": {
+    "1.1 Update `i18n/en.ts` and `i18n/vi.ts`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426071
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735434798
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735485408
+      }
+    ],
+    "1.2 Edit `.kiro/steering/privacy-and-safety.md`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426196
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735488541
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735504279
+      }
+    ],
+    "1.3 Level and monster rules": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426314
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735507489
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735566498
+      }
+    ],
+    "1.4 Add `aiUnavailable` to `view/semantic-note.ts` and the new view fields": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426404
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735569893
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735659133
+      }
+    ],
+    "1.5 Unit tests": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426504
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735662296
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735724627
+      }
+    ],
+    "1.6 Property tests PBT-75, PBT-76, PBT-77, PBT-80 in `result-view.page.property.test.ts` and `dictionary.property.test.ts`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426588
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735728099
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735790066
+      }
+    ],
+    "2. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426662
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735793466
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735829721
+      }
+    ],
+    "3.1 Create `src/ui/run-check.ts`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426732
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735832975
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735897396
+      }
+    ],
+    "3.2 Unit tests `run-check.test.ts`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426808
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735900844
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735949765
+      }
+    ],
+    "3.3 Property test PBT-78 in `run-check.property.test.ts`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426885
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735953273
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736012137
+      }
+    ],
+    "3.4 Create `theme/css-vars.ts`, add declared pairs, tests and PBT-79": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735426959
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736017104
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736070800
+      }
+    ],
+    "3.5 Create `view/page-layout.ts` and `page-layout.test.ts`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427030
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736074698
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736147253
+      }
+    ],
+    "3.6 Export the new items from `src/ui/index.ts`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427103
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736151016
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736205308
+      }
+    ],
+    "4. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427170
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736209071
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736241911
+      }
+    ],
+    "5.1 Create `icons.tsx`, `monster-art.tsx` (original inline SVG, `aria-hidden`)": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427243
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736246062
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736299002
+      }
+    ],
+    "5.2 Create result components: `LevelBanner`, `AiNote`, `ActionBox`, `EvidenceList`, `HighlightedMessage`, `LimitsNote`, `MonsterCard`, `Notices`, `TechnicalDetails`, `ResultPanel`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427320
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736303343
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736428041
+      }
+    ],
+    "5.3 Create input and shell components: `InputForm`, `StatusRegion`, `ErrorAlert`, `SettingsPanel`, `Header`, `App`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427398
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736431628
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736589235
+      }
+    ],
+    "5.4 Replace `src/app/page.tsx`; edit `layout.tsx` and `globals.css`": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427472
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736593289
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736728794
+      }
+    ],
+    "5.5 Source-scan tests": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427609
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736732636
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736866649
+      }
+    ],
+    "6. Final checkpoint": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735427678
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736870924
+      },
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736972544
+      }
+    ],
+    "1. Dictionary, level and view-model amendments (`src/ui/`)": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794735790154
+      }
+    ],
+    "3. Orchestration and theme helpers (`src/ui/`)": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736205435
+      }
+    ],
+    "5. Components and page": [
+      {
+        "executionId": "bb6bbc89-31ee-495a-bfef-a7f537b9c1eb",
+        "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
+        "timestamp": 1794736866738
+      }
+    ]
+  }
+}
