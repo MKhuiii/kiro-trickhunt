@@ -3,6 +3,7 @@ import type { Locale } from "../pipeline";
 import { t } from "../ui";
 import type { MessageRef } from "../ui";
 import { IconWarning } from "./icons";
+import { FOCUS_RING } from "./styles";
 
 interface ErrorAlertProps {
   readonly message: MessageRef;
@@ -22,7 +23,7 @@ export function ErrorAlert({ message, locale }: ErrorAlertProps): ReactElement {
         <span>{t(locale, message.key, message.params)}</span>
       </p>
       <details className="mt-3">
-        <summary className="cursor-pointer text-base font-semibold">
+        <summary className={`cursor-pointer text-base font-semibold ${FOCUS_RING}`}>
           {t(locale, "result.tech.summary")}
         </summary>
         <p className="mt-2 font-mono text-sm break-all">

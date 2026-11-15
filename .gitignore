@@ -48,3 +48,6 @@ next-env.d.ts
 
 src/**/tmp-*.test.ts
 /tmp-*.txt
+# playwright
+/test-results/
+/playwright-report/
