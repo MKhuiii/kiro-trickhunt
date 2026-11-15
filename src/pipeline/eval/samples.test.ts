@@ -41,11 +41,12 @@ const scams = EVAL_SAMPLES.filter((s) => s.expectedMonster !== null);
 const benign = EVAL_SAMPLES.filter((s) => s.expectedMonster === null);
 
 describe("EVAL_SAMPLES (REQ-PIPE-43, REQ-PIPE-45)", () => {
-  it("has 53 samples: 26 scam and 27 benign (43 tuning + 10 batch 2)", () => {
-    expect(EVAL_SAMPLES).toHaveLength(53);
+  it("has 75 samples: 26 scam and 49 benign (43 tuning + 10 batch 2 + 22 batch 3)", () => {
+    expect(EVAL_SAMPLES).toHaveLength(75);
     expect(scams).toHaveLength(26);
-    expect(benign).toHaveLength(27);
+    expect(benign).toHaveLength(49);
     expect(EVAL_SAMPLES.filter((s) => s.id.startsWith("b2-"))).toHaveLength(10);
+    expect(EVAL_SAMPLES.filter((s) => s.id.startsWith("b3-"))).toHaveLength(22);
   });
 
   it("has unique ids", () => {
