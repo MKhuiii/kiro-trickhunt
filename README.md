@@ -188,6 +188,12 @@ Licenses and sources of the shipped components are listed in [`THIRD_PARTY_NOTIC
 
 `/try` is a temporary developer page for checking this flow in a real browser. It is not linked from other pages and will be replaced by the real UI.
 
+## Known limits
+
+- **Rules-only mode misses new wording.** Without the AI layer, TrickHunt checks messages against a fixed set of known warning phrases. It often misses scam wording it has not seen before. The AI layer is needed to catch those. A result of "Nothing detected yet" only means the rules found no warning signs. It is not a guarantee about the message.
+- **The evaluation set is not an accuracy estimate.** The 75 sample messages (26 scam, 49 benign) were used to tune the rules. The rules were adjusted until they handled these samples well, so good results on them do not show how the rules will do on new messages.
+- **Accepted recall losses: currently none.** Every scam sample in the set still reaches at least its expected risk level. Two scam samples moved from `critical` to `high`. They still meet their minimum level, so they are not counted as losses.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
