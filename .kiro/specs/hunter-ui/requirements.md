@@ -31,7 +31,10 @@ amends them as follows and leaves everything else as is:
 | `TechnicalDetails` | No longer prints signal ids or notice kinds |
 | `monster-art.tsx` | Same `artKey`s, new detailed drawings, reached through an art registry |
 | `LimitsNote` | Pinned at the foot of the information frame so it stays visible (REQ-PAGE-23) |
-| `hunter-scene-rules.md` | Rewritten for this flow (steering) |
+| `hunter-scene-rules.md` | Rewritten for this flow (steering); amended again for the Pixi and journal revision |
+| `InfoFrame` (revision 2) | Replaced by `JournalSheet`: one paper object with two pages. `resultSections` order is kept; the split into pages is a new pure function |
+| `BagPanel` look (revision 2) | Redrawn without boxes (pockets, ruled paper, photo, wax seal). Its behaviour and props contract do not change |
+| Out of scope "sound" (revision 2) | Optional ambient sound, off by default, generated with Web Audio (no files) |
 
 `resultSections` and the order of the sections are **not** changed. The
 information frame renders them in the same order; only `limitsNote` is pinned
@@ -52,7 +55,8 @@ level, the "What to do now" box and the evidence stay the primary content
   key sets. No hard-coded text in components or inside SVG. English is default.
 - Images never leave the browser; only text and http(s) URLs reach the server.
   Nothing the user submits is stored. No analytics.
-- No third-party runtime requests and no new dependency.
+- No third-party runtime requests. The only new dependency allowed by this spec
+  is `pixi.js`, pinned to an exact version (Requirement 10).
 - Reduced motion, no flashing, large-text mode and high contrast keep working.
 
 ## Glossary
@@ -76,7 +80,7 @@ level, the "What to do now" box and the evidence stay the primary content
 1. **REQ-HUNT-01** THE page SHALL fill the viewport (`100dvh`, `overflow: hidden` on the page) in every flow step, with no page scroll at any width from 320 px up.
 2. **REQ-HUNT-02** Only the Info frame MAY scroll, and only inside itself. It SHALL be keyboard focusable (`tabindex="0"`), have an accessible name from the dictionary and a visible focus ring, so a keyboard user can scroll it.
 3. **REQ-HUNT-03** At large text sizes and on small screens, no content SHALL be cut off: whatever does not fit is reachable by scrolling inside the Info frame or the bag panel.
-4. **REQ-HUNT-04** The app name and the Settings control SHALL sit in a slim top bar. Settings opens a panel over the frame with its own internal scroll. The existing settings (language, text size, motion, contrast) and their behaviour are unchanged.
+4. **REQ-HUNT-04** (Revision 3) There SHALL be no header bar. Three round buttons float in the top-right corner: the language (shown as the flag of the current language, one press switches between English and Vietnamese), the ambient sound (a speaker icon, on or off, `aria-pressed`) and the settings (a gear icon that opens a panel over the frame with its own internal scroll). Each button SHALL have a text name from the dictionary. The existing settings (language, text size, motion, contrast, sound) and their behaviour are unchanged. The "TrickHunt" logo SHALL sit above the hunter on the home screen in a Halloween display font, and be a screen-reader-only heading on the other steps.
 5. **REQ-HUNT-05** The privacy note SHALL be visible at `home` and in the bag.
 
 ### Requirement 2: Flow and scene model
@@ -144,14 +148,65 @@ level, the "What to do now" box and the evidence stay the primary content
 1. **REQ-HUNT-45** The Frame SHALL work in portrait and landscape from 320 px wide to wide desktops, at text size 100% to the largest preference. In landscape on small phones the layout SHALL use two columns.
 2. **REQ-HUNT-46** All sizes of user-facing text and boxes SHALL use relative units (`rem`, `%`, `dvh`, `clamp`). No fixed-pixel font sizes. Buttons and toggles SHALL be at least 2.75 rem high.
 3. **REQ-HUNT-47** New palette tokens SHALL be defined in `NORMAL_PALETTE` and `HIGH_CONTRAST_PALETTE`; every text pair SHALL be declared and pass the existing thresholds. Text SHALL sit on `surface` or `parchment` panels, never directly on art.
-4. **REQ-HUNT-48** No new icon SHALL be added. The existing level, warning and eye icons stay as they are.
+4. **REQ-HUNT-48** No new icon SHALL be added, except the flags, the speaker and the gear of the three top-right buttons (REQ-HUNT-04, requested by the maintainer). The existing level, warning and eye icons stay as they are.
 5. **REQ-HUNT-49** Components SHALL follow `components.boundaries.test.ts` (no `fetch`, storage, console, http literals, hard-coded JSX text, literal `alt`/`title`/`aria-label`, fixed-pixel text). The draft text and image live only in React state and are cleared on "Hunt again".
 6. **REQ-HUNT-50** Keyboard path: skip link, Settings, hunter button, bag controls, confirm, result heading and Info frame, "Hunt again". Visible focus everywhere.
+
+### Requirement 10: PixiJS stage (revision 2)
+
+**User Story:** As a user, I want the scene to feel like a game, so that the hunt is alive and not a flat picture.
+
+1. **REQ-HUNT-51** The only new runtime dependency SHALL be `pixi.js`, pinned to an exact version (8.23.0). `@pixi/react` and any other new runtime dependency SHALL NOT be added. Its size (gzip, as bundled), licence (MIT) and release date SHALL be recorded in `design.md`.
+2. **REQ-HUNT-52** `pixi.js` SHALL be loaded only through a dynamic `import()` inside a function, after the first screen is shown. No other file SHALL import it at module top level. The first screen SHALL render from the existing SVG art and Pixi SHALL take over the atmosphere layer when it has loaded (progressive enhancement).
+3. **REQ-HUNT-53** The canvas SHALL be decorative: `aria-hidden="true"`, not focusable, `pointer-events: none`. Every piece of text and every control SHALL stay a DOM element above or beside the canvas.
+4. **REQ-HUNT-54** The page SHALL keep the existing SVG scene and show no error when: WebGL is not available, creating the stage fails or loses its context, or the device profile is `off`. With reduced motion (system or in-page) the stage draws only still layers (REQ-HUNT-63) and starts no ticker.
+5. **REQ-HUNT-55** The stage SHALL make no network request. Textures come from memory or same-origin blob URLs created from the existing SVG art; blob URLs SHALL be revoked and the application, its textures and its ticker SHALL be destroyed when the stage unmounts or the page hides.
+6. **REQ-HUNT-56** No Pixi filter (blur, glow, displacement) SHALL be used. Light SHALL be drawn with pre-built radial gradient textures in additive blend. No brightness change SHALL cross more than 3 times in any second; lantern flicker SHALL be at most 1.5 Hz and smooth; vignette pulse SHALL be at most 0.5 Hz.
+7. **REQ-HUNT-57** `stagePlan(scene, prefs, profile)` SHALL be a pure, total function in `src/ui/view/stage-plan.ts`. It returns the layers, particle recipes, light and intensities for the current scene. It never throws. Particle counts SHALL be capped by the profile (`off`, `low`, `normal`). The Pixi adapter SHALL take its dependencies (the `pixi.js` module, the plan, the container) as parameters so it can be tested with fakes.
+8. **REQ-HUNT-58** The adapter SHALL pause its ticker while the tab is hidden and SHALL resize with its container (resolution capped at 2, no antialias on small screens).
+
+### Requirement 11: A scarier atmosphere (revision 2)
+
+1. **REQ-HUNT-59** The scenes SHALL be darker (near-black violet), with a vignette closing in on the edges and a small dark-red accent token. All new color tokens SHALL be defined in both palettes; text pairs SHALL be declared and pass the existing thresholds; text SHALL never sit directly on busy art.
+2. **REQ-HUNT-60** The stage SHALL draw at least three depth layers of drifting fog, fireflies, bats and crows crossing at long intervals, eyes in the dark that fade in and out slowly, swaying dead trees, and a warm light pool around the hunter's lantern.
+3. **REQ-HUNT-61** WHILE `hunting`, THE vignette SHALL breathe slowly like a heartbeat (at most 0.5 Hz). The hunt legs SHALL move as parallax layers, the hunter SHALL step and the Shade SHALL run ahead. Moving between legs SHALL pass through darkness.
+4. **REQ-HUNT-62** The reveal SHALL close the darkness, sweep the lantern light across the scene and fade the monster in out of the Shade, then let it breathe. It SHALL NOT use flashes. Camera motion SHALL be at most 2% and slow.
+5. **REQ-HUNT-63** With reduced motion every layer SHALL be still: the vignette and the light pool remain, nothing drifts, pulses or crosses, and the hunter and monster use their still poses. Layout and content SHALL be identical.
+6. **REQ-HUNT-64** (Done in task 22.) While hunting, the hunter and the shade are painted in the canvas, and at the reveal the monster is painted in the canvas, from the page's own SVG drawings (marked `data-actor`). The SVG copy stays in the page for layout and as the fallback, and is hidden (`data-canvas-actor="on"`, opacity 0) only after the canvas copy exists. It is shown again when the stage is closed, loses its context, or the step changes. The home and bag steps keep the SVG hunter. The monster steps out of the shade (dark and faint, then its colors) and breathes; the hunter bobs and the shade runs; with reduced motion all of them are still and fully shown. Pictures are made from same-origin `blob:` addresses that are revoked at once; the art is checked to be plain (no script, no image, no external link).
+
+### Requirement 12: The hunter's journal (revision 2)
+
+**User Story:** As a user, I want a short note of what the hunter found, so that I know what to do without reading many boxes.
+
+1. **REQ-HUNT-65** After the reveal, THE result SHALL be shown on one paper object (`JournalSheet`) with two pages. There SHALL be no card, tile or bordered box inside the paper. At most one framed object SHALL be on any screen.
+2. **REQ-HUNT-66** `buildJournalView(view)` SHALL be a pure, total function in `src/ui/view/journal.ts`. For a ready result, page 1 SHALL contain: the monster name and one short sentence; the level label (text, meter and the existing level icon); the primary action and at most two more actions (at most 3); at most 3 clues chosen by severity from high to low (stable order when equal); one line for the most important note (AI note when the AI check did not run, else a QR payment or Wi-Fi notice) with "N more notes on the next page" when there are others; and the limits note on one line.
+3. **REQ-HUNT-67** Page 1 SHALL contain at least one evidence clue whenever the level is not `no_signals`, and SHALL always contain the limits note. For `no_signals` page 1 SHALL contain the "no warning signs found" text and the reminder to verify through official channels, never the words "safe", "clean" or "an toàn". A withheld result SHALL show the withheld message and the limits note on page 1.
+4. **REQ-HUNT-68** Page 2 SHALL contain everything else from `resultSections`, in the same order: all clues grouped by source, the highlighted message, the monster's tips, limitations, all notices, the AI note and the collapsed technical details. Page 1 and page 2 together SHALL hold every section of `resultSections` (nothing is lost). Page 2 scrolls inside the paper with `tabindex="0"` and a dictionary label.
+5. **REQ-HUNT-69** The paper SHALL be aged light paper with dark ink (contrast AA or better). Handwriting fonts, self-hosted at build time, SHALL be used for headings only and SHALL cover Vietnamese; body text SHALL be a plain readable font. In high contrast the paper SHALL be white with black ink and no stains or texture.
+6. **REQ-HUNT-70** The page turn SHALL use only `transform` and `opacity`. Text MAY appear as if being written, but all text SHALL be in the DOM from the start and reduced motion SHALL show it at once. "Hunt again" SHALL be a plain ink-style text button. Focus goes to the journal heading when the result is ready.
+7. **REQ-HUNT-71** No internal id SHALL appear in the journal (REQ-HUNT-35 still applies).
+
+### Requirement 13: The bag without boxes (revision 2)
+
+1. **REQ-HUNT-72** The bag SHALL show two cloth pockets in the scene (Text and Picture), a ruled paper for the message (the text field has no border box) and a photo frame for the picture. The confirm control SHALL be a wax seal with the text "Start the hunt". The behaviour of `BagPanel` SHALL NOT change: toggles, Enter, Shift+Enter, IME safety, Esc, focus on the heading, drag and drop, paste, remove, the `canConfirm` rule and its props.
+2. **REQ-HUNT-73** All bag controls SHALL stay real labelled form controls, at least 2.75 rem high, with visible focus.
+
+### Requirement 14: Optional ambient sound (revision 2)
+
+1. **REQ-HUNT-74** A `sound` preference SHALL be added to `src/ui/preferences.ts` (closed key set, default `false`, try/catch, a wrong stored value gives the default). Settings SHALL show a text-labelled switch for it. With sound off, no audio object SHALL be created.
+2. **REQ-HUNT-75** `soundPlan(scene, prefs)` SHALL be a pure, total function in `src/ui/view/sound-plan.ts` that returns the cues for the scene: wind for every step, a heartbeat while `hunting`, a creak when the bag opens, a low swell at the reveal. Every cue SHALL have a gain of at most 0.2 and a fade of at least 0.5 s. With sound off it returns no cues. The generated sounds SHALL be audible on a phone or laptop speaker: sources are normalized before the cue gain, notes sit above 100 Hz, and the loudness measured offline with the real host is about -27 to -22 dBFS RMS.
+3. **REQ-HUNT-76** The audio adapter SHALL create its `AudioContext` only after a user gesture, take the context factory as a parameter, build all sounds from noise and oscillators (no files, no network), suspend when the tab is hidden and close on unmount. A sound SHALL never be the only carrier of information.
 
 ## Property-Based Testing
 
 | ID | Property |
 |---|---|
+| **PBT-95** | `stagePlan` never throws and returns a valid plan for any scene, preferences and profile. With reduced motion it has no moving layer. Particle counts never exceed the profile cap. Flicker and pulse frequencies never exceed the limits in REQ-HUNT-56 (REQ-HUNT-56, 57, 63). |
+| **PBT-96** | For any generated verdict, `buildJournalView` page 1 has at most 3 clues and 3 actions, is sorted by severity, has the limits note, has at least one clue when the level is not `no_signals`, keeps the AI note line when the AI did not run, and contains no internal id. Page 1 plus page 2 hold every section of `resultSections` (REQ-HUNT-66 to 68, 71). |
+| **PBT-97** | `soundPlan` returns no cue when sound is off; every cue has gain at most 0.2 and fade at least 0.5 s; never throws for malformed input (REQ-HUNT-75). |
+| **PBT-98** | A wrong or missing stored `sound` value always loads as `false`; saving then loading returns the saved value (REQ-HUNT-74). |
+| **PBT-99** | The English and Vietnamese dictionaries have identical key sets for all `journal.*`, `sound.*` and `settings.sound.*` keys, and no such string contains "safe", "clean" or "an toàn" (REQ-HUNT-67, 74). |
+
 | **PBT-89** | `flowReducer` never throws and always returns a valid step for any state and any event sequence; events that do not fit are no-ops; the only way to reach `hunting` is `bag` plus a confirm with `canConfirm` true (REQ-HUNT-06, 07, 16). |
 | **PBT-90** | Journey: for any `CheckStatus`, elapsed time and image flag, the Leg is in the allowed list for that flag; it never decreases as elapsed time grows (status fixed); it never passes `ruins`; the reveal wait is 0 under reduced motion and never more than the minimum hunt time (REQ-HUNT-22 to 24). |
 | **PBT-91** | `sceneFor` never throws, returns a valid phase and caption key for any input; `leg` only for `hunting` and `monster` only for `revealed` (REQ-HUNT-08, 09). |
@@ -161,10 +216,10 @@ level, the "What to do now" box and the evidence stay the primary content
 
 ## Out of Scope
 
-- Sound, vibration, video, or any downloaded image or font.
+- Sound files, vibration, video, or any downloaded image or font (generated
+  ambient sound is in scope, REQ-HUNT-74 to 76; fonts are self-hosted at build time).
 - Cancelling a check in progress (`runCheck` has no abort).
 - More than one image per hunt.
 - A new monster type or any change to scoring, signals, rules or the API.
 - Changing the order of result sections.
-- Playwright end-to-end tests (needs a new dev dependency; kept as an optional task).
 - Phone-call transcripts.

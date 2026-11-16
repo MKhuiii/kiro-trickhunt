@@ -380,3 +380,145 @@ small amount per second, so nothing flashes.
   largest text size and in landscape.
 - The 4 second minimum adds delay to quick checks. Mitigation: it is one
   constant, skipped with reduced motion, and the check itself is not delayed.
+
+---
+
+# Revision 2: PixiJS stage, hunter's journal, optional sound
+
+Goal: less cluttered and more like a game, with a scarier mood. The flow, the
+journey, `runCheck`, the API and `resultSections` stay as designed above.
+Requirements 10 to 14 (`REQ-HUNT-51` to `REQ-HUNT-76`, `PBT-95` to `PBT-99`).
+
+## R2-A. Pure logic
+
+### stagePlan (`src/ui/view/stage-plan.ts`)
+
+```ts
+export type StageProfile = "off" | "low" | "normal";
+
+export interface StageLayer {
+  readonly id: "fog-far" | "fog-mid" | "fog-near" | "trees" | "vignette" | "lantern-light";
+  readonly motion: "still" | "drift" | "sway" | "flicker" | "pulse";
+  readonly hz: number;        // cycles per second, 0 for still
+  readonly alpha: number;     // 0..1
+}
+export interface StageParticles {
+  readonly kind: "firefly" | "bat" | "crow" | "eyes";
+  readonly count: number;     // already capped by the profile
+}
+export interface StagePlan {
+  readonly enabled: boolean;  // false: keep SVG only
+  readonly layers: readonly StageLayer[];
+  readonly particles: readonly StageParticles[];
+  readonly darkness: number;  // 0..1, how dark the scene is (reveal closes it)
+  readonly cameraDrift: number; // 0..0.02
+  readonly heartbeat: boolean;  // vignette pulse while hunting
+}
+export function stagePlan(scene: SceneView, prefs: { reduceMotion: boolean }, profile: StageProfile): StagePlan;
+```
+
+Rules: `profile: "off"` gives `enabled: false`. Reduced motion keeps only `still` layers
+(vignette, lantern light) and no particles. Particle caps: `low` at most 6 in
+total, `normal` at most 18. Flicker `hz` at most 1.5, pulse `hz` at most 0.5.
+Camera drift 0.02 at most, only while `hunting` or `revealed`. Total, never throws.
+
+`profileFor(env)` (pure) maps `{ hardwareConcurrency, deviceMemory, saveData,
+webgl }` to a profile: no WebGL gives `off`; `saveData` or 2 cores or less or
+2 GB or less gives `low`; else `normal`. Missing values are treated as `normal`.
+
+### buildJournalView (`src/ui/view/journal.ts`)
+
+```ts
+export interface JournalPage1 {
+  readonly monsterNameKey: MessageKey; readonly monsterShortKey: MessageKey;
+  readonly levelKey: MessageKey; readonly iconKey: string; readonly percent: number;
+  readonly actions: readonly string[];          // at most 3
+  readonly clues: readonly SignalCardView[];    // at most 3, by severity then order
+  readonly note: { key: MessageKey; params?: ... } | null;  // one line
+  readonly moreNotes: number;                   // other notes moved to page 2
+  readonly limitsNoteKey: MessageKey;
+  readonly noSignals: ReadyResultView["noSignals"];
+}
+export interface JournalView {
+  readonly kind: "ready" | "withheld";
+  readonly page1: ...; readonly page2: readonly SectionId[]; // sections shown on page 2
+}
+export function buildJournalView(view: ResultView): JournalView;
+```
+
+Clue choice: all cards flattened in group order, sorted by `severityBand`
+(high, medium, low) with a stable order, first 3. Note choice: AI note first,
+then a warning notice (`payment-qr`, `wifi-qr`), then none; every other notice
+counts in `moreNotes`. `page2` is `resultSections(view)` minus `heading`,
+`levelBanner` and `limitsNote`; the sections shown in page 1 in short form
+(`actions`, `evidence`) are also kept in full on page 2 so nothing is lost.
+
+### soundPlan (`src/ui/view/sound-plan.ts`)
+
+`soundPlan(scene, prefs)` returns `{ cues: Cue[] }`, where a cue is
+`{ id: "wind" | "heartbeat" | "creak" | "swell"; gain: number; fadeInS: number; fadeOutS: number; loop: boolean }`.
+Off returns no cues. Wind loops at gain 0.06 at every step. Heartbeat loops at
+0.12 while `hunting`. Creak plays once at 0.1 when the step becomes `bag`. Swell
+plays once at 0.15 at `revealed`. Fades at least 0.5 s. Total, never throws.
+
+### Preferences
+
+`sound: boolean` is added to the closed key set in `src/ui/preferences.ts` with
+default `false`.
+
+## R2-B. Stage adapter (`src/components/stage/`)
+
+| File | Role |
+|---|---|
+| `PixiStage.tsx` | Client component. Renders an `aria-hidden` container, picks the profile, and on idle loads the adapter with `import()`. Shows nothing extra if it fails |
+| `stage-adapter.ts` | Receives `{ pixi, container, getPlan }`, builds layers and particles, runs a ticker, applies `stagePlan` changes, pauses when hidden, destroys everything on `dispose()` |
+| `light-textures.ts` | Draws radial gradient textures to an offscreen canvas for light, vignette and fog; revokes nothing network-related |
+| `svg-texture.ts` | Serializes an art SVG with `XMLSerializer` and turns it into a texture through a same-origin blob URL (revoked after load) |
+
+The only file that mentions `pixi.js` at runtime is `stage-adapter.ts` through
+its parameter; `PixiStage.tsx` has the dynamic `import("pixi.js")`.
+
+Dependency record (task 15, REQ-HUNT-51): `pixi.js` 8.23.0, MIT, the registry's
+latest version when installed (uploaded about 10 November 2026, read from the
+registry upload timestamp). As bundled by Next.js it is split into lazy chunks of
+about 240 KB gzip in total (about 865 KB raw); the page's first-load JS is not
+affected (about 121 KB shared). `npm audit` lists no issue in `pixi.js` or its
+dependencies (nine existing findings elsewhere are unchanged). `@pixi/react` was
+not added.
+
+## R2-C. Journal components
+
+| File | Role |
+|---|---|
+| `JournalSheet.tsx` | The paper. Ragged edge by `clip-path`, stains as SVG shapes, handwriting headings, two pages with a turn animation (`transform`, `opacity`) |
+| `JournalPageOne.tsx` | The condensed note |
+| `JournalPageTwo.tsx` | The scrolling full notes (reuses `renderSection`) |
+| `fonts.ts` | `next/font` self-hosted heading font with a Vietnamese subset |
+
+No `border` utilities and no `rounded-xl` cards inside these files.
+
+## R2-D. Bag without boxes
+
+`BagPanel.tsx` keeps its props and behaviour. Its markup changes: pockets are
+SVG pieces behind real `<button aria-pressed>` controls; the text field sits on
+a ruled-paper background with no border; the picture control is a photo frame
+with the real `<input type="file">`; the confirm button is a wax seal.
+
+## R2-E. Audio
+
+| File | Role |
+|---|---|
+| `src/components/audio/audio-host.ts` | Receives `{ createContext }` and a plan; creates the context after a user gesture; builds noise and oscillator graphs; suspends on `visibilitychange`; `dispose()` closes |
+| `SoundSwitch` in `SettingsPanel.tsx` | Text-labelled switch bound to `prefs.sound` |
+
+## R2-F. Testing for revision 2
+
+| Layer | How |
+|---|---|
+| `stagePlan`, `profileFor`, `buildJournalView`, `soundPlan` | Unit tests and PBT-95, PBT-96, PBT-97 |
+| Preferences | PBT-98 |
+| Dictionary | PBT-99 |
+| Stage adapter and audio host | Tests with fake `pixi`/`AudioContext` objects: create, apply plan, hidden tab, dispose, failure paths |
+| Source scans | `pixi.js` only inside `src/components/stage/`, only through `import()` or parameters; no `fetch`/URL literals; no `border`/`rounded-xl` in journal and bag files |
+| Dependencies | A test reads `package.json` and checks `pixi.js` is an exact version and there is no `@pixi/react` |
+| End to end | Existing Playwright flow updated for the journal and the sound switch; network assertions stay |

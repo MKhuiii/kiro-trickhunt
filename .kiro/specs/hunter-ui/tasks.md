@@ -186,3 +186,94 @@ components, art and CSS. No change to `src/core`, `src/analyzers`,
 
 - [x] 12. Final checkpoint
   - Run `vitest run` and `eslint`; run `next build`; confirm none of `src/core`, `src/analyzers`, `src/pipeline`, `src/server`, `src/app/api`, `src/client` changed (`git diff --stat`); confirm no new dependency in `package.json`; confirm no "safe" / "an toàn" in new strings; confirm `InputForm.tsx` and the old `monster-art.tsx` re-export are removed and nothing imports them.
+
+## Revision 2 tasks (PixiJS stage, journal, optional sound)
+
+Requirements 10 to 14 (`REQ-HUNT-51` to `REQ-HUNT-76`), `design.md` "Revision 2".
+The only new runtime dependency is `pixi.js` at an exact version. Do the tasks
+in order; each ends with the app working and `vitest run` green.
+
+- [x] 13. Spec and steering updated for revision 2
+  - Requirements 10 to 14, design "Revision 2" and `hunter-scene-rules.md` are written (this file's parent folder and `.kiro/steering`).
+  - _Requirements: REQ-HUNT-51 to REQ-HUNT-76_
+
+- [x] 14. Stage plan, journal model, sound plan and sound preference (`src/ui/`)
+  - [x] 14.1 Create `view/stage-plan.ts` with `stagePlan` and `profileFor`
+    - Rules in design R2-A; total, types only
+    - _Requirements: REQ-HUNT-56, REQ-HUNT-57, REQ-HUNT-61, REQ-HUNT-63_
+  - [x] 14.2 Create `view/journal.ts` with `buildJournalView`
+    - Rules in design R2-A; reuse `SignalCardView`, `resultSections`
+    - _Requirements: REQ-HUNT-66, REQ-HUNT-67, REQ-HUNT-68, REQ-HUNT-71_
+  - [x] 14.3 Create `view/sound-plan.ts` with `soundPlan`
+    - _Requirements: REQ-HUNT-75_
+  - [x] 14.4 Add the `sound` preference in `preferences.ts`; add dictionary keys (`journal.*`, `settings.sound.*`, `sound.*`) in en and vi
+    - Closed key set, default false; keys with identical sets in both languages
+    - _Requirements: REQ-HUNT-74_
+  - [x] 14.5 Unit tests and property tests PBT-95 to PBT-99
+    - `stage-plan.test.ts`, `stage-plan.property.test.ts`, `journal.test.ts`, `journal.property.test.ts`, `sound-plan.test.ts`, `sound-plan.property.test.ts`, extend `preferences` tests, `dictionary.revision2.property.test.ts`
+    - **Validates: Requirements REQ-HUNT-56, 57, 63, 66 to 68, 71, 74, 75**
+  - [x] 14.6 Export from `src/ui/index.ts`
+  - Demo: `vitest run` is green and the page is unchanged.
+
+- [x] 15. Install pixi.js and build the stage adapter
+  - [x] 15.1 Install `pixi.js` at an exact version
+    - Record gzip size as bundled, licence and release date in `design.md`; add a test that checks `package.json`
+    - _Requirements: REQ-HUNT-51_
+  - [x] 15.2 Create `components/stage/` (`PixiStage.tsx`, `stage-adapter.ts`, `light-textures.ts`, `svg-texture.ts`)
+    - Lazy `import()`, progressive upgrade, fallback, destroy on unmount, pause when hidden, no network
+    - _Requirements: REQ-HUNT-52 to REQ-HUNT-58_
+  - [x] 15.3 Adapter and boundary tests with fakes
+    - _Requirements: REQ-HUNT-52, REQ-HUNT-54, REQ-HUNT-55_
+  - [x] 15.4 Mount `PixiStage` behind the scene in `App.tsx`
+  - Demo: fog and a vignette appear over the SVG scene; with no WebGL or reduced motion the scene is as before.
+
+- [x] 16. Checkpoint - Ensure all tests pass
+
+- [x] 17. Atmosphere
+  - [x] 17.1 Add tokens (`blood`, `paper`, `ink`, `ink-faded`, `paper-stain`) to both palettes and declared pairs
+    - _Requirements: REQ-HUNT-59_
+  - [x] 17.2 Fog layers, fireflies, bats and crows, eyes, swaying trees, lantern light pool, vignette
+    - _Requirements: REQ-HUNT-59, REQ-HUNT-60_
+  - [x] 17.3 Hunt and reveal sequences
+    - Heartbeat vignette, leg parallax through darkness, reveal sweep, camera push at most 2%, still with reduced motion
+    - _Requirements: REQ-HUNT-61, REQ-HUNT-62, REQ-HUNT-63_
+  - Demo: the home, bag, hunt and reveal screens feel darker and alive.
+
+- [x] 18. Journal
+  - [x] 18.1 Heading font in `components/fonts.ts` through `next/font` (Vietnamese subset)
+  - [x] 18.2 `JournalSheet`, `JournalPageOne`, `JournalPageTwo` and CSS
+    - Replace `InfoFrame` in `App.tsx`; keep focus on the heading, "Hunt again", limits note always visible
+    - _Requirements: REQ-HUNT-65 to REQ-HUNT-71_
+  - [x] 18.3 Markup tests and the no-boxes scan; PBT-93 re-run on the journal
+    - _Requirements: REQ-HUNT-65, REQ-HUNT-71_
+  - Demo: the result is one short note; "more notes" turns the page.
+
+- [x] 19. Bag without boxes
+  - [x] 19.1 Redraw `BagPanel` markup (props and behaviour unchanged)
+    - _Requirements: REQ-HUNT-72, REQ-HUNT-73_
+  - [x] 19.2 Keep `BagPanel.test.ts` green; add the no-boxes scan
+  - Demo: the bag has no form box and works as before.
+
+- [x] 20. Optional ambient sound
+  - [x] 20.1 `audio/audio-host.ts` and tests with a fake `AudioContext`
+    - _Requirements: REQ-HUNT-75, REQ-HUNT-76_
+  - [x] 20.2 Settings switch and wiring in `App.tsx`
+    - Create the context only after a user gesture; dispose on unmount
+    - _Requirements: REQ-HUNT-74, REQ-HUNT-76_
+  - Demo: turn sound on in Settings and hear wind, a heartbeat while hunting and a swell at the reveal.
+
+- [x] 21. Final pass
+  - Run `vitest run`, `eslint`, `next build`; update the Playwright flow; check widths 320 to 1440, text size, high contrast, reduced motion, keyboard; confirm only `pixi.js` was added to `package.json`; confirm no change in `src/core`, `src/analyzers`, `src/pipeline`, `src/server`, `src/app/api`, `src/client`.
+
+### Notes on revision 2 (what was done and what was not)
+
+- Done: 14 (stage plan, journal model, sound plan, sound preference, dictionary keys), 15 (`pixi.js` 8.23.0 pinned, `components/stage/`, tests with fakes, boundaries test), 17 (atmosphere: fog, trees, fireflies, bats, crows, eyes, lantern light, vignette heartbeat, darkness easing, reveal light sweep, camera push), 18 (journal), 19 (bag without boxes), 20 (optional sound), 21 (full tests, lint, build, e2e).
+- Done in task 22 (REQ-HUNT-64): the hunter and the shade (hunting) and the monster (reveal) are painted in the canvas from the page's own SVG drawings (`svg-markup.ts`, `svg-texture.ts`, actors in `stage-adapter.ts`, `data-actor` marks, the sync in `PixiStage`). The SVG copy stays for layout and as the fallback.
+- Leg parallax stays CSS on the SVG backdrops (already built in task 7); Pixi adds the atmosphere on top.
+- `InfoFrame.tsx`, `InfoFrame.test.ts`, `view/info-sections.ts` and its test are no longer used by the app (the journal replaced them). Deleting them was blocked, so they remain until the maintainer removes them.
+- Font: Patrick Hand (OFL-1.1, Vietnamese subset) is self-hosted in `public/fonts/` through `@font-face`; no runtime dependency was added for it.
+- Sound levels were raised after a loudness measurement (see requirements REQ-HUNT-75).
+- Measured: `pixi.js` is split into lazy chunks of about 240 KB gzip in total (about 865 KB raw); the first-load JS of the page stays about 121 KB shared.
+
+- [x] 22. Move the hunter, shade and monsters into the canvas (REQ-HUNT-64)
+  - Serialize the art SVG with `XMLSerializer`, make same-origin blob textures, position them from a DOM anchor rectangle, fade the monster in out of the shade, keep the SVG as the fallback.
