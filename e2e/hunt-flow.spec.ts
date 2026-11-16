@@ -123,7 +123,10 @@ async function runFlow(page: Page, text: string): Promise<void> {
   await expect(page.locator("[data-leg]")).toBeVisible();
   await expectNoPageScroll(page);
 
-  await expect(page.getByRole("region", { name: "Hunt report" })).toBeVisible();
+  await expect(page.getByRole("article", { name: "The hunter's journal" })).toBeVisible();
+  // The paper must have a real width at every size (it once shrank to nothing on tablets).
+  const paper = await page.getByRole("article", { name: "The hunter's journal" }).boundingBox();
+  expect(paper?.width ?? 0).toBeGreaterThan(200);
   await expectNoPageScroll(page);
   await expectNoIds(page);
 }
@@ -155,20 +158,172 @@ test.describe("hunt flow", () => {
   });
 });
 
+test.describe("journal and settings", () => {
+  test("turns to the full notes and back, with no page scroll", async ({ page }) => {
+    await mockAnalyze(page, SCAM_VERDICT);
+    await runFlow(page, SCAM_TEXT);
+
+    await page.getByRole("button", { name: "Read the full notes" }).click();
+    await expect(page.getByRole("region", { name: "Full notes" })).toBeVisible();
+    await expect(page.getByText("What to do now")).toBeVisible();
+    await expectNoPageScroll(page);
+    await expectNoIds(page);
+
+    await page.getByRole("button", { name: "Back to the note" }).click();
+    await expect(page.getByRole("region", { name: "The hunter's note" })).toBeVisible();
+    await page.getByRole("button", { name: "Hunt again" }).click();
+    await expect(page.getByRole("button", { name: "Open the hunter's bag" })).toBeVisible();
+  });
+
+  test("the logo sits above the hunter and there is no header bar", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("heading", { level: 1, name: "TrickHunt" })).toBeVisible();
+    await expect(page.locator("header")).toHaveCount(0);
+    const logo = await page.getByRole("heading", { level: 1 }).boundingBox();
+    const hunter = await page.getByRole("button", { name: "Open the hunter's bag" }).boundingBox();
+    expect(logo && hunter && logo.y + logo.height <= hunter.y + 1).toBe(true);
+    await expectNoPageScroll(page);
+  });
+
+  test("ambient sound is off by default and the speaker button switches it on", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    const sound = page.getByRole("button", { name: "Spooky sound" });
+    await expect(sound).toHaveAttribute("aria-pressed", "false");
+    await sound.click();
+    await expect(sound).toHaveAttribute("aria-pressed", "true");
+    await sound.click();
+    await expect(sound).toHaveAttribute("aria-pressed", "false");
+  });
+
+  test("the flag button switches the language both ways", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("button", { name: /^Language: English/ }).click();
+    await expect(page.getByText("Chạm vào bác thợ săn để mở túi của ông.")).toBeVisible();
+    await page.getByRole("button", { name: /^Ngôn ngữ: Tiếng Việt/ }).click();
+    await expect(page.getByText("Tap the hunter to open his bag.")).toBeVisible();
+  });
+
+  test("the gear button opens and closes the settings panel", async ({ page }) => {
+    await page.goto("/");
+    const gear = page.getByRole("button", { name: "Settings" });
+    await gear.click();
+    await expect(page.getByLabel("Text size")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByLabel("Text size")).toHaveCount(0);
+    await expect(gear).toBeFocused();
+  });
+});
+
+test.describe("halloween voice", () => {
+  test("the home screen and the hunt speak in the horror voice", async ({ page }) => {
+    // A slow answer keeps the hunt (and its status line) on screen.
+    await page.route("**/api/analyze", async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 8000));
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ verdict: SCAM_VERDICT, meta: { semanticMode: "used" } }),
+      });
+    });
+    await page.goto("/");
+    await expect(
+      page.getByText("Before you reply, send the hunter into the dark after that strange message."),
+    ).toBeVisible();
+    await page.getByRole("button", { name: "Open the hunter's bag" }).click();
+    await page.getByLabel("Paste the message or link you want to check").fill(SCAM_TEXT);
+    await page.getByRole("button", { name: "Start the hunt" }).click();
+    await expect(page.getByText("Following the trail of warning signs…").first()).toBeVisible();
+  });
+
+  test("the fixed text stays plain on a result, with no banned word", async ({ page }) => {
+    await mockAnalyze(page, SCAM_VERDICT);
+    await runFlow(page, SCAM_TEXT);
+    await expect(page.getByText("Strong indicators of a scam").first()).toBeVisible();
+    await expect(page.getByText("Do this first")).toBeVisible();
+    await expect(
+      page.getByText("TrickHunt looks for warning signs. It cannot prove that a message is genuine."),
+    ).toBeVisible();
+    // The full notes use the horror voice for the monster section and keep the plain text elsewhere.
+    await page.getByRole("button", { name: "Read the full notes" }).click();
+    await expect(page.getByText("The monster behind this trick")).toBeVisible();
+    await expect(page.getByText("How to spot this monster")).toBeVisible();
+    await expect(page.getByText("What to do now")).toBeVisible();
+    const text = (await page.evaluate(() => document.body.innerText)).toLowerCase();
+    expect(text).not.toMatch(/\b(safe|clean|definitely|guaranteed)\b/);
+  });
+});
+
+test.describe("canvas actors", () => {
+  test("the hunter and the shade are painted in the canvas while hunting", async ({ page }) => {
+    // A slow answer keeps the hunt on screen long enough to look at it.
+    await page.route("**/api/analyze", async (route) => {
+      await new Promise((resolve) => setTimeout(resolve, 12000));
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ verdict: SCAM_VERDICT, meta: { semanticMode: "used" } }),
+      });
+    });
+    await page.goto("/");
+    await page.getByRole("button", { name: "Open the hunter's bag" }).click();
+    await page.getByLabel("Paste the message or link you want to check").fill(SCAM_TEXT);
+    await page.getByRole("button", { name: "Start the hunt" }).click();
+    await expect(page.locator("[data-leg]")).toBeVisible();
+    await expect(page.locator("[data-stage] canvas")).toHaveCount(1, { timeout: 10000 });
+    await expect(page.locator('[data-actor="hunter"][data-canvas-actor="on"]')).toHaveCount(1);
+    await expect(page.locator('[data-actor="shade"][data-canvas-actor="on"]')).toHaveCount(1);
+    // The SVG copy stays for layout, but is see-through.
+    const opacity = await page
+      .locator('[data-actor="hunter"] svg')
+      .evaluate((el) => getComputedStyle(el).opacity);
+    expect(opacity).toBe("0");
+  });
+
+  test("the monster is painted in the canvas after the reveal, and the SVG returns for a new hunt", async ({
+    page,
+  }) => {
+    await mockAnalyze(page, SCAM_VERDICT);
+    await runFlow(page, SCAM_TEXT);
+    await page.waitForTimeout(1500);
+    test.skip((await page.locator("[data-stage] canvas").count()) === 0, "no WebGL: the SVG stays");
+    await expect(page.locator('[data-actor="monster"][data-canvas-actor="on"]')).toHaveCount(1);
+    const opacity = await page
+      .locator('[data-actor="monster"] svg')
+      .evaluate((el) => getComputedStyle(el).opacity);
+    expect(opacity).toBe("0");
+
+    await page.getByRole("button", { name: "Hunt again" }).click();
+    await expect(page.locator("[data-canvas-actor]")).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Open the hunter's bag" })).toBeVisible();
+  });
+});
+
 test.describe("reduced motion", () => {
   test.use({ reducedMotion: "reduce" });
 
   test("flow works and skips the hunt wait", async ({ page, baseURL }) => {
     const requests = recordRequests(page);
-    await mockAnalyze(page, SCAM_VERDICT);
+    // Time from the moment the answer is sent to the moment the journal shows. A normal run
+    // still waits for the rest of the 4 s minimum hunt time; reduced motion must not. Measuring
+    // from the answer (not from the click) keeps this check independent of how busy the machine is.
+    let answeredAt = 0;
+    await page.route("**/api/analyze", async (route) => {
+      answeredAt = Date.now();
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ verdict: SCAM_VERDICT, meta: { semanticMode: "used" } }),
+      });
+    });
     await page.goto("/");
     await page.getByRole("button", { name: "Open the hunter's bag" }).click();
     await page.getByLabel("Paste the message or link you want to check").fill(SCAM_TEXT);
-    const started = Date.now();
     await page.getByRole("button", { name: "Start the hunt" }).click();
-    await expect(page.getByRole("region", { name: "Hunt report" })).toBeVisible();
-    // Normal runs wait at least 4 s (MIN_HUNT_MS); reduced motion must not.
-    expect(Date.now() - started).toBeLessThan(3500);
+    await expect(page.getByRole("article", { name: "The hunter's journal" })).toBeVisible();
+    expect(answeredAt).toBeGreaterThan(0);
+    expect(Date.now() - answeredAt).toBeLessThan(2500);
     await expectNoPageScroll(page);
     await expectNoIds(page);
     expectNetworkClean(requests, baseURL ?? "");
