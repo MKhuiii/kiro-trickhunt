@@ -55,7 +55,13 @@ describe("DEFAULT_LOCALE", () => {
 });
 
 describe("loadPreferences", () => {
-  const defaults = { language: "en", textSize: 100, reduceMotion: false, highContrast: false };
+  const defaults = {
+    language: "en",
+    textSize: 100,
+    reduceMotion: false,
+    highContrast: false,
+    sound: false,
+  };
 
   it("returns defaults for empty storage", () => {
     expect(loadPreferences(fakeStorage())).toEqual(defaults);
@@ -67,12 +73,14 @@ describe("loadPreferences", () => {
       [PREFERENCE_STORAGE_KEYS.textSize]: "150",
       [PREFERENCE_STORAGE_KEYS.reduceMotion]: "true",
       [PREFERENCE_STORAGE_KEYS.highContrast]: "true",
+      [PREFERENCE_STORAGE_KEYS.sound]: "true",
     });
     expect(loadPreferences(s)).toEqual({
       language: "vi",
       textSize: 150,
       reduceMotion: true,
       highContrast: true,
+      sound: true,
     });
   });
 
@@ -89,18 +97,21 @@ describe("loadPreferences", () => {
       [PREFERENCE_STORAGE_KEYS.textSize]: "125",
       [PREFERENCE_STORAGE_KEYS.reduceMotion]: "true",
       [PREFERENCE_STORAGE_KEYS.highContrast]: "true",
+      [PREFERENCE_STORAGE_KEYS.sound]: "true",
     };
     const bad: Record<string, string> = {
       language: "fr",
       textSize: "130",
       reduceMotion: "yes",
       highContrast: "1",
+      sound: "on",
     };
     const expectedValid = {
       language: "vi",
       textSize: 125,
       reduceMotion: true,
       highContrast: true,
+      sound: true,
     };
     for (const k of Object.keys(bad) as (keyof typeof PREFERENCE_STORAGE_KEYS)[]) {
       const s = fakeStorage({ ...valid, [PREFERENCE_STORAGE_KEYS[k]]: bad[k] });
@@ -118,7 +129,7 @@ describe("loadPreferences", () => {
     expect(loadPreferences(undefined)).toEqual(defaults);
   });
 
-  it("reads only the four known keys", () => {
+  it("reads only the five known keys", () => {
     const s = fakeStorage({ other: "x" });
     loadPreferences(s);
     expect(s.reads.length).toBeGreaterThan(0);
@@ -150,17 +161,20 @@ describe("savePreference", () => {
     expect(savePreference(s, "textSize", 125)).toBe(true);
     expect(savePreference(s, "reduceMotion", true)).toBe(true);
     expect(savePreference(s, "highContrast", false)).toBe(true);
+    expect(savePreference(s, "sound", true)).toBe(true);
     expect(Object.fromEntries(s.data)).toEqual({
       [PREFERENCE_STORAGE_KEYS.language]: "vi",
       [PREFERENCE_STORAGE_KEYS.textSize]: "125",
       [PREFERENCE_STORAGE_KEYS.reduceMotion]: "true",
       [PREFERENCE_STORAGE_KEYS.highContrast]: "false",
+      [PREFERENCE_STORAGE_KEYS.sound]: "true",
     });
     expect(loadPreferences(s)).toEqual({
       language: "vi",
       textSize: 125,
       reduceMotion: true,
       highContrast: false,
+      sound: true,
     });
   });
 
@@ -177,6 +191,7 @@ describe("savePreference", () => {
     expect(savePreference(s, "textSize", 130 as never)).toBe(false);
     expect(savePreference(s, "reduceMotion", "true" as never)).toBe(false);
     expect(savePreference(s, "highContrast", 1 as never)).toBe(false);
+    expect(savePreference(s, "sound", "on" as never)).toBe(false);
     expect(s.writes).toEqual([]);
   });
 
@@ -192,9 +207,10 @@ describe("savePreference", () => {
     savePreference(s, "textSize", 150);
     savePreference(s, "reduceMotion", false);
     savePreference(s, "highContrast", true);
+    savePreference(s, "sound", false);
     savePreference(s, "nope" as never, true as never);
     for (const k of s.writes) expect(KNOWN_KEYS).toContain(k);
-    expect(KNOWN_KEYS).toHaveLength(4);
+    expect(KNOWN_KEYS).toHaveLength(5);
   });
 });
 

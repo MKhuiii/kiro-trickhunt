@@ -34,6 +34,10 @@ export const COLOR_TOKENS = [
   "parchment",
   "parchment-text",
   "parchment-border",
+  "paper",
+  "ink",
+  "ink-faded",
+  "blood",
 ] as const;
 
 export type ColorToken = (typeof COLOR_TOKENS)[number];
@@ -71,6 +75,10 @@ export const NORMAL_PALETTE: Palette = {
   parchment: "#2E2014",
   "parchment-text": "#F5E6C8",
   "parchment-border": "#C9A66B",
+  paper: "#E9DCBC",
+  ink: "#2A1A12",
+  "ink-faded": "#5A4636",
+  blood: "#8B1A1A",
 };
 
 export const HIGH_CONTRAST_PALETTE: Palette = {
@@ -104,4 +112,8 @@ export const HIGH_CONTRAST_PALETTE: Palette = {
   parchment: "#0A0612",
   "parchment-text": "#FFFFFF",
   "parchment-border": "#E3D9FF",
+  paper: "#FFFFFF",
+  ink: "#000000",
+  "ink-faded": "#1A1A1A",
+  blood: "#8B0000",
 };

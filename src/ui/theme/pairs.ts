@@ -61,4 +61,12 @@ export const DECLARED_PAIRS: readonly DeclaredPair[] = [
   // Bag panel (REQ-HUNT-47).
   { fg: "parchment-text", bg: "parchment", use: "text" },
   { fg: "parchment-border", bg: "parchment", use: "ui" },
+  // The logo above the hunter: lantern-colored display text on the page background.
+  { fg: "lantern", bg: "bg", use: "large-text" },
+  // The logo above the hunter: lantern-colored display text on the page background.
+  { fg: "lantern", bg: "bg", use: "large-text" },
+  // Journal paper (REQ-HUNT-69): dark ink on light paper.
+  { fg: "ink", bg: "paper", use: "text" },
+  { fg: "ink-faded", bg: "paper", use: "text" },
+  { fg: "blood", bg: "paper", use: "ui" },
 ];

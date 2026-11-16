@@ -36,19 +36,21 @@ import type {
 } from "../ui";
 import { ErrorAlert } from "./ErrorAlert";
 import { Frame } from "./Frame";
-import { Header } from "./Header";
+import { TopControls } from "./TopControls";
 import { Art } from "./art/registry";
 import { HunterButton } from "./HunterButton";
 import { AiNote } from "./AiNote";
 import { BagPanel, firstImage } from "./BagPanel";
 import { HuntScene } from "./HuntScene";
-import { InfoFrame } from "./InfoFrame";
+import { JournalSheet } from "./JournalSheet";
 import { LostScene } from "./LostScene";
 import { MonsterStage } from "./MonsterStage";
+import { PixiStage } from "./stage/PixiStage";
+import { useAmbientSound } from "./audio/useAmbientSound";
 import { ResultPanel } from "./ResultPanel";
 import { StatusRegion } from "./StatusRegion";
 import type { PreferenceChange } from "./SettingsPanel";
-import { BUTTON_SECONDARY, FOCUS_RING } from "./styles";
+import { FOCUS_RING } from "./styles";
 
 type PageState =
   | { readonly kind: "idle"; readonly hint: MessageKey | null }
@@ -102,6 +104,9 @@ export function App(): ReactElement {
   const [elapsedMs, setElapsedMs] = useState(0);
 
   const locale: Locale = prefs.language;
+
+  // Optional ambient sound: off by default, made only after the first pointer or key press.
+  useAmbientSound(flow.step, prefs.sound);
 
   // Load saved preferences after mount.
   useEffect(() => {
@@ -162,8 +167,14 @@ export function App(): ReactElement {
     if (state.kind === "done") headingRef.current?.focus();
   }, [state.kind]);
 
-  // Focus the hunter button on load and whenever the flow returns home.
+  // Return focus to the hunter button whenever the flow comes back home. Not on the first
+  // load, so no focus outline is drawn around the hunter before the user does anything.
+  const firstFlowRef = useRef(true);
   useEffect(() => {
+    if (firstFlowRef.current) {
+      firstFlowRef.current = false;
+      return;
+    }
     if (flow.step === "home") hunterRef.current?.focus();
   }, [flow.step]);
 
@@ -278,6 +289,19 @@ export function App(): ReactElement {
   const scene = sceneFor({ step: flow.step === "bag" ? "bag" : "home" });
   const step: FlowStep = flow.step === "home" || flow.step === "bag" ? scene.phase : flow.step;
 
+  // The leg of the hunt, and the key that tells the canvas which drawings are on the page.
+  const huntLeg =
+    flow.step === "hunting"
+      ? legFor({
+          hasImage: hasImageRef.current,
+          status: state.kind === "working" ? state.status : "sending",
+          elapsedMs,
+          minMs: MIN_HUNT_MS,
+        })
+      : null;
+  const actorKey =
+    huntLeg ?? (flow.step === "revealed" && view?.kind === "ready" ? view.monster.id : "");
+
   return (
     <div style={cssVars as CSSProperties}>
       <a
@@ -286,11 +310,23 @@ export function App(): ReactElement {
       >
         {t(locale, "a11y.skip")}
       </a>
-      <Frame step={step} bar={<Header prefs={prefs} locale={locale} onChange={updatePref} />}>
+      <Frame
+        step={step}
+        controls={<TopControls prefs={prefs} locale={locale} onChange={updatePref} />}
+        stage={
+          <PixiStage
+            phase={flow.step}
+            reduceMotion={reducedMotionRef.current}
+            highContrast={prefs.highContrast}
+            actorKey={actorKey}
+          />
+        }
+      >
+        {flow.step !== "home" ? <h1 className="sr-only">{t(locale, "app.name")}</h1> : null}
         {flow.step === "home" ? (
           <div className="relative min-h-0 flex-1">
             <Art id="backdrop-home" className="absolute inset-0 h-full w-full" />
-            <div className="relative flex h-full flex-col items-center overflow-y-auto px-4 py-4">
+            <div className="relative flex h-full flex-col items-center overflow-y-auto px-4 pb-4 pt-[3.75rem]">
               <HunterButton
                 ref={hunterRef}
                 locale={locale}
@@ -302,8 +338,8 @@ export function App(): ReactElement {
         ) : flow.step === "bag" ? (
           <div className="relative min-h-0 flex-1">
             <Art id="backdrop-home" className="absolute inset-0 h-full w-full opacity-40" />
-            <div className="relative flex h-full flex-col items-center gap-4 overflow-hidden px-4 py-4 md:flex-row md:items-center">
-              <div className="h-[20dvh] max-h-32 w-[20dvh] max-w-32 shrink-0 md:aspect-square md:h-auto md:max-h-full md:w-[28%] md:max-w-none">
+            <div className="relative flex h-full flex-col items-center gap-4 overflow-hidden px-4 pb-4 pt-[3.75rem] md:flex-row md:items-center">
+              <div className="hidden h-[11dvh] w-[11dvh] shrink-0 md:block [@media(min-height:52rem)]:block md:aspect-square md:h-auto md:max-h-full md:w-[28%] md:max-w-none">
                 <Art id="hunter" pose="idle" className="h-full w-full" />
               </div>
               <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-2 md:max-h-full">
@@ -324,15 +360,7 @@ export function App(): ReactElement {
             </div>
           </div>
         ) : flow.step === "hunting" ? (
-          <HuntScene
-            locale={locale}
-            leg={legFor({
-              hasImage: hasImageRef.current,
-              status: state.kind === "working" ? state.status : "sending",
-              elapsedMs,
-              minMs: MIN_HUNT_MS,
-            })}
-          >
+          <HuntScene locale={locale} leg={huntLeg ?? "forest"}>
             <StatusRegion locale={locale} messageKey={statusKey} params={statusParams} />
           </HuntScene>
         ) : flow.step === "lost" ? (
@@ -348,19 +376,16 @@ export function App(): ReactElement {
           </LostScene>
         ) : (
           <div className="flex min-h-0 flex-1 flex-col md:flex-row [@media(max-height:32rem)]:flex-row">
-            <div className="min-h-0 min-w-0 flex-1">
+            <div className="min-h-0 min-w-0 shrink-0 basis-[26dvh] md:flex-1 md:basis-0 [@media(max-height:32rem)]:flex-1 [@media(max-height:32rem)]:basis-0">
               {view !== null && view.kind === "ready" ? (
                 <MonsterStage locale={locale} monster={view.monster.id} />
               ) : null}
             </div>
             {view !== null ? (
-              <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-                <InfoFrame view={view} locale={locale} headingRef={headingRef}>
+              <div className="flex min-h-0 min-w-0 flex-1 flex-col md:pt-[3.75rem]">
+                <JournalSheet view={view} locale={locale} headingRef={headingRef} onAgain={reset}>
                   <StatusRegion locale={locale} messageKey={statusKey} params={statusParams} />
-                  <button type="button" onClick={reset} className={`min-h-11 ${BUTTON_SECONDARY}`}>
-                    {t(locale, "hunt.again")}
-                  </button>
-                </InfoFrame>
+                </JournalSheet>
               </div>
             ) : null}
           </div>

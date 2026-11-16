@@ -20,6 +20,9 @@ before `dev` and `build`. The source and destination of every file are listed in
 | zlib.js (bundled in `worker.min.js`) | see note 1 | MIT | https://github.com/imaya/zlib.js |
 | zxing-wasm | 3.1.6 | MIT | https://github.com/Sec-ant/zxing-wasm |
 | zxing-cpp (compiled into the zxing-wasm reader) | see note 2 | Apache-2.0 | https://github.com/zxing-cpp/zxing-cpp |
+| pixi.js (decorative atmosphere layer, bundled in the app's own JavaScript, loaded lazily) | 8.23.0 | MIT | https://github.com/pixijs/pixijs |
+| Grenze Gotisch font (headings and buttons, weight 700; files in `public/fonts/`, from `@fontsource/grenze-gotisch` 5.3.0; licence text in `public/fonts/LICENSE.grenze-gotisch.txt`) | 5.3.0 (package) | OFL-1.1 | https://github.com/fontsource/font-files |
+| Creepster font (the "TrickHunt" logo only; file in `public/fonts/`, from `@fontsource/creepster` 5.3.0; licence text in `public/fonts/LICENSE.creepster.txt`) | 5.3.0 (package) | OFL-1.1 | https://github.com/fontsource/font-files |
 
 Notes:
 

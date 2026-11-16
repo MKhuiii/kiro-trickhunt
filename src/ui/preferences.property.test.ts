@@ -11,13 +11,20 @@ import {
 
 const NUM_RUNS = 200;
 const KNOWN_KEYS: readonly string[] = Object.values(PREFERENCE_STORAGE_KEYS);
-const PREF_KEYS: readonly PreferenceKey[] = ["language", "textSize", "reduceMotion", "highContrast"];
+const PREF_KEYS: readonly PreferenceKey[] = [
+  "language",
+  "textSize",
+  "reduceMotion",
+  "highContrast",
+  "sound",
+];
 
 const VALID_ENCODINGS: Record<string, readonly string[]> = {
   [PREFERENCE_STORAGE_KEYS.language]: ["vi", "en"],
   [PREFERENCE_STORAGE_KEYS.textSize]: ["100", "125", "150"],
   [PREFERENCE_STORAGE_KEYS.reduceMotion]: ["true", "false"],
   [PREFERENCE_STORAGE_KEYS.highContrast]: ["true", "false"],
+  [PREFERENCE_STORAGE_KEYS.sound]: ["true", "false"],
 };
 
 interface FakeStorage extends StorageLike {
@@ -53,6 +60,7 @@ const storedEntries = fc.record({
   textSize: junkValue,
   reduceMotion: junkValue,
   highContrast: junkValue,
+  sound: junkValue,
 });
 
 function isValidSet(p: unknown): boolean {
@@ -62,7 +70,8 @@ function isValidSet(p: unknown): boolean {
     (o.language === "vi" || o.language === "en") &&
     (o.textSize === 100 || o.textSize === 125 || o.textSize === 150) &&
     typeof o.reduceMotion === "boolean" &&
-    typeof o.highContrast === "boolean"
+    typeof o.highContrast === "boolean" &&
+    typeof o.sound === "boolean"
   );
 }
 
@@ -94,7 +103,7 @@ describe("PBT-71 preferences are always valid and never throw", () => {
   });
 
   /** **Validates: Requirements REQ-UI-38, REQ-UI-41** */
-  it("savePreference never throws and writes only the four known keys with valid encodings", () => {
+  it("savePreference never throws and writes only the five known keys with valid encodings", () => {
     fc.assert(
       fc.property(
         fc.oneof(fc.string(), fc.constantFrom<string>(...PREF_KEYS)),
@@ -126,6 +135,7 @@ describe("PBT-71 preferences are always valid and never throw", () => {
       fc.tuple(fc.constant<PreferenceKey>("textSize"), fc.constantFrom<unknown>(100, 125, 150)),
       fc.tuple(fc.constant<PreferenceKey>("reduceMotion"), fc.boolean()),
       fc.tuple(fc.constant<PreferenceKey>("highContrast"), fc.boolean()),
+      fc.tuple(fc.constant<PreferenceKey>("sound"), fc.boolean()),
     );
     fc.assert(
       fc.property(validPair, ([key, value]) => {
@@ -166,5 +176,38 @@ describe("PBT-74 default language is English", () => {
       ),
       { numRuns: NUM_RUNS },
     );
+  });
+});
+
+describe("PBT-98 sound preference", () => {
+  /** **Validates: Requirements REQ-HUNT-74** */
+  it("a wrong or missing stored value loads as false", () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom<StorageKind>("missing", "throwing", "junk"),
+        fc.anything().filter((v) => v !== "true"),
+        (kind, value) => {
+          const map = new Map<string, unknown>([[PREFERENCE_STORAGE_KEYS.sound, value]]);
+          const storage = kind === "missing" ? null : makeStorage(map, { throwGet: kind === "throwing" });
+          expect(loadPreferences(storage).sound).toBe(false);
+        },
+      ),
+      { numRuns: NUM_RUNS },
+    );
+  });
+
+  /** **Validates: Requirements REQ-HUNT-74** */
+  it("a saved boolean is read back; a non-boolean is never written", () => {
+    fc.assert(
+      fc.property(fc.boolean(), (value) => {
+        const storage = makeStorage(new Map());
+        expect(savePreference(storage, "sound", value)).toBe(true);
+        expect(loadPreferences(storage).sound).toBe(value);
+      }),
+      { numRuns: NUM_RUNS },
+    );
+    const storage = makeStorage(new Map());
+    expect(savePreference(storage, "sound", "true" as never)).toBe(false);
+    expect(storage.written).toEqual([]);
   });
 });

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { BagPanel } from "./BagPanel";
-import { Header } from "./Header";
+import { TopControls } from "./TopControls";
 import { HunterButton } from "./HunterButton";
 import { Frame } from "./Frame";
 import { FOCUS_RING } from "./styles";
@@ -22,10 +22,10 @@ describe("focus ring on interactive elements", () => {
     expect(FOCUS_RING).toContain(RING);
   });
 
-  it("every Header and HunterButton button has the focus ring", () => {
+  it("every TopControls and HunterButton button has the focus ring", () => {
     const noop = (): void => undefined;
     const header = renderToStaticMarkup(
-      createElement(Header, { prefs: loadPreferences(null), locale: "en", onChange: noop }),
+      createElement(TopControls, { prefs: loadPreferences(null), locale: "en", onChange: noop }),
     );
     const hunter = renderToStaticMarkup(
       createElement(HunterButton, { locale: "en", onOpen: noop }),
@@ -59,7 +59,7 @@ describe("focus ring on interactive elements", () => {
 
   it("the skip-link target is focusable", () => {
     const html = renderToStaticMarkup(
-      createElement(Frame, { step: "home", bar: null, ...{ children: null } }),
+      createElement(Frame, { step: "home", ...{ children: null } }),
     );
     expect(html).toMatch(/<main\b[^>]*id="main"[^>]*tabindex="-1"/);
   });

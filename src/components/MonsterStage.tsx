@@ -23,16 +23,22 @@ export function MonsterStage({ locale, monster }: MonsterStageProps): ReactEleme
       data-monster={presentation.id}
     >
       <Art id="backdrop-home" className="absolute inset-0 h-full w-full opacity-40" />
-      <div className="relative flex min-h-0 flex-1 items-center justify-center p-3">
+      <div className="relative flex min-h-0 flex-1 items-center justify-center p-3 pr-[9.5rem] md:pr-3">
         <div
-          className="th-reveal h-full max-h-[32rem] w-full max-w-[32rem]"
-          style={{ color: `var(--th-${presentation.colorToken})` }}
+          data-actor="monster"
+          data-actor-key={presentation.id}
+          className="h-full max-h-[32rem] w-full max-w-[32rem]"
         >
-          <Art id={presentation.artKey} className="h-full w-full" />
+          <div
+            className="th-reveal h-full w-full"
+            style={{ color: `var(--th-${presentation.colorToken})` }}
+          >
+            <Art id={presentation.artKey} className="h-full w-full" />
+          </div>
         </div>
       </div>
-      <div className="relative flex shrink-0 justify-center p-3">
-        <p className="max-h-[30dvh] w-full max-w-prose overflow-y-auto rounded-xl border border-[var(--th-border)] bg-[var(--th-surface)] p-3 text-base text-[color:var(--th-text)]">
+      <div className="th-caption relative z-10 w-full shrink-0 px-4 pb-3 pt-8">
+        <p className="mx-auto max-h-[30dvh] max-w-prose overflow-y-auto text-center text-lg">
           {caption}
         </p>
       </div>

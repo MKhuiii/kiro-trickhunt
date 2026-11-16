@@ -5,7 +5,7 @@
 export const en = {
   // App, input, progress, privacy
   "app.name": "TrickHunt",
-  "app.tagline": "Check a strange message before you reply.",
+  "app.tagline": "Before you reply, send the hunter into the dark after that strange message.",
   "input.text.label": "Paste the message or link you want to check",
   "input.text.hint": "You can paste the whole message. We will find any links in it.",
   "input.image.label": "Choose a screenshot or QR code image",
@@ -14,14 +14,14 @@ export const en = {
   "input.image.remove": "Remove the selected image",
   "input.submit": "Start the hunt",
   "input.reset": "Check another message",
-  "input.empty": "Paste a message or choose an image to start.",
-  "progress.preparing": "Getting the image ready…",
-  "progress.qr": "Looking for a QR code…",
-  "progress.ocr.loading": "Loading the text reader…",
-  "progress.ocr.recognizing": "Reading the text in the image: {percent}%",
-  "progress.sending": "Looking for warning signs…",
-  "progress.done": "Your result is ready.",
-  "progress.nothing": "There is nothing to check. Add a message or an image.",
+  "input.empty": "Put a message or a picture in the bag to start the hunt.",
+  "progress.preparing": "Lighting the lantern and getting the image ready…",
+  "progress.qr": "Searching the dark for a QR code…",
+  "progress.ocr.loading": "Waking the text reader…",
+  "progress.ocr.recognizing": "Reading the strange marks in the image: {percent}%",
+  "progress.sending": "Following the trail of warning signs…",
+  "progress.done": "The hunt is over. Your report is ready.",
+  "progress.nothing": "The bag is empty. Add a message or an image.",
   "privacy.note":
     "Your image never leaves your device. Only text and links are sent to be checked, and we do not store them.",
   "a11y.skip": "Skip to main content",
@@ -40,13 +40,13 @@ export const en = {
   "prefs.highContrast": "High contrast",
 
   // Result, levels, sources, semantic notes
-  "result.heading": "Your result",
+  "result.heading": "Your hunt report",
   "result.meter.label": "Risk meter: {percent} out of 100",
-  "result.message.heading": "Your message",
-  "result.message.note": "Highlighted parts are where we saw a warning sign.",
+  "result.message.heading": "The message you gave the hunter",
+  "result.message.note": "Highlighted parts are where the hunter found a warning sign.",
   "result.highlight.srLabel": "Suspicious part:",
-  "result.signals.heading": "Why we are cautious",
-  "result.evidence.label": "What we saw:",
+  "result.signals.heading": "Why the hunter is cautious",
+  "result.evidence.label": "What the hunter saw:",
   "result.severity.low": "Minor",
   "result.severity.medium": "Moderate",
   "result.severity.high": "Serious",
@@ -54,8 +54,8 @@ export const en = {
   "result.aiNote.heading": "Extra check not available",
   "result.aiNote.unavailable":
     "The extra AI check was not available, so this result may miss newer or unusual scams. Treat unexpected requests with care.",
-  "result.monster.heading": "The kind of trick this looks like",
-  "result.evidence.heading": "What we found",
+  "result.monster.heading": "The monster behind this trick",
+  "result.evidence.heading": "What the hunter found",
   "result.limitsNote":
     "TrickHunt looks for warning signs. It cannot prove that a message is genuine.",
   "result.noSignals.reminderStrong":
@@ -63,7 +63,7 @@ export const en = {
   "settings.open": "Settings",
   "input.paste.hint": "Tip: you can paste a screenshot with Ctrl+V.",
   "result.limitations.heading": "Good to know",
-  "result.tips.heading": "How to spot it",
+  "result.tips.heading": "How to spot this monster",
   "result.tech.summary": "Technical details",
   "result.withheld": "We cannot show this result reliably. Please try again.",
   "result.noSignals.summary": "No warning signs found.",
@@ -93,11 +93,11 @@ export const en = {
   // Hunter scene, bag and home
   "scene.home.caption": "Tap the hunter to open his bag.",
   "scene.bag.caption":
-    "What shall the hunter track? Put a message, a picture, or both in the bag.",
-  "scene.hunt.forest": "The hunter slips into the dark forest…",
-  "scene.hunt.mountain": "He climbs the mountain pass, lantern held high…",
-  "scene.hunt.swamp": "He wades through the swamp, reading the strange marks…",
-  "scene.hunt.ruins": "The ruins ahead. He takes aim at the shadow…",
+    "What shall the hunter track in the dark? Put a message, a picture, or both in the bag.",
+  "scene.hunt.forest": "The hunter creeps into the dark forest…",
+  "scene.hunt.mountain": "He climbs the cold mountain pass, lantern held high…",
+  "scene.hunt.swamp": "He wades through the swamp fog, reading the strange marks…",
+  "scene.hunt.ruins": "The old ruins ahead. Something moves in the shadows. He takes aim…",
   "scene.reveal.found": "The shadow was a {name}.",
   "scene.reveal.nothing":
     "The trail is quiet. No warning signs found, but still check through official channels.",
@@ -113,6 +113,19 @@ export const en = {
   "bag.close": "Close the bag",
   "hunt.again": "Hunt again",
   "result.frame.label": "Hunt report",
+  "topbar.language": "Language: {name}. Press to switch to {other}.",
+
+  // Hunter's journal and optional sound
+  "journal.title": "The hunter's journal",
+  "journal.page1.label": "The hunter's note",
+  "journal.page2.label": "Full notes",
+  "journal.more": "Read the full notes",
+  "journal.back": "Back to the note",
+  "journal.moreNotes": "{count} more notes on the next page.",
+  "journal.clues.heading": "Warning signs the hunter saw",
+  "journal.do.heading": "Do this first",
+  "settings.sound.label": "Spooky sound",
+  "settings.sound.hint": "Soft wind and a slow heartbeat. Off by default.",
 
   // Signal explanations
   "signal.text.otp-request.explain":
@@ -167,34 +180,34 @@ export const en = {
   // Monsters
   "monster.bank.name": "Bank Ghost",
   "monster.bank.short":
-    "Pretends to be your bank to get your code, password or card number.",
+    "A ghost in a banker's coat. It haunts your phone and wants your code, password or card number.",
   "monster.bank.tip1": "It asks for a code or password. Real banks do not.",
   "monster.bank.tip2": "It threatens to lock your account and wants you to act now.",
   "monster.bank.tip3": "It sends a strange link. Open your bank app yourself instead.",
   "monster.prize.name": "Gift Vampire",
-  "monster.prize.short": "Promises a gift or prize to drain your money and details.",
+  "monster.prize.short": "A vampire with a gift box. It drinks your money and your details.",
   "monster.prize.tip1": "You won a prize you never entered for.",
   "monster.prize.tip2": "It asks you to pay a fee to get the gift.",
   "monster.prize.tip3": "It tells you to reply fast or lose the gift.",
   "monster.job-bait.name": "Job Zombie",
-  "monster.job-bait.short": "Offers easy, well-paid work to take your deposit or details.",
+  "monster.job-bait.short": "A zombie that crawls out of the graveyard with an easy job. It wants your deposit or details.",
   "monster.job-bait.tip1": "The work is easy but the pay is very high.",
   "monster.job-bait.tip2": "It asks you to chat on another app, like Telegram or Zalo.",
   "monster.job-bait.tip3": "It asks for a deposit or fee before you start.",
   "monster.authority.name": "Authority Banshee",
   "monster.authority.short":
-    "Pretends to be the police or an agency to scare you into obeying.",
+    "A banshee that wails in an officer's cap. It frightens you into obeying.",
   "monster.authority.tip1": "It says you are linked to a case.",
   "monster.authority.tip2": "It threatens arrest or a fine if you do not act now.",
   "monster.authority.tip3": "It tells you to keep it secret and send money.",
   "monster.generic.name": "Odd Shadow",
   "monster.generic.short":
-    "The message has warning signs but does not fit one known kind of scam.",
+    "A shadow creeping in the fog. It shows warning signs, but its face is unknown.",
   "monster.generic.tip1": "It comes out of the blue from someone you do not know.",
   "monster.generic.tip2": "It pushes you to hurry.",
   "monster.generic.tip3": "It asks for money, codes or personal details.",
   "monster.neutral.name": "Watchful Candle",
-  "monster.neutral.short": "No signs yet, but stay careful.",
+  "monster.neutral.short": "A candle burning low in the dark. No signs yet, but keep watch.",
 
   // Notices
   "notice.ocr-skipped": "We skipped reading text because the image has a QR code.",

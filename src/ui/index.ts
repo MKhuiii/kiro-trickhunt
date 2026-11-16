@@ -74,3 +74,27 @@ export { sceneFor } from "./view/scene";
 export type { ScenePhase, SceneInput, SceneView } from "./view/scene";
 
 export { splitSections } from "./view/info-sections";
+
+export { stagePlan, profileFor } from "./view/stage-plan";
+export type {
+  StagePlan,
+  StageLayer,
+  StageLayerId,
+  StageMotion,
+  StageParticles,
+  ParticleKind,
+  StageProfile,
+  DeviceInfo,
+} from "./view/stage-plan";
+
+export { buildJournalView, firstSentence, pickClues } from "./view/journal";
+export type {
+  JournalView,
+  JournalReady,
+  JournalWithheld,
+  JournalPage1,
+  JournalNote,
+} from "./view/journal";
+
+export { soundPlan } from "./view/sound-plan";
+export type { SoundPlan, SoundCue, CueId } from "./view/sound-plan";

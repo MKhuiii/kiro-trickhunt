@@ -84,6 +84,22 @@ export function SettingsPanel({ prefs, locale, onChange }: SettingsPanelProps): 
         />
         <span>{t(locale, "prefs.highContrast")}</span>
       </label>
+
+      <div className="flex flex-col gap-1">
+        <label className="flex items-center gap-3 text-base font-semibold">
+          <input
+            type="checkbox"
+            checked={prefs.sound}
+            onChange={(e) => onChange("sound", e.target.checked)}
+            aria-describedby="pref-sound-hint"
+            className={CHECK}
+          />
+          <span>{t(locale, "settings.sound.label")}</span>
+        </label>
+        <p id="pref-sound-hint" className="pl-8 text-base text-[color:var(--th-muted)]">
+          {t(locale, "settings.sound.hint")}
+        </p>
+      </div>
     </fieldset>
   );
 }

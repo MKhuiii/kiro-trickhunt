@@ -2,7 +2,7 @@ import type { ReactElement, ReactNode } from "react";
 import type { Locale } from "../pipeline";
 import { sceneFor, t } from "../ui";
 import { Art } from "./art/registry";
-import { BUTTON_SECONDARY } from "./styles";
+import { FOCUS_RING } from "./styles";
 
 interface LostSceneProps {
   readonly locale: Locale;
@@ -27,13 +27,15 @@ export function LostScene({ locale, onAgain, children }: LostSceneProps): ReactE
             "linear-gradient(to top, var(--th-fog) 0%, var(--th-fog) 35%, transparent 100%)",
         }}
       />
-      <div className="absolute inset-0 flex flex-col items-center overflow-y-auto p-3">
-        <div className="mt-auto w-full max-w-prose space-y-3 rounded-xl border border-[var(--th-border)] bg-[var(--th-surface)] p-3 text-base text-[color:var(--th-text)]">
-          <p>{t(locale, scene.captionKey)}</p>
-          {children}
-          <button type="button" onClick={onAgain} className={`min-h-11 ${BUTTON_SECONDARY}`}>
-            {t(locale, "hunt.again")}
-          </button>
+      <div className="absolute inset-0 z-10 flex flex-col items-center overflow-y-auto p-3">
+        <div className="th-caption relative -mx-3 mt-auto w-[calc(100%+1.5rem)] px-4 pb-3 pt-10 text-center">
+          <div className="mx-auto max-w-prose space-y-3 text-lg">
+            <p>{t(locale, scene.captionKey)}</p>
+            {children}
+            <button type="button" onClick={onAgain} className={`th-text-button ${FOCUS_RING}`}>
+              {t(locale, "hunt.again")}
+            </button>
+          </div>
         </div>
       </div>
     </div>

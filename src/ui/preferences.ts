@@ -8,6 +8,8 @@ export interface Preferences {
   textSize: TextSize;
   reduceMotion: boolean;
   highContrast: boolean;
+  /** Optional ambient sound. Off by default (REQ-HUNT-74). */
+  sound: boolean;
 }
 
 export interface StorageLike {
@@ -22,6 +24,7 @@ export const PREFERENCE_STORAGE_KEYS: Readonly<Record<PreferenceKey, string>> = 
   textSize: "trickhunt.pref.textSize",
   reduceMotion: "trickhunt.pref.reduceMotion",
   highContrast: "trickhunt.pref.highContrast",
+  sound: "trickhunt.pref.sound",
 };
 
 const DEFAULTS: Preferences = {
@@ -29,6 +32,7 @@ const DEFAULTS: Preferences = {
   textSize: 100,
   reduceMotion: false,
   highContrast: false,
+  sound: false,
 };
 
 function readRaw(storage: StorageLike | null | undefined, key: string): string | null {
@@ -62,6 +66,7 @@ export function loadPreferences(storage: StorageLike | null | undefined): Prefer
       readRaw(storage, PREFERENCE_STORAGE_KEYS.highContrast),
       DEFAULTS.highContrast,
     ),
+    sound: parseBool(readRaw(storage, PREFERENCE_STORAGE_KEYS.sound), DEFAULTS.sound),
   };
 }
 
@@ -82,6 +87,10 @@ function serialize(key: unknown, value: unknown): { k: string; v: string } | nul
     case "highContrast":
       return typeof value === "boolean"
         ? { k: PREFERENCE_STORAGE_KEYS.highContrast, v: String(value) }
+        : null;
+    case "sound":
+      return typeof value === "boolean"
+        ? { k: PREFERENCE_STORAGE_KEYS.sound, v: String(value) }
         : null;
     default:
       return null;

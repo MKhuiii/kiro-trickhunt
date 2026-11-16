@@ -13,9 +13,6 @@ interface HunterButtonProps {
   readonly captionKey?: MessageKey;
 }
 
-const PANEL =
-  "rounded-xl border border-[var(--th-border)] bg-[var(--th-surface)] p-4 text-base text-[color:var(--th-text)]";
-
 /**
  * Home step: the whole hunter figure is one real button that opens the bag.
  * The art is decorative; the accessible name comes from the dictionary. The
@@ -27,17 +24,27 @@ export const HunterButton = forwardRef<HTMLButtonElement, HunterButtonProps>(fun
 ): ReactElement {
   return (
     <div className="my-auto flex w-full flex-col items-center gap-3">
+      <div className="th-title-scrim relative z-10 w-full px-4 pb-6 pt-6 text-center">
+        <h1 className="th-logo text-6xl md:text-7xl">{t(locale, "app.name")}</h1>
+        <p className="mx-auto mt-2 max-w-prose text-lg text-[color:var(--th-muted)]">
+          {t(locale, "app.tagline")}
+        </p>
+      </div>
       <button
         ref={ref}
         type="button"
         onClick={onOpen}
         aria-label={t(locale, "home.hunter.action")}
-        className={`block h-[min(50dvh,24rem)] [@media(max-height:32rem)]:h-[min(32dvh,24rem)] min-h-[2.75rem] w-[min(60%,16rem)] min-w-[2.75rem] cursor-pointer rounded-xl ${FOCUS_RING}`}
+        className={`relative z-10 block h-[min(40dvh,22rem)] [@media(max-height:32rem)]:h-[min(28dvh,22rem)] min-h-[2.75rem] w-[min(60%,16rem)] min-w-[2.75rem] cursor-pointer rounded-xl ${FOCUS_RING}`}
       >
         <Art id="hunter" pose="idle" className="h-full w-full" />
       </button>
-      <p className={`${PANEL} w-full max-w-prose text-center`}>{t(locale, captionKey)}</p>
-      <p className={`${PANEL} w-full max-w-prose`}>{t(locale, "privacy.note")}</p>
+      <div className="th-caption th-caption-float relative z-10 w-full px-4 pb-8 pt-10 text-center">
+        <p className="mx-auto max-w-prose text-lg">{t(locale, captionKey)}</p>
+        <p className="mx-auto mt-2 max-w-prose text-base text-[color:var(--th-muted)]">
+          {t(locale, "privacy.note")}
+        </p>
+      </div>
     </div>
   );
 });

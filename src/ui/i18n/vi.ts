@@ -7,7 +7,7 @@ import type { MessageKey } from "./en";
 export const vi: Record<MessageKey, string> = {
   // App, input, progress, privacy
   "app.name": "TrickHunt",
-  "app.tagline": "Kiểm tra tin nhắn lạ trước khi bạn trả lời.",
+  "app.tagline": "Trước khi trả lời, hãy nhờ bác thợ săn vào bóng tối lần theo tin nhắn lạ ấy.",
   "input.text.label": "Dán tin nhắn hoặc đường dẫn cần kiểm tra",
   "input.text.hint": "Bạn có thể dán cả tin nhắn. Chúng tôi sẽ tự tìm đường dẫn trong đó.",
   "input.image.label": "Chọn ảnh chụp màn hình hoặc mã QR",
@@ -16,14 +16,14 @@ export const vi: Record<MessageKey, string> = {
   "input.image.remove": "Bỏ ảnh đã chọn",
   "input.submit": "Bắt đầu săn",
   "input.reset": "Kiểm tra tin khác",
-  "input.empty": "Hãy dán tin nhắn hoặc chọn một ảnh để bắt đầu.",
-  "progress.preparing": "Đang chuẩn bị ảnh…",
-  "progress.qr": "Đang tìm mã QR…",
-  "progress.ocr.loading": "Đang tải công cụ đọc chữ…",
-  "progress.ocr.recognizing": "Đang đọc chữ trong ảnh: {percent}%",
-  "progress.sending": "Đang tìm các dấu hiệu cảnh báo…",
-  "progress.done": "Đã có kết quả.",
-  "progress.nothing": "Không có gì để kiểm tra. Hãy thêm tin nhắn hoặc ảnh.",
+  "input.empty": "Hãy bỏ tin nhắn hoặc hình ảnh vào túi để bắt đầu cuộc săn.",
+  "progress.preparing": "Đang thắp đèn và chuẩn bị ảnh…",
+  "progress.qr": "Đang tìm mã QR trong bóng tối…",
+  "progress.ocr.loading": "Đang đánh thức công cụ đọc chữ…",
+  "progress.ocr.recognizing": "Đang đọc những ký hiệu lạ trong ảnh: {percent}%",
+  "progress.sending": "Đang lần theo dấu vết cảnh báo…",
+  "progress.done": "Cuộc săn đã xong. Báo cáo đã sẵn sàng.",
+  "progress.nothing": "Túi đang trống. Hãy thêm tin nhắn hoặc ảnh.",
   "privacy.note":
     "Ảnh của bạn không rời khỏi máy. Chỉ chữ và đường dẫn được gửi đi để kiểm tra, và chúng tôi không lưu lại.",
   "a11y.skip": "Đến nội dung chính",
@@ -42,13 +42,13 @@ export const vi: Record<MessageKey, string> = {
   "prefs.highContrast": "Tương phản cao",
 
   // Result, levels, sources, semantic notes
-  "result.heading": "Kết quả kiểm tra",
+  "result.heading": "Báo cáo cuộc săn của bạn",
   "result.meter.label": "Mức nguy cơ: {percent} trên 100",
-  "result.message.heading": "Tin nhắn của bạn",
-  "result.message.note": "Phần được tô sáng là chỗ chúng tôi thấy dấu hiệu lạ.",
+  "result.message.heading": "Tin nhắn bạn đưa cho bác thợ săn",
+  "result.message.note": "Phần được tô sáng là chỗ bác thợ săn thấy dấu hiệu lạ.",
   "result.highlight.srLabel": "Đoạn đáng ngờ:",
-  "result.signals.heading": "Vì sao chúng tôi thấy lạ",
-  "result.evidence.label": "Chỗ đáng ngờ:",
+  "result.signals.heading": "Vì sao bác thợ săn thấy lạ",
+  "result.evidence.label": "Bác thợ săn thấy:",
   "result.severity.low": "Mức nhẹ",
   "result.severity.medium": "Mức vừa",
   "result.severity.high": "Mức nặng",
@@ -56,8 +56,8 @@ export const vi: Record<MessageKey, string> = {
   "result.aiNote.heading": "Bước kiểm tra bổ sung không khả dụng",
   "result.aiNote.unavailable":
     "Bước kiểm tra AI bổ sung không khả dụng, nên kết quả này có thể bỏ sót các kiểu lừa đảo mới hoặc hiếm gặp. Hãy thận trọng với mọi yêu cầu bất ngờ.",
-  "result.monster.heading": "Kiểu chiêu trò mà tin nhắn này giống",
-  "result.evidence.heading": "Chúng tôi thấy gì",
+  "result.monster.heading": "Con quái vật đứng sau chiêu trò này",
+  "result.evidence.heading": "Bác thợ săn tìm thấy gì",
   "result.limitsNote":
     "TrickHunt tìm các dấu hiệu cảnh báo. Công cụ không thể chứng minh một tin nhắn là thật.",
   "result.noSignals.reminderStrong":
@@ -65,7 +65,7 @@ export const vi: Record<MessageKey, string> = {
   "settings.open": "Tùy chỉnh",
   "input.paste.hint": "Mẹo: bạn có thể dán ảnh chụp màn hình bằng Ctrl+V.",
   "result.limitations.heading": "Điều cần nhớ",
-  "result.tips.heading": "Cách nhận ra",
+  "result.tips.heading": "Cách nhận ra con quái vật này",
   "result.tech.summary": "Chi tiết kỹ thuật",
   "result.withheld": "Chúng tôi chưa thể hiển thị kết quả này một cách đáng tin. Hãy thử kiểm tra lại.",
   "result.noSignals.summary": "Chưa thấy dấu hiệu cảnh báo nào.",
@@ -95,11 +95,11 @@ export const vi: Record<MessageKey, string> = {
   // Hunter scene, bag and home
   "scene.home.caption": "Chạm vào bác thợ săn để mở túi của ông.",
   "scene.bag.caption":
-    "Bác thợ săn sẽ lần theo gì? Hãy bỏ tin nhắn, hình ảnh hoặc cả hai vào túi.",
-  "scene.hunt.forest": "Bác thợ săn lách vào khu rừng tối…",
-  "scene.hunt.mountain": "Ông leo lên đèo núi, giơ cao ngọn đèn…",
-  "scene.hunt.swamp": "Ông lội qua đầm lầy, xem kỹ những ký hiệu lạ…",
-  "scene.hunt.ruins": "Tàn tích phía trước. Ông nhắm vào cái bóng…",
+    "Bác thợ săn sẽ lần theo gì trong bóng tối? Hãy bỏ tin nhắn, hình ảnh hoặc cả hai vào túi.",
+  "scene.hunt.forest": "Bác thợ săn rón rén vào khu rừng tối…",
+  "scene.hunt.mountain": "Ông leo lên đèo núi lạnh, giơ cao ngọn đèn…",
+  "scene.hunt.swamp": "Ông lội qua đầm lầy đầy sương, xem kỹ những ký hiệu lạ…",
+  "scene.hunt.ruins": "Tàn tích cũ phía trước. Có thứ gì đó cựa quậy trong bóng tối. Ông nhắm bắn…",
   "scene.reveal.found": "Cái bóng ấy là {name}.",
   "scene.reveal.nothing":
     "Dấu vết im ắng. Chưa thấy dấu hiệu cảnh báo, nhưng vẫn nên kiểm tra qua kênh chính thức.",
@@ -115,6 +115,19 @@ export const vi: Record<MessageKey, string> = {
   "bag.close": "Đóng túi",
   "hunt.again": "Săn tiếp",
   "result.frame.label": "Báo cáo cuộc săn",
+  "topbar.language": "Ngôn ngữ: {name}. Nhấn để chuyển sang {other}.",
+
+  // Hunter's journal and optional sound
+  "journal.title": "Nhật ký của thợ săn",
+  "journal.page1.label": "Ghi chú của thợ săn",
+  "journal.page2.label": "Ghi chép đầy đủ",
+  "journal.more": "Xem ghi chép đầy đủ",
+  "journal.back": "Quay lại ghi chú",
+  "journal.moreNotes": "Còn {count} lưu ý ở trang sau.",
+  "journal.clues.heading": "Dấu hiệu cảnh báo thợ săn đã thấy",
+  "journal.do.heading": "Việc cần làm trước tiên",
+  "settings.sound.label": "Âm thanh ma quái",
+  "settings.sound.hint": "Gió nhẹ và nhịp tim chậm. Mặc định tắt.",
 
   // Signal explanations
   "signal.text.otp-request.explain":
@@ -168,33 +181,33 @@ export const vi: Record<MessageKey, string> = {
 
   // Monsters
   "monster.bank.name": "Bóng ma ngân hàng",
-  "monster.bank.short": "Giả làm ngân hàng để xin mã, mật khẩu hoặc số thẻ của bạn.",
+  "monster.bank.short": "Bóng ma khoác áo ngân hàng, lởn vởn trong điện thoại của bạn để đòi mã, mật khẩu hoặc số thẻ.",
   "monster.bank.tip1": "Nó xin mã hoặc mật khẩu. Ngân hàng thật không xin.",
   "monster.bank.tip2": "Nó dọa khóa tài khoản và bắt bạn làm ngay.",
   "monster.bank.tip3": "Nó gửi đường dẫn lạ. Hãy tự mở ứng dụng ngân hàng thay vì bấm vào.",
   "monster.prize.name": "Ma cà rồng quà tặng",
-  "monster.prize.short": "Hứa cho bạn quà hoặc giải thưởng để hút tiền và thông tin của bạn.",
+  "monster.prize.short": "Ma cà rồng cầm hộp quà. Nó hút cạn tiền và thông tin của bạn.",
   "monster.prize.tip1": "Bạn trúng thưởng dù chưa tham gia gì.",
   "monster.prize.tip2": "Nó đòi bạn trả phí để nhận quà.",
   "monster.prize.tip3": "Nó bảo bạn trả lời gấp kẻo mất quà.",
   "monster.job-bait.name": "Xác sống việc làm",
-  "monster.job-bait.short": "Mời việc nhẹ lương cao để lấy tiền cọc hoặc thông tin của bạn.",
+  "monster.job-bait.short": "Xác sống bò ra từ nghĩa địa với việc nhẹ lương cao. Nó muốn tiền cọc hoặc thông tin của bạn.",
   "monster.job-bait.tip1": "Việc nhẹ mà lương rất cao.",
   "monster.job-bait.tip2": "Nó rủ bạn sang ứng dụng khác như Telegram hoặc Zalo để nói chuyện.",
   "monster.job-bait.tip3": "Nó đòi tiền cọc hoặc phí trước khi bạn đi làm.",
   "monster.authority.name": "Ma nữ khẩn cấp",
-  "monster.authority.short": "Giả làm công an hay cơ quan nhà nước để dọa bạn phải làm theo.",
+  "monster.authority.short": "Ma nữ gào khóc đội mũ công an. Nó dọa bạn phải làm theo.",
   "monster.authority.tip1": "Nó nói bạn có liên quan đến một vụ việc.",
   "monster.authority.tip2": "Nó dọa bắt hoặc phạt nếu bạn không làm ngay.",
   "monster.authority.tip3": "Nó bảo bạn giữ bí mật và chuyển tiền.",
   "monster.generic.name": "Bóng lạ",
   "monster.generic.short":
-    "Tin nhắn có dấu hiệu lạ nhưng chưa giống một kiểu lừa đảo quen thuộc.",
+    "Một cái bóng len lỏi trong sương. Nó có dấu hiệu lạ nhưng chưa rõ mặt.",
   "monster.generic.tip1": "Nó đến bất ngờ từ người bạn không quen.",
   "monster.generic.tip2": "Nó thúc bạn làm thật nhanh.",
   "monster.generic.tip3": "Nó xin tiền, mã hoặc thông tin cá nhân.",
   "monster.neutral.name": "Ngọn nến canh gác",
-  "monster.neutral.short": "Chưa có dấu hiệu nào, nhưng bạn vẫn nên cẩn thận.",
+  "monster.neutral.short": "Ngọn nến leo lét trong bóng tối. Chưa thấy dấu hiệu nào, nhưng hãy cứ canh chừng.",
 
   // Notices
   "notice.ocr-skipped": "Chúng tôi đã bỏ qua bước đọc chữ vì ảnh có mã QR.",

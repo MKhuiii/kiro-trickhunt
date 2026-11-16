@@ -32,7 +32,7 @@ function renderList(
 export function InfoFrame({ view, locale, headingRef, children }: InfoFrameProps): ReactElement {
   const { scrolling, pinned } = splitSections(resultSections(view));
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-2 px-4 py-4">
+    <div className="relative z-10 flex min-h-0 flex-1 flex-col gap-2 px-4 py-4">
       <div
         role="region"
         tabIndex={0}

@@ -11,7 +11,8 @@ import type {
 import type { Locale } from "../pipeline";
 import { canConfirm, shouldSubmitOnEnter, t } from "../ui";
 import type { Slots } from "../ui";
-import { BUTTON_PRIMARY, BUTTON_SECONDARY, FOCUS_RING } from "./styles";
+import { Art } from "./art/registry";
+import { FOCUS_RING } from "./styles";
 
 export type BagSlot = "text" | "image";
 
@@ -40,9 +41,13 @@ export function firstImage(files: FileList | readonly File[] | null | undefined)
   return null;
 }
 
-const TEXT_COLOR = "text-[color:var(--th-parchment-text)]";
-const FIELD_BORDER = "border-2 border-[var(--th-parchment-border)]";
+const TEXT = "text-[color:var(--th-text)]";
 
+/**
+ * The hunter's bag: two cloth pockets, a ruled sheet for the message, a photo
+ * for the picture and a wax seal to start. No form box. The controls are real
+ * labelled form controls; the drawings are decorative.
+ */
 export function BagPanel({
   locale,
   slots,
@@ -109,20 +114,28 @@ export function BagPanel({
     if (dropped) onFileChange(dropped);
   };
 
-  const toggle = (slot: BagSlot, labelKey: "bag.text.label" | "bag.image.label"): ReactElement => {
+  const pocket = (
+    slot: BagSlot,
+    labelKey: "bag.text.label" | "bag.image.label",
+    pose: "paper" | "photo",
+  ): ReactElement => {
     const on = slots[slot];
     return (
       <button
         type="button"
         aria-pressed={on}
         onClick={() => onToggle(slot)}
-        className={`min-h-11 rounded-xl ${FIELD_BORDER} px-4 py-2 text-base font-semibold ${TEXT_COLOR} ${
-          on ? "ring-4 ring-inset ring-[var(--th-parchment-border)]" : ""
-        } bg-[var(--th-parchment)] ${FOCUS_RING}`}
+        className={`flex min-h-11 flex-col items-center gap-1 px-2 py-1 text-base font-semibold ${TEXT} ${
+          on ? "" : "opacity-70"
+        } ${FOCUS_RING}`}
       >
-        <span>{t(locale, labelKey)}</span>
-        {": "}
-        <span>{t(locale, on ? "bag.slot.on" : "bag.slot.off")}</span>
+        <span className="block h-14 w-14" aria-hidden="true">
+          <Art id="bag" pose={pose} className="h-full w-full" />
+        </span>
+        <span className={on ? "underline decoration-2 underline-offset-4" : undefined}>
+          {t(locale, labelKey)}
+        </span>
+        <span className="text-sm font-normal">{t(locale, on ? "bag.slot.on" : "bag.slot.off")}</span>
       </button>
     );
   };
@@ -131,48 +144,44 @@ export function BagPanel({
     <form
       onSubmit={handleSubmit}
       onKeyDown={handleFormKeyDown}
-      className={`min-h-0 space-y-5 overflow-y-auto rounded-xl ${FIELD_BORDER} bg-[var(--th-parchment)] p-4 ${TEXT_COLOR}`}
+      className={`th-scrim relative z-10 flex min-h-0 flex-col gap-3 overflow-y-auto px-6 py-4 ${TEXT}`}
     >
       <h2
         ref={setHeading}
         tabIndex={-1}
-        className={`text-2xl font-bold ${TEXT_COLOR} ${FOCUS_RING}`}
+        className={`th-hand text-3xl ${TEXT} ${FOCUS_RING}`}
       >
         {t(locale, "bag.heading")}
       </h2>
 
-      <div className="flex flex-wrap gap-3">
-        {toggle("text", "bag.text.label")}
-        {toggle("image", "bag.image.label")}
+      <div className="flex flex-wrap gap-6">
+        {pocket("text", "bag.text.label", "paper")}
+        {pocket("image", "bag.image.label", "photo")}
       </div>
 
       {slots.text ? (
-        <div className="space-y-2">
-          <label htmlFor="input-text" className={`block text-xl font-semibold ${TEXT_COLOR}`}>
+        <div className="th-paper th-ruled flex flex-col gap-1 px-5 py-4">
+          <label htmlFor="input-text" className="th-hand text-xl text-[color:var(--th-ink)]">
             {t(locale, "input.text.label")}
           </label>
           <textarea
             id="input-text"
-            rows={6}
+            rows={3}
             value={text}
             onChange={(e) => onTextChange(e.target.value)}
             onKeyDown={handleTextKeyDown}
             aria-describedby="input-text-hint"
-            className={`min-h-11 w-full rounded-xl ${FIELD_BORDER} bg-[var(--th-parchment)] p-3 text-lg ${TEXT_COLOR} ${FOCUS_RING}`}
+            className={`min-h-11 w-full resize-none bg-transparent text-lg leading-8 text-[color:var(--th-ink)] ${FOCUS_RING}`}
           />
-          <p id="input-text-hint" className={`text-base ${TEXT_COLOR}`}>
+          <p id="input-text-hint" className="text-base text-[color:var(--th-ink-faded)]">
             {t(locale, "input.text.hint")}
           </p>
         </div>
       ) : null}
 
       {slots.image ? (
-        <div
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-          className="space-y-2 rounded-xl border-2 border-dashed border-[var(--th-parchment-border)] bg-[var(--th-parchment)] p-4"
-        >
-          <label htmlFor="input-image" className={`block text-xl font-semibold ${TEXT_COLOR}`}>
+        <div onDragOver={handleDragOver} onDrop={handleDrop} className="flex flex-col gap-1">
+          <label htmlFor="input-image" className={`th-hand text-xl ${TEXT}`}>
             {t(locale, "input.image.label")}
           </label>
           <input
@@ -182,18 +191,18 @@ export function BagPanel({
             accept="image/png,image/jpeg,image/webp"
             onChange={handlePick}
             aria-describedby="input-image-hint"
-            className={`block min-h-11 w-full text-base ${TEXT_COLOR} ${FOCUS_RING}`}
+            className={`block min-h-11 w-full text-base ${TEXT} file:mr-3 file:min-h-11 file:cursor-pointer file:border-0 file:bg-transparent file:px-1 file:font-bold file:text-[color:var(--th-text)] file:underline file:underline-offset-4 ${FOCUS_RING}`}
           />
-          <p id="input-image-hint" className={`text-base ${TEXT_COLOR}`}>
+          <p id="input-image-hint" className="text-base text-[color:var(--th-muted)]">
             {t(locale, "input.image.hint")} {t(locale, "input.paste.hint")}
           </p>
           {file !== null ? (
-            <p className={`flex flex-wrap items-center gap-3 text-base ${TEXT_COLOR}`}>
+            <p className={`flex flex-wrap items-center gap-3 text-base ${TEXT}`}>
               <span>{t(locale, "input.image.selected")}</span>
               <button
                 type="button"
                 onClick={() => onFileChange(null)}
-                className={`min-h-11 ${BUTTON_SECONDARY}`}
+                className={`th-text-button ${FOCUS_RING}`}
               >
                 {t(locale, "input.image.remove")}
               </button>
@@ -203,22 +212,22 @@ export function BagPanel({
       ) : null}
 
       {!confirmable ? (
-        <p id="bag-need-one" className={`text-base ${TEXT_COLOR}`}>
+        <p id="bag-need-one" className={`text-base ${TEXT}`}>
           {t(locale, "bag.needOne")}
         </p>
       ) : null}
-      <p className={`text-base ${TEXT_COLOR}`}>{t(locale, "bag.enter.hint")}</p>
+      <p className="hidden text-base text-[color:var(--th-muted)] md:block">{t(locale, "bag.enter.hint")}</p>
 
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="mt-auto flex flex-wrap items-center gap-6 pt-2">
         <button
           type="submit"
           disabled={!confirmable || busy}
           aria-describedby={!confirmable ? "bag-need-one" : undefined}
-          className={`min-h-11 ${BUTTON_PRIMARY}`}
+          className={`th-seal ${FOCUS_RING}`}
         >
           {t(locale, "input.submit")}
         </button>
-        <button type="button" onClick={onClose} className={`min-h-11 ${BUTTON_SECONDARY}`}>
+        <button type="button" onClick={onClose} className={`th-text-button ${FOCUS_RING}`}>
           {t(locale, "bag.close")}
         </button>
       </div>

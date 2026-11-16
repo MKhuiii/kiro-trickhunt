@@ -2,9 +2,11 @@ import fc from "fast-check";
 import { describe, expect, it } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { InfoFrame } from "./InfoFrame";
-import { MONSTER_PRESENTATION, buildResultView } from "../ui";
+import { JournalPageTwo } from "./JournalPageTwo";
+import { JournalSheet } from "./JournalSheet";
+import { MONSTER_PRESENTATION, buildJournalView, buildResultView } from "../ui";
 import { KNOWN_SIGNAL_IDS } from "../ui/i18n/signal-ids";
+import { shortEvidence } from "../ui/view/evidence";
 import type { Verdict } from "../pipeline";
 
 // PBT-93: no ids in the rendered result (REQ-HUNT-35, REQ-HUNT-37).
@@ -106,7 +108,13 @@ describe("PBT-93: no ids in the rendered result", () => {
         extrasArb,
         (verdict, text, locale, extras) => {
           const view = buildResultView(verdict, text, locale, extras);
-          const html = renderToStaticMarkup(createElement(InfoFrame, { view, locale }));
+          // Both pages: the short note and the full notes (technical details included).
+          const journal = buildJournalView(view);
+          const html =
+            renderToStaticMarkup(
+              createElement(JournalSheet, { view, locale, onAgain: () => undefined }),
+            ) +
+            renderToStaticMarkup(createElement(JournalPageTwo, { view, journal, locale }));
 
           for (const id of ALL_IDS) {
             expect(hasWholeValue(html, id), id).toBe(false);
@@ -116,7 +124,10 @@ describe("PBT-93: no ids in the rendered result", () => {
           }
 
           if (view.kind === "ready" && verdict.level !== "no_signals") {
-            const shown = verdict.signals.some((s) => html.includes(escapeHtml(s.evidence)));
+            // The view collapses whitespace and trims, so compare with the shown form.
+            const shown = verdict.signals.some((s) =>
+              html.includes(escapeHtml(shortEvidence(s.evidence))),
+            );
             expect(shown).toBe(true);
           }
         },
