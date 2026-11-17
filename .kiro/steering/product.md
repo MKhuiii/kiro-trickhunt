@@ -17,6 +17,9 @@ scam patterns memorable without being condescending.
 2. **The LLM does not decide.** The risk score comes from a deterministic
    noisy-or aggregator. The LLM only contributes semantic signals and generates
    the plain-English explanation. Results are testable and explainable.
+   The LLM may also mark a message as a scam warning. That mark can lower a
+   `high` result by one step, but only fixed rules decide whether it does
+   (see `src/pipeline/awareness.config.ts`).
 
 3. **Privacy by default.** Nothing the user submits is stored. Ever.
 

@@ -13,6 +13,8 @@ import { TextAnalyzer } from "../analyzers/text-analyzer";
 import { UrlAnalyzer } from "../analyzers/url-analyzer";
 import type { LlmClient } from "../analyzers/llm-client";
 
+import { applyAwarenessAdjustment } from "./awareness";
+import { AWARENESS_ADJUSTMENT_ENABLED } from "./awareness.config";
 import { applyRules } from "./combine";
 import { prepareInput } from "./input";
 import type { PreparedInput } from "./input";
@@ -32,6 +34,11 @@ export interface PipelineOptions {
   readonly locale?: Locale;
   /** Test hook: pipeline-level semantic timeout in ms. */
   readonly semanticTimeoutMs?: number;
+  /**
+   * Test and probe hook: override AWARENESS_ADJUSTMENT_ENABLED. When off, the
+   * LLM is not asked for the awareness marker at all.
+   */
+  readonly awarenessEnabled?: boolean;
 }
 
 export interface Pipeline {
@@ -69,6 +76,7 @@ function assemble(params: {
   readonly semantic: SemanticOutcome;
   readonly prepared: Pick<PreparedInput, "inputTruncated" | "urls" | "urlsSkipped">;
   readonly locale: Locale;
+  readonly awarenessApplied?: boolean;
 }): Verdict {
   const { scored, semantic, prepared, locale } = params;
   const signals = sortBySeverity(params.signals);
@@ -83,6 +91,7 @@ function assemble(params: {
       level: scored.level,
       semanticStatus: semantic.status,
       locale,
+      awarenessApplied: params.awarenessApplied === true,
     }),
     semantic,
     inputTruncated: prepared.inputTruncated,
@@ -118,11 +127,15 @@ export function createPipeline(options: PipelineOptions): Pipeline {
   let client: LlmClient | null = null;
   let locale: Locale = "en";
   let timeoutMs = SEMANTIC_TIMEOUT_MS;
+  let awarenessEnabled: boolean = AWARENESS_ADJUSTMENT_ENABLED;
   try {
     client = options?.llmClient ?? null;
     locale = resolveLocale(options?.locale);
     const t = options?.semanticTimeoutMs;
     if (typeof t === "number" && Number.isFinite(t) && t >= 0) timeoutMs = t;
+    if (typeof options?.awarenessEnabled === "boolean") {
+      awarenessEnabled = options.awarenessEnabled;
+    }
   } catch {
     // keep defaults
   }
@@ -130,16 +143,24 @@ export function createPipeline(options: PipelineOptions): Pipeline {
   async function runSemantic(
     text: string,
     activeClient: LlmClient,
-  ): Promise<{ signals: Signal[]; outcome: SemanticOutcome }> {
+  ): Promise<{
+    signals: Signal[];
+    outcome: SemanticOutcome;
+    awareness: { readonly severity: number } | null;
+  }> {
     let settled = false;
     let captured: SemanticResult | null = null;
     let timer: ReturnType<typeof setTimeout> | undefined;
     try {
       const registry = new AnalyzerRegistry();
       registry.register(
-        new SemanticAnalyzer(activeClient, (r) => {
-          if (!settled) captured = r;
-        }),
+        new SemanticAnalyzer(
+          activeClient,
+          (r) => {
+            if (!settled) captured = r;
+          },
+          { awareness: awarenessEnabled },
+        ),
       );
 
       const timeout = new Promise<"timeout">((resolve) => {
@@ -155,6 +176,7 @@ export function createPipeline(options: PipelineOptions): Pipeline {
         return {
           signals: [],
           outcome: { status: "degraded", reason: "timeout", skipped: false },
+          awareness: null,
         };
       }
 
@@ -163,10 +185,15 @@ export function createPipeline(options: PipelineOptions): Pipeline {
         return {
           signals: [],
           outcome: { status: "degraded", reason: "client-error", skipped: false },
+          awareness: null,
         };
       }
       if (result.status === "ok") {
-        return { signals: winner, outcome: { status: "ok", skipped: false } };
+        return {
+          signals: winner,
+          outcome: { status: "ok", skipped: false },
+          awareness: result.awareness ?? null,
+        };
       }
       const reason =
         result.reason === "timeout" || result.reason === "invalid-response"
@@ -175,12 +202,14 @@ export function createPipeline(options: PipelineOptions): Pipeline {
       return {
         signals: [],
         outcome: { status: "degraded", reason, skipped: false },
+        awareness: null,
       };
     } catch {
       settled = true;
       return {
         signals: [],
         outcome: { status: "degraded", reason: "client-error", skipped: false },
+        awareness: null,
       };
     } finally {
       settled = true;
@@ -223,6 +252,7 @@ export function createPipeline(options: PipelineOptions): Pipeline {
       let signals = ruleSignals;
       let scored = rulesScored;
       let semantic: SemanticOutcome = emptySemantic;
+      let awareness: { readonly severity: number } | null = null;
 
       if (client !== null && !textBlank) {
         const allowed =
@@ -230,6 +260,7 @@ export function createPipeline(options: PipelineOptions): Pipeline {
         if (allowed) {
           const sem = await runSemantic(prepared.text, client);
           semantic = sem.outcome;
+          awareness = sem.awareness;
           if (sem.signals.length > 0) {
             signals = shortenEvidence([...ruleSignals, ...sem.signals]);
             scored = score(signals);
@@ -237,7 +268,29 @@ export function createPipeline(options: PipelineOptions): Pipeline {
         }
       }
 
-      return assemble({ scored, signals, semantic, prepared, locale });
+      // The one exception to "only raise": see awareness.config.ts.
+      const adjusted = applyAwarenessAdjustment({
+        enabled: awarenessEnabled,
+        score: scored.score,
+        level: scored.level,
+        signals,
+        text: prepared.text,
+        inputUrls: prepared.urls,
+        semanticStatus: semantic.status,
+        awareness,
+      });
+      if (adjusted.applied) {
+        scored = { score: adjusted.score, level: adjusted.level };
+      }
+
+      return assemble({
+        scored,
+        signals,
+        semantic,
+        prepared,
+        locale,
+        awarenessApplied: adjusted.applied,
+      });
     } catch {
       return fallbackVerdict(locale, client !== null);
     }

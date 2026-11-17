@@ -8,6 +8,7 @@ import {
   ACTIONS_BY_MONSTER,
   ACTIONS_BY_SIGNAL,
   ACTIONS_FALLBACK,
+  LIMITATIONS_AWARENESS,
   LIMITATIONS_DEGRADED,
   LIMITATIONS_FIXED,
   LIMITATIONS_NO_SIGNALS,
@@ -51,11 +52,14 @@ export interface BuildLimitationsParams {
   readonly level: RiskLevel;
   readonly semanticStatus: SemanticStatus;
   readonly locale: unknown;
+  /** True when the awareness adjustment lowered the level (rules-tuning-v5). */
+  readonly awarenessApplied?: boolean;
 }
 
 export function buildLimitations(params: BuildLimitationsParams): string[] {
   const loc = resolveLocale(params.locale);
   const out: string[] = [...LIMITATIONS_FIXED[loc]];
+  if (params.awarenessApplied === true) out.push(...LIMITATIONS_AWARENESS[loc]);
   if (params.semanticStatus === "degraded") out.push(...LIMITATIONS_DEGRADED[loc]);
   if (params.semanticStatus === "unavailable")
     out.push(...LIMITATIONS_UNAVAILABLE[loc]);

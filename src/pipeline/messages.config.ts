@@ -122,3 +122,13 @@ export const LIMITATIONS_NO_SIGNALS: ByLocale<readonly string[]> = {
     "Chưa phát hiện dấu hiệu nào, nhưng thủ đoạn lừa đảo thay đổi liên tục. Hãy cẩn thận với các yêu cầu bất ngờ.",
   ],
 };
+
+/** Shown when the awareness adjustment lowered the level (rules-tuning-v5). */
+export const LIMITATIONS_AWARENESS: ByLocale<readonly string[]> = {
+  en: [
+    "This message looks like a warning about scams, so the level was lowered by one step. Still check through the official app or a phone number you trust.",
+  ],
+  vi: [
+    "Tin nhắn này có vẻ là lời cảnh báo về lừa đảo, nên mức độ được hạ một bậc. Bạn vẫn nên kiểm tra qua ứng dụng chính thức hoặc số điện thoại bạn tin tưởng.",
+  ],
+};
