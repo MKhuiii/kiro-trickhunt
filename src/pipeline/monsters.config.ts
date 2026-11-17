@@ -42,6 +42,7 @@ export const MONSTERS: readonly MonsterDef[] = [
       "text.off-platform": 1,
       "semantic.isolation-secrecy": 1,
       "semantic.too-good-to-be-true": 1,
+      "semantic.emotional-manipulation": 1,
       "text.payment-request": 1,
     },
   },
