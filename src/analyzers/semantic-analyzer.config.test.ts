@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { SEMANTIC_SIGNALS, SEVERITY_CAP } from "./semantic-analyzer.config";
+import { PROMPT_GUIDANCE, SEMANTIC_SIGNALS, SEVERITY_CAP } from "./semantic-analyzer.config";
 
 const EXPECTED_IDS = [
   "semantic.impersonation-tone",
@@ -29,6 +29,18 @@ describe("semantic-analyzer.config", () => {
       expect(def.maxSeverity).toBeGreaterThan(0);
       expect(def.maxSeverity).toBeLessThanOrEqual(SEVERITY_CAP);
     }
+  });
+
+  it("has a short, non-empty prompt hint for every signal (rules-tuning-v5)", () => {
+    for (const def of SEMANTIC_SIGNALS) {
+      expect(def.hint.trim().length, def.id).toBeGreaterThan(0);
+      expect(def.hint.split(/\s+/).length, def.id).toBeLessThanOrEqual(25);
+    }
+  });
+
+  it("has non-empty prompt guidance lines", () => {
+    expect(PROMPT_GUIDANCE.length).toBeGreaterThan(0);
+    for (const line of PROMPT_GUIDANCE) expect(line.trim().length).toBeGreaterThan(0);
   });
 
   it("keeps SEVERITY_CAP strictly below 1 (REQ-SEM-03)", () => {

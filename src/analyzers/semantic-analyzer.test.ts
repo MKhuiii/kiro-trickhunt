@@ -17,6 +17,7 @@ import {
   SEMANTIC_SIGNALS,
   MAX_EVIDENCE_CHARS,
   MAX_SIGNALS,
+  PROMPT_GUIDANCE,
   SEVERITY_CAP,
 } from "./semantic-analyzer.config";
 
@@ -31,6 +32,15 @@ describe("buildPrompt", () => {
     for (const s of SEMANTIC_SIGNALS) {
       expect(system).toContain(s.id);
     }
+  });
+
+  it("system prompt gives each id its hint and includes the guidance lines (v5)", () => {
+    const { system } = buildPrompt("hello");
+    for (const s of SEMANTIC_SIGNALS) {
+      expect(system).toContain(`- ${s.id}: ${s.hint}`);
+    }
+    for (const line of PROMPT_GUIDANCE) expect(system).toContain(line);
+    expect(system).not.toContain("hello");
   });
 
   it("system prompt forbids verdict/score/risk level and requires JSON only", () => {
