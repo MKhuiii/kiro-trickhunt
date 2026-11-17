@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
+    "probe:messages": "tsx --env-file=.env.local scripts/run-message-probe.ts",
     "e2e": "playwright test"
   },
   "dependencies": {
