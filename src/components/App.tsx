@@ -326,7 +326,7 @@ export function App(): ReactElement {
         {flow.step === "home" ? (
           <div className="relative min-h-0 flex-1">
             <Art id="backdrop-home" className="absolute inset-0 h-full w-full" />
-            <div className="relative flex h-full flex-col items-center overflow-y-auto px-4 pb-4 pt-[3.75rem]">
+            <div className="relative flex h-full flex-col items-center overflow-x-hidden overflow-y-auto px-4 pb-4 pt-[3.75rem]">
               <HunterButton
                 ref={hunterRef}
                 locale={locale}
