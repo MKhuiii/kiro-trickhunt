@@ -288,3 +288,212 @@ Source-scan details for `components.boundaries.test.ts`:
 - `aiNote` for a withheld view: `App` computes it from `meta.semanticMode` and
   passes it as a prop; the pure view only has `limitsNoteKey`.
 - Storage unavailable: defaults are used, controls still work for the session.
+
+## Part C: link creature badges (amendment)
+
+Needs `link-creatures` tasks 1 to 4 first. Nothing in `src/core`, `src/analyzers`,
+`src/pipeline`, `src/server`, `src/app/api` or the API contract changes.
+
+### C1. Pure helper (`src/ui/view/link-badges.ts`)
+
+```ts
+function linkBadgesForGroup(
+  group: SignalGroupView,
+  linkCreatures: readonly LinkCreatureView[],
+): readonly (LinkCreatureView | null)[]
+```
+
+For `group.source === "url"`, walk `group.cards` in order. A card gets the
+creature `c` when `c.signalIds` contains `card.signalId` and `c` has not been
+given to an earlier card. Every other slot is `null`. For any other group the
+result is all `null`. Total (`try/catch` gives all `null`), no mutation. Exported
+from `src/ui/index.ts`.
+
+### C2. Components
+
+```
+src/components/
+  LinkBadge.tsx            props { creature: LinkCreatureView; locale }. Plain markup, tokens only.
+  icons.tsx                + IconLink, IconToneStrong, IconToneMedium, IconToneSoft, ToneIcon({ iconKey }) (fallback: soft)
+  EvidenceList.tsx         edited: url group shows link.plain.note once; each card renders its badge from linkBadgesForGroup
+  art/link-creatures.tsx   LINK_ART registry (artKey -> component) and LinkCreatureArt({ artKey, className })
+```
+
+`LinkBadge` layout (inside the existing card `<li>`, below severity):
+
+```
+ [art 3rem]  Link trait                      <- link.badge.caption, muted, text-base
+             Doppelganger                    <- name, font-bold
+             This link has traits of a lookalike: ...   <- link.<id>.desc
+             [tone icon] Strong sign         <- toneLabelKey, text label, not color alone
+             This link has traits that are often used to hide ...  <- explanationKey
+             What the hunter saw: paypa1 looks like paypal ...     <- existing evidence label + plain span
+```
+
+- The art `<svg>` sits in a wrapper with `style={{ color: "var(--th-" + colorToken + ")" }}`; the art uses `currentColor`. The name and the tone icon use the same variable. Tone label text uses `text`; description and explanation use `text` and `muted`. No color literal.
+- Container: `rounded-xl border border-[var(--th-border)] bg-[var(--th-raised)] p-3`. Sizes are `rem`. No transition, no animation.
+- The evidence `<span className="break-words">` is plain text. There is no `<a>`, `href`, `onClick`, `role="link"` or `tabIndex` in the badge or the card.
+- `link.plain.note` ("Shown as plain text. TrickHunt never opens links.") sits under the url group heading in `EvidenceList`, once per group.
+
+### C3. Art (`art/link-creatures.tsx`)
+
+```ts
+const LINK_ART: Readonly<Record<string, (p: { className?: string }) => ReactElement>> = { /* seven artKeys */ };
+function LinkCreatureArt({ artKey, className }: { artKey: unknown; className?: string }): ReactElement {
+  const Art = typeof artKey === "string" && Object.hasOwn(LINK_ART, artKey) ? LINK_ART[artKey] : null;
+  return Art === null ? <IconLink className={className} /> : <Art className={className} />;
+}
+```
+
+Seven pieces, each at most 12 elements in a `viewBox="0 0 48 48"` frame, stroke
+2.5, round caps, `fill="none"` or `currentColor`. Shapes (original, folklore
+feel, no existing character):
+
+| `artKey` | Sketch |
+|---|---|
+| `creature-doppelganger` | Two rounded outlines side by side, the right one mirrored, joined by a dotted centre line |
+| `creature-changeling` | A circle split in two halves with swap arrows on its edge |
+| `creature-faceless-one` | A hooded triangle with an empty oval where the face would be |
+| `creature-masked-stranger` | An oval face with a wide band across it and two eye holes |
+| `creature-hydra` | Three small circles (heads) on curved necks that meet at one base |
+| `creature-cloaked-gate` | An arch (gate) with a draped triangle over its top |
+| `creature-wisp` | A teardrop flame with two small dots beside it |
+
+`IconLink` (in `icons.tsx`, 24 box like the other icons) is two linked loops. It
+is also the fallback, so the badge and a later monster guide never render a
+broken or empty image. `art-budget.test.ts` already limits the new file to 30 KB.
+
+### C4. Rewritten `signal.url.*.explain` texts (REQ-PAGE-45)
+
+The two texts with "fake" and the claims that a site "is not the real site" are
+rewritten. The punycode text no longer states the sender's intent. IP address and
+shortener texts stay as they are. Vietnamese is a draft, pending human review;
+tests do not pin it.
+
+| Key | English | Vietnamese (draft) |
+|---|---|---|
+| `signal.url.punycode-host.explain` | The web address has traits of a disguised name. It uses unusual characters that can look like normal letters. Do not open it. | Địa chỉ web có dấu hiệu của một tên đội lốt. Nó dùng ký tự lạ có thể trông giống chữ thường. Đừng mở nó. |
+| `signal.url.at-in-authority.explain` | The web address has an @ sign. This can hide where it really goes. Do not open it. | Địa chỉ web có ký tự @. Điều này có thể che nơi nó thật sự dẫn đến. Đừng mở nó. |
+| `signal.url.excessive-subdomains.explain` | The web address has many parts. This can make the site name hard to read. Do not open it. | Địa chỉ web có nhiều phần. Điều này có thể làm tên trang khó đọc. Đừng mở nó. |
+| `signal.url.brand-lookalike.explain` | The site name looks almost like a well-known brand. It has traits of a lookalike. Type the real address yourself. | Tên trang web trông gần giống một thương hiệu nổi tiếng. Nó có dấu hiệu của một tên bắt chước. Hãy tự gõ địa chỉ thật. |
+| `signal.url.credential-keywords.explain` | The link has words like login or verify. Pages that ask for passwords often use them. Do not enter your password. | Đường dẫn có chữ như login hoặc verify. Các trang đòi mật khẩu hay dùng những chữ này. Đừng nhập mật khẩu. |
+| `signal.url.ip-address-host.explain` | *(unchanged)* | *(unchanged)* |
+| `signal.url.known-shortener.explain` | *(unchanged)* | *(unchanged)* |
+
+New keys (tier C, both languages):
+
+| Key | English | Vietnamese (draft) |
+|---|---|---|
+| `link.badge.caption` | Link trait | Dấu hiệu của đường dẫn |
+| `link.plain.note` | Shown as plain text. TrickHunt never opens links. | Chỉ hiển thị dạng chữ. TrickHunt không bao giờ mở đường dẫn. |
+
+### C5. Tests
+
+| Area | Test file | Kind |
+|---|---|---|
+| `linkBadgesForGroup` | `src/ui/view/link-badges.test.ts`, `link-badges.property.test.ts` | examples, PBT-110 |
+| Art registry, fallback, forbidden tags and colors | `src/components/art/link-creatures.test.ts` | examples, PBT-111 |
+| Badge and card markup (`renderToStaticMarkup`, as `registry.test.ts` does) | `src/components/LinkBadge.test.ts`, `src/components/EvidenceList.link.property.test.ts` | examples, PBT-112 |
+| Wording of the key set | `src/ui/i18n/link-wording.property.test.ts` | PBT-113 |
+| Source scan for `href`, `<a `, `onClick` in the three link files, and hard-coded text in `LinkBadge.tsx` | `src/components/components.boundaries.test.ts` (edited) | source scan |
+| New declared pairs | `src/ui/theme/pairs.ts` (existing tests and PBT-72 cover them) | existing |
+
+The tests run in `node` with `react-dom/server`, no jsdom, no new dependency.
+
+### C6. Edge cases
+
+- Evidence that contains `<a href="x">` is escaped by React and shown as text; PBT-112 checks it.
+- A creature whose card was dropped (blank evidence) is not in `linkCreatures`, so no badge appears without evidence.
+- Language switch: the badge re-renders from keys at once; no re-analysis.
+- High contrast: art and text use the high-contrast tokens through the same CSS variables.
+
+## Part D: link spotlight (amendment)
+
+Needs group 7 (Part C) done. Nothing in `src/core`, `src/analyzers`,
+`src/pipeline`, `src/server`, `src/app/api` or the API contract changes.
+
+Decision: **move** the badge. `EvidenceList` stops rendering it, so each creature
+appears once. Alternatives considered: copy the badge (a creature shows twice,
+longer page, harder to test "once"); a compact reference on the card (a second
+format to build and word). Moving is the simplest and keeps REQ-PAGE-50 true. The
+url card keeps `link.plain.note`, explanation, evidence and severity, so every
+badge stays backed by a visible card.
+
+### D1. Layout
+
+```
+[Your result]
+ ┌ Level banner ┐
+ Links in this message            <- new: result.links.heading
+   • Doppelganger badge           <- LinkBadge, same as before
+   • Cloaked Gate badge
+ ┌ AI note (if any) ┐
+ ┌ What to do now ┐
+ What we found: url cards (no badge) + highlighted message
+ ...
+```
+
+### D2. Pure layout change (`src/ui/view/page-layout.ts`, `journal.ts`)
+
+- `SectionId` gets `"linkSpotlight"`.
+- `resultSections(view)`: for a ready view with `view.linkCreatures.length > 0`, insert `"linkSpotlight"` right after `"levelBanner"`. A withheld view, and a ready view with no creatures, return the same list as today (REQ-PAGE-54). The function stays total (a non-array `linkCreatures` counts as empty).
+- `journal.ts`: `linkSpotlight` is not in `PAGE1_SECTIONS`, so it lands in `page2` and, because `page2` keeps `resultSections` order, it is first there (REQ-PAGE-53, Open point 7). Page 1 limits (`MAX_CLUES`, `MAX_ACTIONS`, one note) do not change.
+- `link-badges.ts` and `linkBadgesForGroup` are not edited and not deleted.
+
+### D3. Components
+
+```
+src/components/
+  LinkSpotlight.tsx   props { creatures: readonly LinkCreatureView[]; locale }. Returns null for [].
+  ResultPanel.tsx     renderSection: case "linkSpotlight" -> <LinkSpotlight creatures={view.linkCreatures} locale={locale} />
+  EvidenceList.tsx    edited: no linkBadgesForGroup, no LinkBadge import; keeps link.plain.note once in the url group
+  LinkBadge.tsx       not edited
+```
+
+`LinkSpotlight`:
+
+```tsx
+<section aria-labelledby="link-spotlight-heading">
+  <h3 id="link-spotlight-heading" className="text-2xl font-bold">{t(locale, "result.links.heading")}</h3>
+  <ul className="mt-3 space-y-3">
+    {creatures.map((c) => <li key={c.id}><LinkBadge creature={c} locale={locale} /></li>)}
+  </ul>
+</section>
+```
+
+- The heading uses the same size class as the Evidence_List heading. No new frame, icon, token or animation. The badge keeps its own existing container; the spotlight adds none (`hunter-scene-rules.md`: at most one framed object per screen applies to the journal paper, and the badge is already inside it today).
+- The id is fixed because there is one spotlight per result. A test checks it appears once.
+- `InfoFrame.tsx` already calls `renderSection`, so the spotlight appears in the journal without further change; `splitSections` must place it in the scrolling part (not pinned). The edit to `split-sections` (if it lists ids) is part of task 8.2.
+- `renderSection` returns `null` for `linkSpotlight` on a withheld view, as for other ready-only sections.
+
+### D4. Dictionary
+
+One new key, tier C (default tier, so `voice.ts` needs no new rule; the test that every key has a tier must still pass):
+
+| Key | English | Vietnamese (draft, pending human review) |
+|---|---|---|
+| `result.links.heading` | Links in this message | Đường dẫn trong nội dung |
+
+Joins the PBT-113 key set. It uses no horror word, no safe-family word and says nothing about the link being a scam. `link.badge.caption` and `link.plain.note` are unchanged.
+
+### D5. How existing tests change
+
+| Test | Change |
+|---|---|
+| `EvidenceList.link.property.test.ts` (PBT-112) | Edited: assertion "shows every creature name exactly once" becomes "shows no creature name"; escaping and no-link-element checks stay. Add PBT-115 here (no badge, no art, evidence kept, `link.plain.note` once). |
+| `LinkBadge.test.ts` | Not edited. The badge component is unchanged. |
+| `link-badges.test.ts`, `link-badges.property.test.ts` (PBT-110) | Not edited. |
+| `link-wording.property.test.ts` (PBT-113) | Edited: the key set gains `result.links.heading`. |
+| `view/page-layout.test.ts` | Edited: new examples for a view with and without links; existing examples unchanged. |
+| `journal` tests | Edited only if one pins `page2` for a view with links. |
+| `ResultPanel.test.ts` | Edited: example with links shows the heading and badges before the action box. PBT-114 is added in a new `ResultPanel.link.property.test.ts` (`renderToStaticMarkup`, no jsdom). |
+| `components.boundaries.test.ts` | Edited: `href`, `<a ` and `onClick` are also forbidden in `LinkSpotlight.tsx` and `ResultPanel.tsx`; the hard-coded text scan covers `LinkSpotlight.tsx`; add sanity cases. |
+| `dictionary` tests, `voice` tier test | Cover the new key through existing checks. |
+
+### D6. Edge cases
+
+- Many creatures (all seven): the spotlight grows. In the journal it scrolls inside page 2, which is already a keyboard-focusable scroll region.
+- A creature without evidence is not in `linkCreatures` (Part C), so the spotlight never shows a badge without its card.
+- Language switch: heading and badges re-render from keys; no re-analysis.
+- `linkCreatures` empty or garbage: no section, no empty wrapper.
+- Evidence with markup stays escaped text (PBT-114).

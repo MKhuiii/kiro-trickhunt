@@ -40,7 +40,7 @@ describe("route module wiring", () => {
     expect(typeof mod.POST).toBe("function");
     expect(mod.runtime).toBe("nodejs");
     expect(mod.dynamic).toBe("force-dynamic");
-    expect(mod.maxDuration).toBe(15);
+    expect(mod.maxDuration).toBe(20);
   });
 });
 
@@ -63,10 +63,13 @@ describe("createDefaultAnalyzeHandler", () => {
     expect(res.status).toBe(200);
     const body = (await res.json()) as {
       verdict?: unknown;
-      meta?: { semanticMode: string };
+      meta?: { semanticMode: string; reputationMode: string };
     };
     expect(body.verdict).toBeDefined();
-    expect(body.meta).toEqual({ semanticMode: "not-configured" });
+    expect(body.meta).toEqual({
+      semanticMode: "not-configured",
+      reputationMode: "not-requested",
+    });
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });

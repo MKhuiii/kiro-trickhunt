@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { InfoFrame } from "./InfoFrame";
 import { buildResultView, t } from "../ui";
 import type { Locale, Verdict } from "../pipeline";
+import { NO_REPUTATION } from "../pipeline/reputation-fixture";
 
 // Markup tests for the information frame (REQ-HUNT-02, 29, 30, 36).
 
@@ -36,6 +37,7 @@ function verdict(): Verdict {
     inputTruncated: false,
     urlsAnalyzed: 0,
     urlsSkipped: 0,
+    reputation: NO_REPUTATION,
   };
 }
 

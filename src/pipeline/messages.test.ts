@@ -10,6 +10,7 @@ import {
   LIMITATIONS_DEGRADED,
   LIMITATIONS_FIXED,
   LIMITATIONS_NO_SIGNALS,
+  LIMITATIONS_REPUTATION,
   LIMITATIONS_UNAVAILABLE,
 } from "./messages.config";
 import { buildActions, buildLimitations, resolveLocale } from "./messages";
@@ -112,6 +113,27 @@ describe("buildLimitations", () => {
     expect(vi).toContain(LIMITATIONS_NO_SIGNALS.vi[0]);
     const unknown = buildLimitations({ level: "high", semanticStatus: "ok", locale: "zz" });
     expect(unknown).toEqual([...LIMITATIONS_FIXED.en]);
+  });
+
+  it("adds the reputation limitation once when a link is listed", () => {
+    for (const locale of ["en", "vi"] as const) {
+      const out = buildLimitations({
+        level: "high",
+        semanticStatus: "ok",
+        locale,
+        reputationListed: true,
+        awarenessApplied: true,
+      });
+      expect(out.filter((t) => t === LIMITATIONS_REPUTATION[locale][0])).toHaveLength(1);
+    }
+  });
+
+  it("omits the reputation limitation when not listed or unset", () => {
+    const base = { level: "high", semanticStatus: "ok", locale: "en" } as const;
+    expect(buildLimitations(base)).not.toContain(LIMITATIONS_REPUTATION.en[0]);
+    expect(buildLimitations({ ...base, reputationListed: false })).not.toContain(
+      LIMITATIONS_REPUTATION.en[0],
+    );
   });
 
   it("no_signals verdict gets fallback action and no-signals limitation", () => {

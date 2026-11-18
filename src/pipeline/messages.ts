@@ -12,6 +12,7 @@ import {
   LIMITATIONS_DEGRADED,
   LIMITATIONS_FIXED,
   LIMITATIONS_NO_SIGNALS,
+  LIMITATIONS_REPUTATION,
   LIMITATIONS_UNAVAILABLE,
 } from "./messages.config";
 import type { Locale, MonsterId, RiskLevel, SemanticStatus } from "./verdict";
@@ -54,12 +55,15 @@ export interface BuildLimitationsParams {
   readonly locale: unknown;
   /** True when the awareness adjustment lowered the level (rules-tuning-v5). */
   readonly awarenessApplied?: boolean;
+  /** True when a link was found on the list of reported sites. */
+  readonly reputationListed?: boolean;
 }
 
 export function buildLimitations(params: BuildLimitationsParams): string[] {
   const loc = resolveLocale(params.locale);
   const out: string[] = [...LIMITATIONS_FIXED[loc]];
   if (params.awarenessApplied === true) out.push(...LIMITATIONS_AWARENESS[loc]);
+  if (params.reputationListed === true) out.push(...LIMITATIONS_REPUTATION[loc]);
   if (params.semanticStatus === "degraded") out.push(...LIMITATIONS_DEGRADED[loc]);
   if (params.semanticStatus === "unavailable")
     out.push(...LIMITATIONS_UNAVAILABLE[loc]);

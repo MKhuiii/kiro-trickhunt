@@ -1,5 +1,6 @@
 /**
- * POST /api/analyze handler factory (REQ-API-01, 03, 04, 05, 14, 15, 26, 28 to 30, 37, 39, 40).
+ * POST /api/analyze handler factory (REQ-API-01, 03, 04, 05, 14, 15, 26, 28 to 30, 37, 39, 40;
+ * REQ-LREP-03, 13 to 18).
  *
  * Flow order is fixed: rate limit, content type, declared size, bounded read,
  * JSON parse, schema validation (the last four live in readAnalyzeRequest),
@@ -10,6 +11,7 @@
  * failing dependencies are discarded.
  */
 import type { LlmClient } from "../../analyzers/llm-client";
+import type { ReputationChecker } from "../../analyzers/reputation-checker";
 import type { Pipeline, PipelineOptions } from "../../pipeline";
 import { errorResponse, jsonResponse } from "./analyze-response";
 import { readAnalyzeRequest } from "./analyze-request";
@@ -19,12 +21,22 @@ import type { LlmBudget } from "./llm-budget";
 import type { AnalyzeLogEvent, LogSemanticMode, LogStatus } from "./log-event";
 import { extractClientKey } from "./rate-limiter";
 import type { RateLimiter } from "./rate-limiter";
+import { createReputationGate } from "./reputation-gate";
+import type { ReputationBudget, ReputationGate } from "./reputation-gate";
+import { deriveReputationMode } from "./reputation-mode";
+import type { LogReputationMode, ReputationMode } from "./reputation-mode";
 
 export interface AnalyzeHandlerDeps {
   getLlmClient(): LlmClient | null;
   createPipeline(options: PipelineOptions): Pipeline;
   rateLimiter: RateLimiter;
   llmBudget: LlmBudget;
+  /** Optional link reputation lookup. Absent when the feature is not configured. */
+  reputation?: {
+    /** Returns null when not configured. Called at most once per request. */
+    createChecker(gate: () => boolean): ReputationChecker | null;
+    budget: ReputationBudget;
+  };
   /** Epoch ms, used for duration only. */
   now(): number;
   logEvent(event: AnalyzeLogEvent): void;
@@ -56,6 +68,7 @@ export function createAnalyzeHandler(
   return async function handle(req: Request): Promise<Response> {
     const startedAt = safeNow();
     let mode: LogSemanticMode = "none";
+    let logReputationMode: LogReputationMode = "none";
     let response: Response;
 
     try {
@@ -73,10 +86,27 @@ export function createAnalyzeHandler(
               ? null
               : createLazyLlmClient(real, deps.llmBudget);
           const llmClient = lazy === null ? null : lazy.client;
-          const options: PipelineOptions =
-            parsed.input.locale !== undefined
-              ? { llmClient, locale: parsed.input.locale }
-              : { llmClient };
+
+          // The gate and checker exist only with consent (REQ-LREP-13, 17).
+          const checkLinks = parsed.input.checkLinks === true;
+          let gate: ReputationGate | null = null;
+          let checker: ReputationChecker | null = null;
+          if (checkLinks && deps.reputation) {
+            try {
+              gate = createReputationGate(deps.reputation.budget);
+              checker = deps.reputation.createChecker(gate.gate) ?? null;
+            } catch {
+              checker = null;
+            }
+          }
+
+          const options: PipelineOptions = {
+            llmClient,
+            ...(parsed.input.locale !== undefined
+              ? { locale: parsed.input.locale }
+              : {}),
+            ...(checker !== null ? { reputationChecker: checker } : {}),
+          };
           // Locale is not part of the pipeline input.
           const input: { text?: string; urls?: string[] } = {};
           if (parsed.input.text !== undefined) input.text = parsed.input.text;
@@ -87,7 +117,23 @@ export function createAnalyzeHandler(
             const verdict = await pipeline.run(input);
             // Derived after the run: budget is acquired at call time.
             mode = deriveMode(lazy);
-            response = jsonResponse({ verdict, meta: { semanticMode: mode } }, 200);
+            let reputationMode: ReputationMode;
+            try {
+              reputationMode = deriveReputationMode({
+                checkLinks,
+                configured: checker !== null,
+                gate: gate === null ? "skipped" : gate.outcome(),
+                urlsAnalyzed: verdict.urlsAnalyzed,
+                reputation: verdict.reputation,
+              });
+            } catch {
+              reputationMode = "failed";
+            }
+            logReputationMode = reputationMode;
+            response = jsonResponse(
+              { verdict, meta: { semanticMode: mode, reputationMode } },
+              200,
+            );
           } finally {
             // Also covers a throwing run: log the true mode.
             mode = deriveMode(lazy);
@@ -97,6 +143,7 @@ export function createAnalyzeHandler(
     } catch {
       // Caught value is discarded on purpose: it may contain user content.
       response = errorResponse("internal-error");
+      logReputationMode = "none";
     }
 
     try {
@@ -109,6 +156,7 @@ export function createAnalyzeHandler(
         status,
         durationMs: Number.isFinite(elapsed) ? Math.max(0, Math.floor(elapsed)) : 0,
         semanticMode: mode,
+        reputationMode: status === 200 ? logReputationMode : "none",
       });
     } catch {
       // A failing logger must not change the response (REQ-API-39).

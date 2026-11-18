@@ -16,6 +16,7 @@ import { createPipeline } from "./index";
 import { selectMonster } from "./monster";
 import { reduceForScoring } from "./reduce";
 import { EVAL_SAMPLES } from "./eval/samples";
+import { REPUTATION_LISTED_SEVERITY } from "./rules.config";
 
 const pipeline = createPipeline({ llmClient: null });
 
@@ -63,6 +64,7 @@ const URL_MAX: Readonly<Record<string, number>> = {
   "url.known-shortener": 0.4,
   "url.brand-lookalike": 0.75,
   "url.credential-keywords": 0.45,
+  "url.reputation-listed": REPUTATION_LISTED_SEVERITY,
 };
 
 function maxSeverityOf(id: string): number {

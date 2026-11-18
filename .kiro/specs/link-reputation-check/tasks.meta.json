@@ -1,0 +1,1165 @@
+{
+  "pbtResults": {
+    "3.2 Property test PBT-126 in `reputation-config.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985076641
+    },
+    "3.4 Property test in `url-expressions.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794978578421
+    },
+    "7.7 Create `src/pipeline/timing.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794978583650
+    },
+    "10.5 Property test PBT-130 in `theme/plague-mark.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985152286
+    },
+    "10.3 Property test PBT-128 in `i18n/reputation-wording.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985153279
+    },
+    "9.3 Property test PBT-129 in `analyze-input.reputation.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985167658
+    },
+    "10.7 Property test PBT-127 in `view/reputation-note.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985490710
+    },
+    "7.9 Property test PBT-123 in `reputation-mode.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985532589
+    },
+    "3.9 Property test PBT-117 (outbound request) in `reputation-checker.privacy.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985954526
+    },
+    "5.4 Property test PBT-120 in `reputation.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985958820
+    },
+    "3.8 Property test PBT-116 in `reputation-checker.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985966104
+    },
+    "5.5 Property test PBT-121 in `reputation.score.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794985969543
+    },
+    "5.6 Property test PBT-122 in `awareness.reputation.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794986302549
+    },
+    "5.7 Property test PBT-125 (pipeline part) in `reputation.timeout.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794986315595
+    },
+    "7.8 Property tests PBT-118 and PBT-119 in `analyze-handler.reputation.property.test.ts`": {
+      "status": "passed",
+      "lastRunTimestamp": 1794986396010
+    },
+    "7.10 Property tests PBT-124 and PBT-117 (handler part)": {
+      "status": "passed",
+      "lastRunTimestamp": 1794986538084
+    }
+  },
+  "executionHistory": {
+    "1.1 Create `src/analyzers/reputation-checker.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978102575
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978112207
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978187827
+      }
+    ],
+    "1.2 Pipeline config constants and limitation text": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978102693
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978292625
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978410838
+      }
+    ],
+    "2. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978102766
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986561560
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986684377
+      }
+    ],
+    "3.1 Create `reputation.config.ts` and `reputation-config.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978102878
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978292764
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978411832
+      }
+    ],
+    "3.2 Property test PBT-126 in `reputation-config.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978102985
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978531166
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985087800
+      }
+    ],
+    "3.3 Create `url-expressions.ts` and `url-expressions.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103077
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978293469
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978414991
+      }
+    ],
+    "3.4 Property test in `url-expressions.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103156
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978531405
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978712550
+      }
+    ],
+    "3.5 Create `safe-browsing-provider.ts` and its tests": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103254
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978531984
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978711616
+      }
+    ],
+    "3.6 Create `fake-reputation-provider.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103360
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985214291
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985337213
+      }
+    ],
+    "3.7 Create `reputation-checker.ts` and `index.ts`; write `reputation-checker.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103436
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985438342
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985768064
+      }
+    ],
+    "3.8 Property test PBT-116 in `reputation-checker.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103506
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985895146
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986257938
+      }
+    ],
+    "3.9 Property test PBT-117 (outbound request) in `reputation-checker.privacy.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103578
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985896037
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986255787
+      }
+    ],
+    "4. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103653
+      },
+      {
+        "executionId": "2c3c435b-c4b4-4093-b217-c14d58851f0c",
+        "chatSessionId": "sess_f38d8401-2dca-43e4-bf6c-f66aef36c6d0",
+        "timestamp": 1794986771710
+      },
+      {
+        "executionId": "2c3c435b-c4b4-4093-b217-c14d58851f0c",
+        "chatSessionId": "sess_f38d8401-2dca-43e4-bf6c-f66aef36c6d0",
+        "timestamp": 1794986807308
+      }
+    ],
+    "5.1 `verdict.ts`: `ReputationOutcome` and `Verdict.reputation`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103728
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978533055
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978711369
+      }
+    ],
+    "5.2 Create `src/pipeline/reputation.ts` and `reputation.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103799
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985214450
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985338230
+      }
+    ],
+    "5.3 Edit `pipeline.ts` and the pipeline index": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103873
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985439305
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985771179
+      }
+    ],
+    "5.4 Property test PBT-120 in `reputation.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978103952
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985896998
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986257093
+      }
+    ],
+    "5.5 Property test PBT-121 in `reputation.score.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104025
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985897901
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986255469
+      }
+    ],
+    "5.6 Property test PBT-122 in `awareness.reputation.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104114
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986262838
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986331899
+      }
+    ],
+    "5.7 Property test PBT-125 (pipeline part) in `reputation.timeout.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104201
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986263665
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986329798
+      }
+    ],
+    "6. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104278
+      },
+      {
+        "executionId": "2c3c435b-c4b4-4093-b217-c14d58851f0c",
+        "chatSessionId": "sess_f38d8401-2dca-43e4-bf6c-f66aef36c6d0",
+        "timestamp": 1794986813910
+      },
+      {
+        "executionId": "2c3c435b-c4b4-4093-b217-c14d58851f0c",
+        "chatSessionId": "sess_f38d8401-2dca-43e4-bf6c-f66aef36c6d0",
+        "timestamp": 1794986849741
+      }
+    ],
+    "7.1 `analyze-request.ts`: add `checkLinks: z.boolean().optional()`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104357
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978112320
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978188624
+      }
+    ],
+    "7.2 Create `reputation-gate.ts` and `reputation-gate.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104444
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978294270
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978415131
+      }
+    ],
+    "7.3 Create `reputation-mode.ts` and `reputation-mode.test.ts`; edit `log-event.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104512
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985215074
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985339344
+      }
+    ],
+    "7.4 Edit `analyze-handler.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104589
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985893899
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986255651
+      }
+    ],
+    "7.5 Edit `default-handler.ts`; update `route.test.ts` meta": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104686
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986336838
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986409177
+      }
+    ],
+    "7.6 Change `maxDuration` from 15 to 20 (design, \"Tensions\" item 1)": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104797
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978113044
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978189438
+      }
+    ],
+    "7.7 Create `src/pipeline/timing.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104872
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978533849
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978711844
+      }
+    ],
+    "7.8 Property tests PBT-118 and PBT-119 in `analyze-handler.reputation.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978104952
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986337663
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986407880
+      }
+    ],
+    "7.9 Property test PBT-123 in `reputation-mode.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105032
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985440134
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985768958
+      }
+    ],
+    "7.10 Property tests PBT-124 and PBT-117 (handler part)": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105111
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986418718
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986552664
+      }
+    ],
+    "8. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105189
+      },
+      {
+        "executionId": "2c3c435b-c4b4-4093-b217-c14d58851f0c",
+        "chatSessionId": "sess_f38d8401-2dca-43e4-bf6c-f66aef36c6d0",
+        "timestamp": 1794986853904
+      },
+      {
+        "executionId": "2c3c435b-c4b4-4093-b217-c14d58851f0c",
+        "chatSessionId": "sess_f38d8401-2dca-43e4-bf6c-f66aef36c6d0",
+        "timestamp": 1794986896056
+      }
+    ],
+    "9.1 Edit `src/client/ingest/types.ts` and `analyze-input.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105272
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978113856
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978190242
+      }
+    ],
+    "9.2 Edit `analyze-client.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105342
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978294920
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978415246
+      }
+    ],
+    "9.3 Property test PBT-129 in `analyze-input.reputation.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105427
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985101612
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985197713
+      }
+    ],
+    "10.1 Eighth link creature and attribution address": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105505
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978415578
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978520320
+      }
+    ],
+    "10.2 Signal id, tier rule and dictionary keys": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105579
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978416373
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978521120
+      }
+    ],
+    "10.3 Property test PBT-128 in `i18n/reputation-wording.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105657
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985101894
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985199111
+      }
+    ],
+    "10.4 Theme token `link-plague-mark`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105736
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978114519
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978190850
+      }
+    ],
+    "10.5 Property test PBT-130 in `theme/plague-mark.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105823
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985101991
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985200907
+      }
+    ],
+    "10.6 Create `view/reputation-note.ts` and `reputation-note.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978105901
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985102103
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985200063
+      }
+    ],
+    "10.7 Property test PBT-127 in `view/reputation-note.property.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106035
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985441674
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985770070
+      }
+    ],
+    "10.8 View model, layout and journal": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106112
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985216071
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985336401
+      }
+    ],
+    "10.9 Edit `run-check.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106186
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985345957
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985431001
+      }
+    ],
+    "11. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106250
+      },
+      {
+        "executionId": "2c3c435b-c4b4-4093-b217-c14d58851f0c",
+        "chatSessionId": "sess_f38d8401-2dca-43e4-bf6c-f66aef36c6d0",
+        "timestamp": 1794986900754
+      }
+    ],
+    "12.1 Plague Mark art": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106328
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985216729
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985340165
+      }
+    ],
+    "12.2 Create `ReputationNote.tsx` and `ReputationNote.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106405
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985346263
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985433227
+      }
+    ],
+    "12.3 Create `ReputationAttribution.tsx` and `ReputationAttribution.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106479
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985348089
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985432221
+      }
+    ],
+    "12.4 Edit `BagPanel.tsx` and `BagPanel.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106550
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985348199
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985430271
+      }
+    ],
+    "12.5 Edit `App.tsx`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106623
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985442397
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985767312
+      }
+    ],
+    "12.6 Edit `LinkSpotlight.tsx`, `ResultPanel.tsx`, `EvidenceList.tsx`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106702
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985776661
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985887976
+      }
+    ],
+    "12.7 Source-scan rules in `components.boundaries.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106787
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986264575
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986330827
+      }
+    ],
+    "13.1 Edit `.kiro/steering/privacy-and-safety.md`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106852
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978199953
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978253573
+      }
+    ],
+    "13.2 Edit `.kiro/steering/product.md`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978106933
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978200275
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978254609
+      }
+    ],
+    "13.3 Edit `.kiro/steering/tech.md`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978107008
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978200369
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978255162
+      }
+    ],
+    "13.4 Edit `.kiro/steering/api-rules.md`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978107090
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978201092
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978256023
+      }
+    ],
+    "13.5 Edit `.kiro/steering/verdict-rules.md`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978107170
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978201809
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978256768
+      }
+    ],
+    "13.6 Edit `.env.example`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978107238
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978261716
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978286309
+      }
+    ],
+    "13.7 Edit `README.md`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978107317
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978417421
+      },
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978521948
+      }
+    ],
+    "13.8 Create `src/server/reputation/docs.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978107396
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985102248
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985198424
+      }
+    ],
+    "13.9 Create `src/server/reputation/boundaries.test.ts`": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978107470
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986419642
+      },
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986553955
+      }
+    ],
+    "14. Final checkpoint": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978107552
+      }
+    ],
+    "1. Types and pipeline configuration": [
+      {
+        "executionId": "9d482fb7-e29e-4a3f-9b1c-fc0d042f5ca8",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794978410939
+      }
+    ],
+    "9. Client request": [
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985197814
+      }
+    ],
+    "10. UI logic (`src/ui/`; tasks 10.7 and 10.8 need `ui-page` group 8 done first)": [
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794985770150
+      }
+    ],
+    "3. Server module `src/server/reputation/`": [
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986258019
+      }
+    ],
+    "12. Components (all tasks need `ui-page` group 8 done first)": [
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986330909
+      }
+    ],
+    "5. Pipeline integration": [
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986331992
+      }
+    ],
+    "7. API handler and `maxDuration`": [
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986552800
+      }
+    ],
+    "13. Steering, README and `.env.example`": [
+      {
+        "executionId": "1e49b5bf-3646-4daf-9632-220d7b87ff5d",
+        "chatSessionId": "sess_82f71774-db29-41df-bb2f-1026ac4f8f78",
+        "timestamp": 1794986554073
+      }
+    ]
+  }
+}

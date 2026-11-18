@@ -52,6 +52,7 @@ Send `Content-Type: application/json` (parameters such as `charset` are allowed)
 | `text` | string, optional | at most 4000 characters |
 | `urls` | string[], optional | at most 10 items, each at most 2048 characters |
 | `locale` | string, optional | exactly `"vi"` or `"en"` |
+| `checkLinks` | boolean, optional | `true` or `false` (see [Link reputation check](#link-reputation-check)) |
 
 At least one non-blank `text` or a non-empty `urls` is required. A body with only `locale` is rejected.
 
@@ -136,7 +137,51 @@ Set these in `.env` (see `.env.example`). Missing or invalid values fall back to
 
 **Rules-only fallback.** If the LLM is not configured, the budget is spent, or the provider fails or times out, the API still answers with the rule-based verdict. This is a normal state, not an error.
 
-**Duration.** The route sets `maxDuration = 15` seconds. Your hosting plan may cap this lower. If the cap is below about 10 seconds, the platform could cut a slow LLM call before the pipeline's own timeout.
+**Duration.** The route sets `maxDuration = 20` seconds. Your hosting plan may cap this lower. If the cap is below about 10 seconds, the platform could cut a slow LLM call before the pipeline's own timeout.
+
+## Link reputation check
+
+An optional lookup asks Google Safe Browsing whether a link is on its list of reported sites. It is off unless the user asks for it.
+
+### Consent rule
+
+The lookup runs only when the user ticks the unticked consent box for that one scan. The choice is never stored and never carried to the next scan. Without the tick, no lookup is made.
+
+### Data sent
+
+Only the first 4 bytes of the SHA-256 hash of each link expression leave the server (Safe Browsing `hashes.search`). The message, the image, the full link, its path and query, and any user identifier are never sent. The server compares full hashes itself. The call is made from the server, and the API key never reaches the browser. Nothing is stored, cached or logged: no link, expression, hash or provider response. The only outbound host is `safebrowsing.googleapis.com`.
+
+### Not listed is not safe
+
+A link that is not on the list is not called safe. New and unreported links are not on any list yet. The result says "Not found on the lists we checked", never "safe". A listed link "may be on a list of reported sites kept by Google" and is shown with "Advisory provided by Google". A listing can raise the risk level to at least `high`.
+
+### Request field and response mode
+
+Send `"checkLinks": true` in the `POST /api/analyze` body to ask for the lookup. The browser sends it only when the box is ticked and the input has a link. `meta.reputationMode` reports what happened:
+
+| `reputationMode` | Meaning |
+|---|---|
+| `checked` | The lookup ran for the links. |
+| `not-requested` | `checkLinks` was not `true`. No lookup was made. |
+| `not-configured` | `LINK_REPUTATION_API_KEY` is missing or blank. The verdict is rule-based only. |
+| `budget-exhausted` | The per-minute or per-day lookup limit is spent, or a limit is `0`. |
+| `skipped` | The lookup was asked for but had nothing to check (no links were analyzed). |
+| `failed` | The lookup was tried but the provider failed or timed out. The verdict is still returned. |
+
+### Settings
+
+Set these in `.env` (see `.env.example`). They are read on the server only. Missing or invalid values fall back to the default, and out-of-range values are clamped.
+
+| Variable | Default | Bounds | Purpose |
+|---|---|---|---|
+| `LINK_REPUTATION_API_KEY` | none | n/a | Safe Browsing key. Optional. The lookup is off when it is missing. |
+| `LINK_REPUTATION_TIMEOUT_MS` | 3000 | 500 to 6000 | Provider timeout in milliseconds. |
+| `LINK_REPUTATION_CALLS_PER_MINUTE` | 10 | 0 to 60 | Lookups per minute per instance. `0` turns the lookup off. |
+| `LINK_REPUTATION_CALLS_PER_DAY` | 2000 | 0 to 10000 | Lookups per 24 hours per instance. `0` turns the lookup off. |
+
+### Non-commercial use
+
+The Safe Browsing API is free for non-commercial use only. Keep TrickHunt non-commercial, or switch to Google Web Risk. Google does not guarantee the accuracy or reliability of the list.
 
 ## Image and QR input (browser)
 
@@ -187,6 +232,10 @@ Licenses and sources of the shipped components are listed in [`THIRD_PARTY_NOTIC
 ### The `/try` page
 
 `/try` is a temporary developer page for checking this flow in a real browser. It is not linked from other pages and will be replaced by the real UI.
+
+## Link creatures
+
+Each suspicious trait in a link gets a small creature on the result card. For example, the Doppelganger marks a name that is very close to a well-known brand. Creatures only help you read the evidence. They never change the risk level, the score or the main monster. TrickHunt never opens, visits or tests a link, so it cannot tell whether a link exists, where it leads or whether the page behind it is genuine. It only looks at the characters of the link.
 
 ## Known limits
 

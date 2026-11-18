@@ -52,4 +52,6 @@ verdict, advises their relative accurately.
 - Accessible at all font sizes (no fixed-pixel font sizes on user-facing text)
 - Explanation written at a reading level suitable for a non-technical adult
 - Risk level always shown with at least one piece of evidence
-- No network request carries raw user content to a third-party service
+- No network request carries raw user content to a third-party service, except
+  the consented link lookup of `link-reputation-check`, which sends only
+  4-byte hash prefixes of link expressions

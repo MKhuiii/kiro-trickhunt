@@ -241,6 +241,7 @@ describe("Feature: analyze-api, Property 2 — Fixed error bodies, no leaks (PBT
           status: res.status,
           durationMs: expect.any(Number),
           semanticMode: expect.any(String),
+          reputationMode: "none",
         });
       }),
       { numRuns: NUM_RUNS },
@@ -423,7 +424,7 @@ describe("Feature: analyze-api-locale-budget, Property 61 � Blank text never a
           const res = await h.handler(jsonPost(payload));
           expect(res.status).toBe(200);
           const body = (await res.json()) as { meta: { semanticMode: string } };
-          expect(body.meta).toEqual({ semanticMode: "skipped" });
+          expect(body.meta).toEqual({ semanticMode: "skipped", reputationMode: "not-requested" });
           expect(budget.attempts()).toBe(0);
           expect(h.client.callCount).toBe(0);
           expect(h.events[0]?.semanticMode).toBe("skipped");
@@ -452,7 +453,10 @@ describe("Feature: analyze-api-locale-budget, Property 63 � Denying budget deg
           verdict: Record<string, unknown>;
           meta: { semanticMode: string };
         };
-        expect(body.meta).toEqual({ semanticMode: "budget-exhausted" });
+        expect(body.meta).toEqual({
+          semanticMode: "budget-exhausted",
+          reputationMode: "not-requested",
+        });
         expect(h.client.callCount).toBe(0);
         expect(budget.acquired()).toBe(0);
 

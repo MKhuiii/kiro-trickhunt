@@ -150,6 +150,35 @@ describe("analyzeRequest", () => {
     },
   );
 
+  it("sends checkLinks only when it is exactly true", async () => {
+    expect(await sentBody({ text: "t", checkLinks: true })).toEqual({ text: "t", checkLinks: true });
+  });
+
+  it.each([[false], ["true"], [1], [null], [undefined], [{}], [[]]])(
+    "omits checkLinks when it is %j",
+    async (checkLinks) => {
+      expect(await sentBody({ text: "t", checkLinks })).toEqual({ text: "t" });
+    },
+  );
+
+  it.each(["checked", "not-requested", "not-configured", "budget-exhausted", "skipped", "failed"])(
+    "returns reputationMode %s",
+    async (reputationMode) => {
+      const body = { verdict: VERDICT, meta: { semanticMode: "used", reputationMode } };
+      const r = await analyzeRequest(REQ, depsFor(response(200, body)));
+      expect(r).toEqual({ ok: true, verdict: VERDICT, semanticMode: "used", reputationMode });
+    },
+  );
+
+  it.each([["other"], [""], [5], [null], [{}], ["Checked"]])(
+    "leaves reputationMode out for unknown value %j",
+    async (reputationMode) => {
+      const body = { verdict: VERDICT, meta: { semanticMode: "used", reputationMode } };
+      const r = await analyzeRequest(REQ, depsFor(response(200, body)));
+      expect(r).toEqual({ ok: true, verdict: VERDICT, semanticMode: "used" });
+    },
+  );
+
   it("sends only text and urls when the input has extra properties", async () => {
     let body = "";
     const input = { text: "t", urls: ["https://b.example"], image: "BYTES", extra: 1 };

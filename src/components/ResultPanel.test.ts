@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { ResultPanel } from "./ResultPanel";
 import { MONSTER_PRESENTATION, buildResultView, t } from "../ui";
 import type { Locale, Verdict } from "../pipeline";
+import { NO_REPUTATION } from "../pipeline/reputation-fixture";
 
 // Markup tests: no internal ids in the rendered result (REQ-HUNT-20 to REQ-HUNT-22).
 
@@ -49,6 +50,7 @@ function verdict(overrides: Partial<Verdict> = {}): Verdict {
     inputTruncated: true,
     urlsAnalyzed: 1,
     urlsSkipped: 2,
+    reputation: NO_REPUTATION,
     ...overrides,
   };
 }
@@ -118,5 +120,119 @@ describe("ResultPanel without ids", () => {
 
   it("vietnamese ready markup has no ids", () => {
     expectNoIds(render(buildResultView(verdict(), "", "vi"), "vi"));
+  });
+});
+
+describe("ResultPanel link spotlight", () => {
+  const linkView = buildResultView(
+    verdict({
+      signals: [
+        {
+          id: "url.brand-lookalike",
+          source: "url",
+          severity: 0.8,
+          evidence: "http://paypa1.com/verify",
+          whyItMatters: "Lookalike.",
+        },
+      ],
+    }),
+    "",
+    "en",
+  );
+
+  it("shows the heading and badges before the action box, once", () => {
+    expect(linkView.kind).toBe("ready");
+    if (linkView.kind !== "ready") return;
+    expect(linkView.linkCreatures.length).toBeGreaterThan(0);
+    const html = render(linkView);
+    const heading = html.indexOf(escapeHtml(t("en", "result.links.heading")));
+    const actions = html.indexOf(escapeHtml(t("en", "result.actions.heading")));
+    expect(heading).toBeGreaterThan(-1);
+    expect(actions).toBeGreaterThan(heading);
+    for (const c of linkView.linkCreatures) {
+      const name = escapeHtml(t("en", c.nameKey));
+      const pos = html.indexOf(`>${name}<`);
+      expect(pos).toBeGreaterThan(heading);
+      expect(pos).toBeLessThan(actions);
+      expect(html.split(`>${name}<`).length - 1).toBe(1);
+    }
+  });
+
+  it("shows no spotlight when there are no link creatures", () => {
+    const html = render(buildResultView(verdict({ signals: [verdict().signals[0]] }), "", "en"));
+    expect(html).not.toContain(escapeHtml(t("en", "result.links.heading")));
+    expect(html).not.toContain("link-spotlight-heading");
+  });
+});
+
+describe("ResultPanel link reputation", () => {
+  const listedSignal = {
+    id: "url.reputation-listed",
+    source: "url" as const,
+    severity: 0.75,
+    evidence: "bad.example (malware)",
+    whyItMatters: "Listed.",
+  };
+  const checked = { status: "ok", checkedCount: 1 } as const;
+
+  it("listed link: Plague Mark badge and evidence card each carry the attribution link", () => {
+    const view = buildResultView(
+      verdict({ signals: [listedSignal], reputation: checked }),
+      "",
+      "en",
+      { reputationMode: "checked" },
+    );
+    expect(view.kind).toBe("ready");
+    if (view.kind !== "ready") return;
+    expect(view.reputationNote).toBeNull();
+    const html = render(view);
+    expect(html).toContain(escapeHtml(t("en", "link.plague-mark.name")));
+    const text = escapeHtml(t("en", "reputation.attribution.text"));
+    expect(html.split(text).length - 1).toBe(2);
+    expect(html.split("<a ").length - 1).toBe(2);
+    expect(html).not.toContain(escapeHtml(t("en", "reputation.notListed.text")));
+  });
+
+  it("not listed with a creature: note shown inside the spotlight, no attribution", () => {
+    const view = buildResultView(
+      verdict({
+        signals: [
+          {
+            id: "url.brand-lookalike",
+            source: "url",
+            severity: 0.8,
+            evidence: "http://paypa1.com/verify",
+            whyItMatters: "Lookalike.",
+          },
+        ],
+        reputation: checked,
+      }),
+      "",
+      "en",
+      { reputationMode: "checked" },
+    );
+    const html = render(view);
+    expect(html).toContain(escapeHtml(t("en", "reputation.notListed.text")));
+    expect(html).toContain(escapeHtml(t("en", "reputation.notListed.limit")));
+    expect(html).not.toContain("<a ");
+  });
+
+  it("not listed without a creature: note shown as its own section", () => {
+    const view = buildResultView(
+      verdict({ signals: [verdict().signals[0]], reputation: checked }),
+      "",
+      "en",
+      { reputationMode: "checked" },
+    );
+    const html = render(view);
+    expect(html).toContain(escapeHtml(t("en", "reputation.notListed.text")));
+    expect(html).not.toContain("<a ");
+  });
+
+  it("unavailable lookup shows the unavailable note", () => {
+    const view = buildResultView(verdict({ reputation: { status: "degraded", reason: "provider-error", checkedCount: 0 } }), "", "en", {
+      reputationMode: "failed",
+    });
+    expect(render(view)).toContain(escapeHtml(t("en", "reputation.notice.unavailable")));
   });
 });

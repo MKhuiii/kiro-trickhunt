@@ -35,6 +35,34 @@ This spec **amends** it through an explicit, small group of changes to
 | `WithheldResultView` | New field `limitsNoteKey` |
 | `privacy-and-safety.md` risk-level table | Row `suspicious` gets the new wording (steering edit, see Open points) |
 
+## Amendment: link creature badges
+
+The page is already built and its tasks 1 to 6 are checked, so they are not
+reopened. This amendment adds Requirement 8 (`REQ-PAGE-40` to `REQ-PAGE-46`),
+PBT-110 to PBT-113 (global numbering continues after `PBT-109` of
+`link-creatures`) and a new task group 7. It shows the link creatures of the
+`link-creatures` spec on URL signal cards.
+
+**Dependency:** `link-creatures` tasks 1 to 4 (table, `link.*` keys, `link-*`
+color tokens, `ReadyResultView.linkCreatures`) must be done first. This
+amendment does not repeat them. It uses `LINK_CREATURES`, `LINK_TONES` and
+`linkCreatures` as they are specified there. The "SVG artwork and components"
+that `link-creatures` left for a later spec are built here.
+
+Existing items this amendment modifies:
+
+| Existing item | Change |
+|---|---|
+| REQ-PAGE-23 | Extended: a signal card in the `url` group can carry a creature badge. The section order is unchanged. |
+| REQ-PAGE-34 | Extended: 14 new declared `ui` pairs (the seven `link-*` tokens on `surface` and `raised`, for the badge art). |
+| REQ-PAGE-39 | Extended: the new component file is covered by the hard-coded text scan; the new art file carries no text. |
+| REQ-PAGE-37, `components.boundaries.test.ts` | Edited: extra rules for the files that show link text (REQ-PAGE-44). |
+| REQ-UI-03 (`ui-presentation`) | Amended: the English and Vietnamese texts of the seven `signal.url.*.explain` keys are rewritten to follow the link wording rule (REQ-PAGE-45). The ids and the "plain-English rewrite with a next step" rule stay. Any existing test that pins an old text is updated. |
+| `src/components/icons.tsx` | Extended: generic link icon and three tone icons. |
+| `src/components/EvidenceList.tsx` | Edited: renders the badge. |
+| `art/registry.tsx`, `art/registry.test.ts`, `art-budget.test.ts` | Not edited. Link creature art has its own registry (its fallback is a link icon, not the Odd Shadow). The budget test covers the new art file by itself (limit 30 KB per file, 350 KB in total; art is about 160 KB today). |
+| `ResultPanel.test.ts`, `result-markup.property.test.ts`, PBT-65, PBT-66 | Not edited. They must still pass. |
+
 **Hard constraints** (unchanged from `ui-presentation` and `ui-rules.md`):
 
 - No change to `src/core`, `src/analyzers`, `src/pipeline`, `src/server`,
@@ -50,8 +78,39 @@ This spec **amends** it through an explicit, small group of changes to
   `src/components/` (PascalCase `.tsx`) and `src/app/`, and receive dependencies
   as props.
 
+## Amendment: link spotlight
+
+Group 7 is built and its tasks are checked, so they are not reopened. This
+amendment adds Requirement 9 (`REQ-PAGE-47` to `REQ-PAGE-54`), PBT-114 to
+PBT-115 (the next free numbers after `PBT-113`) and a new task group 8. It
+moves the link badges out of the url signal card into one section placed right
+after the Level_Banner, so a user sees at once that the checked content has a
+link. Request (Vietnamese): "Tôi muốn hiển thị rõ hơn badge khi có đường dẫn xuất hiện trong nội dung kiểm tra".
+
+Decision: the badge is **moved**, not copied. The url card keeps its explanation,
+evidence, severity and the `link.plain.note`; it no longer shows a badge. So each
+creature appears once on the result.
+
+Existing items this amendment modifies:
+
+| Existing item | Change |
+|---|---|
+| REQ-PAGE-23 | Extended: when `view.linkCreatures` is non-empty, a Link_Spotlight comes right after the Level_Banner and before the AI_Note. All other sections keep their order. |
+| REQ-PAGE-40 | Amended: the Link_Badge is no longer shown on the signal card. It is shown in the Link_Spotlight (REQ-PAGE-47, REQ-PAGE-48). Its content and order of parts are unchanged. |
+| REQ-PAGE-41, PBT-110, `link-badges.ts` | Kept as is, but no longer used by `EvidenceList`. They stay for the monster guide and tests. If nothing else uses them when task 8 is done, the function is not deleted (a later spec decides). |
+| REQ-PAGE-44 | Extended: the no-link-element rule also covers `LinkSpotlight.tsx` and `ResultPanel.tsx`. `link.plain.note` stays once in the url group. |
+| REQ-PAGE-39 | Extended: `LinkSpotlight.tsx` is covered by the hard-coded text scan. |
+| PBT-112 | Edited: now checks that `EvidenceList` shows no creature name and no badge, and still escapes evidence (REQ-PAGE-49). The "name shown once" check moves to PBT-114. |
+| `page-layout.ts`, `journal.ts`, `ResultPanel.tsx` (`renderSection`), `EvidenceList.tsx` | Edited. New `SectionId` `linkSpotlight`. |
+| `ResultPanel.test.ts`, `page-layout.test.ts`, `journal` tests | Edited only where they pin the section list for a view with links. Views without links give the same list as before. |
+
+Everything else (hard constraints of the badge amendment, the link wording rule,
+privacy) is unchanged. No change to `src/core`, `src/analyzers`, `src/pipeline`,
+`src/server`, `src/app/api` or the API contract.
+
 ## Glossary
 
+- **Link_Spotlight**: The section with a heading and the Link_Badges of all `view.linkCreatures`, placed right after the Level_Banner.
 - **Level_Banner**: The component block showing the level label, level icon and risk meter.
 - **Action_Box**: The "What to do now" block listing `verdict.actions`.
 - **Evidence_List**: The grouped signal cards and the highlighted message.
@@ -60,6 +119,8 @@ This spec **amends** it through an explicit, small group of changes to
 - **Strong_Reminder**: The `no_signals` reminder used when the AI_Note is shown.
 - **Technical_Details**: The collapsed section with the semantic mode note, error codes and similar.
 - **Page_State**: `idle | working | done | failed` plus the data each carries.
+- **Link_Badge**: The block on a URL signal card showing a creature's art, name, description, tone label with icon, and tone explanation line.
+- **Link_Art**: The small original inline SVG of one link creature, chosen by its `artKey`.
 
 ## Requirements
 
@@ -147,6 +208,35 @@ This spec **amends** it through an explicit, small group of changes to
 4. **REQ-PAGE-38** `src/ui/` stays free of `react`, `next`, `window`, `document`, `navigator`, `process`. React code lives only in `src/components/` and `src/app/`.
 5. **REQ-PAGE-39** EVERY user-visible string in `src/components/` and `src/app/page.tsx` SHALL come from `t(...)`. A test SHALL scan the JSX text nodes and string attributes (`aria-label`, `title`, `placeholder`, `alt`) for literal English words and fail on any.
 
+### Requirement 8: Link creature badges
+
+**User Story:** As a family helper, I want each suspicious part of a link named and explained on its card, so that I can tell my parent what to look for without opening the link.
+
+#### Acceptance Criteria
+
+1. **REQ-PAGE-40** ON a signal card of the `url` group, WHEN a creature of `view.linkCreatures` is supported by that card's signal, THE card SHALL show a Link_Badge with, in this order: the Link_Art, the caption `link.badge.caption`, the creature name, the one-sentence description (`link.<id>.desc`), the tone label with its tone icon, and the tone explanation line (`explanationKey`). The existing card parts (explanation, evidence, severity) stay. Cards of other groups never show a badge, even for a `url.*` id.
+2. **REQ-PAGE-41** A pure function `linkBadgesForGroup(group, linkCreatures)` in `src/ui/view/link-badges.ts` SHALL return an array aligned with `group.cards`: for the `url` group, the creature on the first card whose `signalId` is in `creature.signalIds`, and `null` on every other card, so each creature appears at most once; for any other group, all `null`. It never throws and never mutates. The component only renders its result.
+3. **REQ-PAGE-42** THE seven Link_Art pieces SHALL be original inline SVG in `src/components/art/link-creatures.tsx`, one per `artKey` of `LINK_CREATURES`, built from simple shapes only (at most 12 elements each, `viewBox="0 0 48 48"`, `aria-hidden="true"`, `focusable="false"`). They carry no text, `<title>`, `<filter>`, `<animate>`, `<image>`, `<foreignObject>`, `<script>` or color literal. Strokes and fills use `currentColor`, and the badge sets that color from the creature's token (`var(--th-link-<id>)`). The registry keys equal the table's `artKey` set exactly.
+4. **REQ-PAGE-43** THE component `LinkCreatureArt` SHALL render the generic link icon (`IconLink`) for any `artKey` that has no registered art (unknown, empty, non-string, or an inherited name such as `constructor` or `__proto__`), and SHALL NOT throw. An unknown tone icon key falls back to the `soft` tone icon. A badge whose art falls back still shows the name, description, tone label and explanation line.
+5. **REQ-PAGE-44** THE link text on the card SHALL be plain, non-clickable text: `LinkCreatureView.evidence` is rendered in a `<span>` (wrapping with `break-words`), and the Link_Badge, the url group and `HighlightedMessage` contain no `<a>`, `href`, `onClick`, `role="link"` or `tabIndex`. The url group shows `link.plain.note` once under its heading. The source scan forbids `href`, `<a ` and `onClick` in `LinkBadge.tsx`, `EvidenceList.tsx` and `HighlightedMessage.tsx` (the skip link in `page.tsx` is not affected).
+6. **REQ-PAGE-45** THE link wording rule SHALL hold for every string a badge or url card can show: `link.*`, `link.badge.caption`, `link.plain.note` and the seven `signal.url.*.explain` keys, in both languages. None may call a link "fake", "malicious" or "dangerous" (English `/\b(fake|malicious|dangerous)\b/i`, Vietnamese `/giả mạo|độc hại|nguy hiểm|trang giả|trang web giả/i`), none may state as a fact that a link or site is not real or is a scam page, and each says what the link "has traits of" or "can" do. The rewritten `signal.url.*.explain` texts are in `design.md` (Vietnamese drafts, pending human review).
+7. **REQ-PAGE-46** EVERY color pair used by the badge SHALL be declared: the seven `link-*` tokens on `surface` and on `raised` as `ui` (art), and the text already declared (`text`, `muted` on `surface`). All meet the thresholds in both palettes. The tone is shown by label and icon as well as color. Badge text sizes are in `rem` (no fixed pixels) and nothing animates or flashes.
+
+### Requirement 9: Link spotlight
+
+**User Story:** As a family helper, I want the link badges shown right under the risk level, so that I notice at once that the message has a link and see what to tell my parent.
+
+#### Acceptance Criteria
+
+1. **REQ-PAGE-47** WHEN `view.linkCreatures` of a ready view is non-empty, THE ResultPanel SHALL show one Link_Spotlight directly after the Level_Banner and before the AI_Note, the Action_Box and the Evidence_List. WHEN it is empty, or the view is `withheld`, THE ResultPanel SHALL render no Link_Spotlight and no empty wrapper. `resultSections` SHALL include the new id `linkSpotlight` in exactly those cases.
+2. **REQ-PAGE-48** THE Link_Spotlight SHALL be a `<section>` with `aria-labelledby` pointing to its own heading (`result.links.heading`, "Links in this message" / "Đường dẫn trong nội dung"), followed by one Link_Badge (the existing `LinkBadge`, unchanged) for each creature of `view.linkCreatures`, in the order that `buildLinkCreatures` gives. The heading id SHALL be unique on the page. The badges SHALL be list items of one `<ul>`.
+3. **REQ-PAGE-49** THE url group of the Evidence_List SHALL show no Link_Badge, no creature name and no creature art. It SHALL keep, for each card, the explanation, the evidence in a plain `<span>` and the severity text, and SHALL keep `link.plain.note` once under the group heading.
+4. **REQ-PAGE-50** EACH creature of `view.linkCreatures` SHALL appear exactly once in the whole result markup (name, description, tone label and explanation line each once per creature), and EVERY badge SHALL stay backed by evidence: it carries the `evidence` text of its creature, and the signal card it came from stays in the Evidence_List.
+5. **REQ-PAGE-51** THE Link_Spotlight and its badges SHALL be plain, non-clickable text: no `<a`, `href`, `onClick`, `role="link"` or `tabIndex` in `LinkSpotlight.tsx`, `LinkBadge.tsx` or `ResultPanel.tsx`. Evidence containing markup SHALL appear as escaped text.
+6. **REQ-PAGE-52** THE new key `result.links.heading` SHALL exist in `en` and `vi` with equal placeholders, SHALL belong to tier C (plain only), SHALL follow the link wording rule of REQ-PAGE-45 (no "fake", "malicious", "dangerous", no safe-family word, at most 25 words) and SHALL NOT say or suggest that the link is a scam. It joins the key set checked by PBT-113.
+7. **REQ-PAGE-53** THE Link_Spotlight SHALL use only sizes in `rem` and colors from declared pairs (text on `surface`, as the badge does today), SHALL not animate, and SHALL NOT add a new frame, icon or color token. The heading uses the same size class as the other section headings. WHILE the journal is shown, THE Link_Spotlight SHALL be one of the page 2 sections and SHALL come first among them (see Open point 7).
+8. **REQ-PAGE-54** THE Link_Spotlight SHALL NOT change the level, the score, the monster, the actions or the order of the other sections. FOR a view whose `linkCreatures` is empty, `resultSections` SHALL return exactly the list it returned before this amendment.
+
 ## Property-Based Testing Requirements
 
 `numRuns >= 100`. Verdicts are valid as in `ui-presentation` (non-`no_signals`
@@ -161,8 +251,34 @@ has at least one signal).
 | **PBT-79** | `paletteToCssVars` returns exactly one `--th-<token>` entry per `ColorToken`, every value is the palette value, and the key set is identical for both palettes |
 | **PBT-80** | Dictionary: the new keys (`result.aiNote.unavailable`, `result.noSignals.reminderStrong`, `result.limitsNote`) exist in both languages with equal placeholders; every sentence has at most 25 words |
 
+Added by the link creature amendment (continues after `PBT-109`):
+
+| ID | Property |
+|---|---|
+| **PBT-110** | `linkBadgesForGroup` never throws for any group and creature list (including garbage); the result has the same length as `group.cards`; it has a non-null item only for the `url` group; each creature appears at most once; a non-null badge's creature supports that card's `signalId`; two calls give equal results and inputs are not mutated (REQ-PAGE-41) |
+| **PBT-111** | `LinkCreatureArt` rendered with `renderToStaticMarkup` for any `artKey` (`fc.anything()`, `fc.string()`, `constantFrom("constructor","__proto__","toString","")`) never throws and always yields a decorative `svg` (`aria-hidden`, `focusable="false"`); for a key outside the registry the markup equals the `IconLink` markup; for each table `artKey` the markup is not the fallback; no forbidden tag or color literal appears (REQ-PAGE-42, REQ-PAGE-43) |
+| **PBT-112** | *(Edited by the link spotlight amendment.)* For arbitrary verdicts with url signals (evidence may contain `<a href="x">` and other markup), `EvidenceList` markup contains no `<a `, `href=`, `onClick` or `role="link"` outside escaped text, shows the evidence as escaped text, and shows no creature name (the "once" check is PBT-114), in both locales (REQ-PAGE-44, REQ-PAGE-49) |
+| **PBT-113** | For every key in the REQ-PAGE-45 set and both languages: the value is non-empty with equal placeholders in both languages, matches none of the wording regexes, contains no word of the `safe` family, has sentences of at most 25 words, and is tier C (REQ-PAGE-45) |
+
+Added by the link spotlight amendment (continues after `PBT-113`):
+
+| ID | Property |
+|---|---|
+| **PBT-114** | For arbitrary verdicts with url signals (evidence may contain `<a href="x">` and other markup), in both locales: `resultSections` contains `linkSpotlight` exactly when `view.linkCreatures` is non-empty and the view is ready, right after `levelBanner` and before `aiNote`, `actions` and `evidence`; with no creatures the list equals the pre-amendment list; the `ResultPanel` markup shows the name of every creature exactly once, in `buildLinkCreatures` order; contains no `<a `, `href=`, `onClick` or `role="link"` outside escaped text; the section has an `aria-labelledby` that matches a heading id present once (REQ-PAGE-47, REQ-PAGE-48, REQ-PAGE-50, REQ-PAGE-51, REQ-PAGE-54) |
+| **PBT-115** | For arbitrary ready views, `EvidenceList` markup contains none of the creature names, no `link.badge.caption` text and no creature art, and every url card still shows its evidence as escaped text; the `link.plain.note` text appears exactly once when the view has a url group (REQ-PAGE-49) |
+
 ### Example-based tests
 
+- A verdict with `url.brand-lookalike` and `url.known-shortener` renders the heading "Links in this message" and two badges between the level banner and the action box; the url cards below show evidence and severity but no badge.
+- A verdict with no url signal has no Link_Spotlight and the same section list as before.
+- A `withheld` view has no Link_Spotlight.
+- In the journal, `page2` starts with `linkSpotlight` for a view with links.
+
+- A verdict with `url.brand-lookalike` renders a badge named "Doppelganger" with its description and the strong-band label and explanation line; the card also keeps its explanation, evidence and severity.
+- Two `url.known-shortener` cards show one "Cloaked Gate" badge, on the first card only.
+- A `url.ip-address-host` signal with source `text` shows no badge.
+- A creature with `artKey: "creature-unknown"` (fake view) shows the generic link icon and the rest of the badge.
+- The url group shows the `link.plain.note` text once; the page markup for a link evidence has no `<a>` around it.
 - English `level.suspicious` equals "A few things to double-check"; `result.actions.heading` equals "What to do now".
 - A `suspicious` verdict with `monster: "bank"` gives monster `generic`; a `high` verdict with `monster: "bank"` gives `bank`.
 - `semanticMode: "budget-exhausted"` with a `suspicious` verdict gives `aiNote.key === "result.aiNote.unavailable"`; `semanticMode: "used"` gives `null`; `semantic.status: "degraded"` with mode `undefined` gives non-null; `"skipped"` gives `null`.
@@ -175,8 +291,15 @@ has at least one signal).
 
 New analyzers or API changes; changing scores or levels; the monster guide
 page; SVG art beyond one simple original shape per monster (inline SVG, no
-external file); re-running analysis on language change; a Vietnamese review
-pass; Playwright E2E (a later spec); any new dependency.
+external file) and one per link creature; re-running analysis on language
+change; a Vietnamese review pass; Playwright E2E (a later spec); any new
+dependency.
+
+**Monster guide (later spec, not built here).** Its "Link creatures" section
+SHALL be built from the same `LINK_CREATURES` table, the same `LinkCreatureArt`
+component, the same `link.*` keys (name, description, three tips) and the same
+wording rule, with no second list of creatures. This amendment exports
+`LinkCreatureArt` and `IconLink` for that reuse and adds nothing guide-specific.
 
 ## Open points (assumptions made, confirm or change)
 
@@ -187,6 +310,27 @@ pass; Playwright E2E (a later spec); any new dependency.
    example a critical rule result or only URLs). If you want it for
    URL-only input too, say so.
 3. `unavailable` status with no mode counts as "not available" (REQ-PAGE-07).
+4. *(Link creature amendment.)* "Show the URL text itself" is read as the
+   creature's `evidence` (what the URL analyzer reports: the host, the `@`
+   part, the keywords and similar, cut to 80 characters), shown as plain text
+   on the card. The full link stays visible, also as plain text, inside the
+   highlighted message. If you want the full URL on every card, the view model
+   needs a new field, which changes `link-creatures`; say so.
+5. *(Link creature amendment.)* The badge shows name, description and the tone
+   line, not the three tips. The tips are for the monster guide.
+6. *(Link creature amendment.)* Rewriting the seven `signal.url.*.explain`
+   texts is needed because two of them say "fake" and one says a site "is not
+   the real site", which the link wording rule forbids on the same card.
+
+7. *(Link spotlight amendment.)* The hunter's journal keeps page 1 to 3 clues,
+   3 actions and one note line (`hunter-scene-rules.md`), so the spotlight is
+   the first section of page 2 there, not on page 1. In the classic
+   `ResultPanel` it sits right under the Level_Banner. If you want a one-line
+   link hint on journal page 1 too, say so; that needs a `hunter-ui` change.
+8. *(Link spotlight amendment.)* The spotlight comes before the AI_Note and the
+   Action_Box because the request says "directly below the risk-level banner".
+   REQ-PAGE-04 (banner, then actions, then evidence) still holds for the other
+   sections. Say so if you prefer it after the Action_Box.
 
 ## Non-Functional Requirements
 

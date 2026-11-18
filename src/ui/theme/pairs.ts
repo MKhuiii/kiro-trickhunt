@@ -38,6 +38,17 @@ const MONSTER_TOKENS: readonly ColorToken[] = [
   "monster-generic",
 ];
 
+export const LINK_TOKENS: readonly ColorToken[] = [
+  "link-doppelganger",
+  "link-changeling",
+  "link-faceless-one",
+  "link-masked-stranger",
+  "link-hydra",
+  "link-cloaked-gate",
+  "link-wisp",
+  "link-plague-mark",
+];
+
 function cross(
   fgs: readonly ColorToken[],
   bgs: readonly ColorToken[],
@@ -69,4 +80,8 @@ export const DECLARED_PAIRS: readonly DeclaredPair[] = [
   { fg: "ink", bg: "paper", use: "text" },
   { fg: "ink-faded", bg: "paper", use: "text" },
   { fg: "blood", bg: "paper", use: "ui" },
+  // Link creatures (REQ-LINK-15, REQ-LINK-16).
+  ...cross(LINK_TOKENS, CARD_SURFACES, "text"),
+  // Link creature badge art (REQ-PAGE-46): 8 tokens x 2 surfaces = 16 ui pairs.
+  ...cross(LINK_TOKENS, CARD_SURFACES, "ui"),
 ];

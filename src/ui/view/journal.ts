@@ -82,7 +82,10 @@ export function pickClues(view: ReadyResultView, max: number = MAX_CLUES): Signa
 }
 
 function pickNote(view: ReadyResultView): { note: JournalNote | null; more: number } {
-  const total = (view.aiNote !== null ? 1 : 0) + view.notices.length;
+  const total =
+    (view.aiNote !== null ? 1 : 0) +
+    view.notices.length +
+    (view.reputationNote !== null && view.reputationNote !== undefined ? 1 : 0);
   if (view.aiNote !== null) {
     return {
       note: { key: view.aiNote.textKey, params: {} },

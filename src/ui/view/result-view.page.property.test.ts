@@ -6,6 +6,7 @@ import { KNOWN_SIGNAL_IDS } from "../i18n/signal-ids";
 import { LEVEL_PRESENTATION } from "../theme/levels";
 import { buildResultView } from "./result-view";
 import type { ReadyResultView } from "./result-view";
+import { NO_REPUTATION } from "../../pipeline/reputation-fixture";
 
 const NUM_RUNS = 150;
 const MONSTERS = ["bank", "prize", "job-bait", "authority", "generic"] as const;
@@ -41,6 +42,7 @@ function verdictArb(levels: readonly ("no_signals" | "suspicious" | "high" | "cr
       inputTruncated: fc.boolean(),
       urlsAnalyzed: fc.nat({ max: 5 }),
       urlsSkipped: fc.nat({ max: 5 }),
+      reputation: fc.constant(NO_REPUTATION),
     })
     .map(
       (r) =>

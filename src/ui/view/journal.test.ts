@@ -4,6 +4,7 @@ import { buildJournalView, firstSentence, MAX_ACTIONS, MAX_CLUES, pickClues } fr
 import { resultSections } from "./page-layout";
 import { buildResultView } from "./result-view";
 import type { ReadyResultView } from "./result-view";
+import { NO_REPUTATION } from "../../pipeline/reputation-fixture";
 
 function signal(id: string, severity: number, evidence: string) {
   return { id, source: "text", severity, evidence, whyItMatters: "why" };
@@ -27,6 +28,7 @@ function verdict(over: Record<string, unknown> = {}): Verdict {
     inputTruncated: false,
     urlsAnalyzed: 0,
     urlsSkipped: 0,
+    reputation: NO_REPUTATION,
     ...over,
   } as unknown as Verdict;
 }
@@ -36,6 +38,40 @@ function ready(v: Verdict, extras?: Parameters<typeof buildResultView>[3]): Read
   if (view.kind !== "ready") throw new Error("expected a ready view");
   return view;
 }
+
+describe("buildJournalView with links", () => {
+  it("puts linkSpotlight first on page 2, never on page 1", () => {
+    const linkSignal = {
+      id: "url.brand-lookalike",
+      source: "url",
+      severity: 0.6,
+      evidence: "paypa1 looks like paypal",
+      whyItMatters: "why",
+    };
+    const view = ready(verdict({ signals: [linkSignal, signal("text.urgency", 0.2, "Low one")] }));
+    expect(view.linkCreatures.length).toBeGreaterThan(0);
+    const journal = buildJournalView(view);
+    expect(journal.page2[0]).toBe("linkSpotlight");
+    expect(journal.covers).not.toContain("linkSpotlight");
+    expect([...journal.covers, ...journal.page2].sort()).toEqual([...resultSections(view)].sort());
+  });
+
+  it("puts reputationNote on page 2 and counts it as a note on page 1", () => {
+    const v = verdict({ urlsAnalyzed: 1, reputation: { status: "ok", checkedCount: 1 } });
+    const view = ready(v, { semanticMode: "used", reputationMode: "checked" });
+    expect(view.reputationNote?.kind).toBe("not-listed");
+    const journal = buildJournalView(view);
+    if (journal.kind !== "ready") throw new Error("expected ready");
+    expect(journal.page2).toContain("reputationNote");
+    expect(journal.covers).not.toContain("reputationNote");
+    expect(journal.page1.note).toBeNull();
+    expect(journal.page1.moreNotes).toBe(1);
+  });
+
+  it("page 2 has no linkSpotlight without links", () => {
+    expect(buildJournalView(ready(verdict())).page2).not.toContain("linkSpotlight");
+  });
+});
 
 describe("buildJournalView page 1", () => {
   it("keeps at most 3 clues, most serious first, stable for equal severity", () => {
@@ -147,7 +183,7 @@ describe("firstSentence", () => {
     expect(firstSentence("The message asks for a code. Do not share it.")).toBe(
       "The message asks for a code.",
     );
-    expect(firstSentence("Tin nh?n dòi mã OTP! Ð?ng chia s?.")).toBe("Tin nh?n dòi mã OTP!");
+    expect(firstSentence("Tin nh?n dï¿½i mï¿½ OTP! ï¿½?ng chia s?.")).toBe("Tin nh?n dï¿½i mï¿½ OTP!");
   });
 
   it("returns the whole text when there is no full stop, and handles junk", () => {

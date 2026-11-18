@@ -27,6 +27,22 @@ export interface SemanticOutcome {
   readonly skipped: boolean;
 }
 
+export type ReputationStatus = "ok" | "degraded" | "not-requested";
+
+export type ReputationReason =
+  | "timeout"
+  | "provider-error"
+  | "invalid-response"
+  | "rate-limited"
+  | "too-many-links";
+
+export interface ReputationOutcome {
+  readonly status: ReputationStatus;
+  readonly reason?: ReputationReason;
+  /** Integer >= 0. */
+  readonly checkedCount: number;
+}
+
 export interface Verdict {
   /** Integer 0..100. */
   readonly riskScore: number;
@@ -41,4 +57,5 @@ export interface Verdict {
   readonly inputTruncated: boolean;
   readonly urlsAnalyzed: number;
   readonly urlsSkipped: number;
+  readonly reputation: ReputationOutcome;
 }

@@ -25,6 +25,9 @@ interface BagPanelProps {
   readonly busy?: boolean;
   /** Optional access to the heading; BagPanel itself focuses it on mount. */
   readonly headingRef?: Ref<HTMLHeadingElement>;
+  /** Consent_Box state for this one scan. Held by the parent in memory only, never stored. */
+  readonly checkLinks?: boolean;
+  readonly onCheckLinksChange?: (next: boolean) => void;
   readonly onToggle: (slot: BagSlot) => void;
   readonly onTextChange: (text: string) => void;
   readonly onFileChange: (file: File | null) => void;
@@ -55,6 +58,8 @@ export function BagPanel({
   file,
   busy = false,
   headingRef,
+  checkLinks = false,
+  onCheckLinksChange,
   onToggle,
   onTextChange,
   onFileChange,
@@ -217,6 +222,25 @@ export function BagPanel({
         </p>
       ) : null}
       <p className="hidden text-base text-[color:var(--th-muted)] md:block">{t(locale, "bag.enter.hint")}</p>
+
+      <div className="flex min-h-11 items-start gap-3">
+        <input
+          id="input-check-links"
+          type="checkbox"
+          checked={checkLinks}
+          onChange={(e) => onCheckLinksChange?.(e.target.checked)}
+          aria-describedby="input-check-links-hint"
+          className={`h-11 w-11 shrink-0 ${FOCUS_RING}`}
+        />
+        <div className="flex flex-col gap-1">
+          <label htmlFor="input-check-links" className={`th-hand text-xl ${TEXT}`}>
+            {t(locale, "reputation.consent.label")}
+          </label>
+          <p id="input-check-links-hint" className="text-base text-[color:var(--th-muted)]">
+            {t(locale, "reputation.consent.text")}
+          </p>
+        </div>
+      </div>
 
       <div className="mt-auto flex flex-wrap items-center gap-6 pt-2">
         <button

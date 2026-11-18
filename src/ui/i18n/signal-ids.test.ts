@@ -19,10 +19,11 @@ function urlIdsFromSource(): string[] {
 }
 
 describe("signal ids", () => {
-  it("equal the analyzer configs plus the url ids in url-analyzer.ts", () => {
+  it("equal the analyzer configs, the url ids in url-analyzer.ts and the reputation id (24)", () => {
     const expected = [
       ...TEXT_PATTERNS.map((p) => p.id),
       ...urlIdsFromSource(),
+      "url.reputation-listed",
       ...SEMANTIC_SIGNALS.map((s) => s.id),
     ];
     expect([...KNOWN_SIGNAL_IDS].sort()).toEqual([...expected].sort());

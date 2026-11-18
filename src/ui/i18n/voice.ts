@@ -20,7 +20,7 @@ export const TIER_RULES: readonly TierRule[] = [
   { pattern: /^(app\.name|bag\.enter\.hint|monster\.[a-z-]+\.tip\d+)$/, tier: "C" },
   {
     pattern:
-      /^(privacy\.note$|a11y\.|prefs\.|settings\.open$|topbar\.|result\.meter\.|result\.highlight\.|result\.severity\.|result\.actions\.heading$|journal\.do\.heading$|result\.aiNote\.|result\.limitsNote$|result\.noSignals\.|result\.tech\.|result\.withheld$|level\.|source\.|semantic\.|signal\.|notice\.|error\.)/,
+      /^(privacy\.note$|a11y\.|prefs\.|settings\.open$|topbar\.|result\.meter\.|result\.highlight\.|result\.severity\.|result\.actions\.heading$|journal\.do\.heading$|result\.aiNote\.|result\.limitsNote$|result\.noSignals\.|result\.tech\.|result\.withheld$|result\.links\.heading$|level\.|link\.|source\.|semantic\.|signal\.|notice\.|error\.|reputation\.)/,
     tier: "C",
   },
   // A: full horror voice.

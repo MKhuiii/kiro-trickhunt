@@ -5,6 +5,7 @@ import { JournalSheet } from "./JournalSheet";
 import { JournalPageTwo } from "./JournalPageTwo";
 import { buildJournalView, buildResultView, t } from "../ui";
 import type { Locale, Verdict } from "../pipeline";
+import { NO_REPUTATION } from "../pipeline/reputation-fixture";
 
 // Markup tests for the hunter's journal (REQ-HUNT-65 to REQ-HUNT-71).
 
@@ -34,6 +35,7 @@ function verdict(over: Record<string, unknown> = {}): Verdict {
     inputTruncated: false,
     urlsAnalyzed: 0,
     urlsSkipped: 0,
+    reputation: NO_REPUTATION,
     ...over,
   } as unknown as Verdict;
 }

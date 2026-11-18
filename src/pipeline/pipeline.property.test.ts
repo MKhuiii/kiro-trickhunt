@@ -87,7 +87,9 @@ function isValid(v: Verdict): boolean {
     LEVELS.includes(v.level) &&
     (v.monster === null || MONSTERS.includes(v.monster)) &&
     v.actions.length > 0 &&
-    v.limitations.length > 0
+    v.limitations.length > 0 &&
+    v.reputation.status === "not-requested" &&
+    v.reputation.checkedCount === 0
   );
 }
 

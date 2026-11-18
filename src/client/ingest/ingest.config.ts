@@ -21,7 +21,7 @@ export const OCR_MIN_CONFIDENCE = 30;
 export const SKIP_OCR_WHEN_QR_FOUND = false;
 
 export const ANALYZE_ENDPOINT = "/api/analyze";
-export const ANALYZE_TIMEOUT_MS = 20_000; // server maxDuration is 15 s
+export const ANALYZE_TIMEOUT_MS = 20_000; // server maxDuration is 20 s
 export const DEFAULT_RETRY_AFTER_SEC = 30;
 export const MAX_RETRY_AFTER_SEC = 3600;
 

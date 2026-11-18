@@ -25,8 +25,16 @@ export type AnalyzeClientCode =
 
 export type SemanticMode = "used" | "budget-exhausted" | "not-configured" | "skipped";
 
+export type ReputationMode =
+  | "checked"
+  | "not-requested"
+  | "not-configured"
+  | "budget-exhausted"
+  | "skipped"
+  | "failed";
+
 export type AnalyzeClientResult =
-  | { ok: true; verdict: Verdict; semanticMode: SemanticMode }
+  | { ok: true; verdict: Verdict; semanticMode: SemanticMode; reputationMode?: ReputationMode }
   | { ok: false; code: AnalyzeClientCode; retryAfterSec?: number };
 
 export interface ResponseLike {
@@ -59,6 +67,14 @@ const CODE_BY_STATUS: Readonly<Record<number, AnalyzeClientCode>> = {
 
 const LEVELS: readonly string[] = ["no_signals", "suspicious", "high", "critical"];
 const MODES: readonly string[] = ["used", "budget-exhausted", "not-configured", "skipped"];
+const REPUTATION_MODES: readonly string[] = [
+  "checked",
+  "not-requested",
+  "not-configured",
+  "budget-exhausted",
+  "skipped",
+  "failed",
+];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -72,7 +88,7 @@ function defaultDeps(): AnalyzeClientDeps {
 }
 
 function buildBody(request: unknown): string {
-  const body: { text?: string; urls?: string[]; locale?: "vi" | "en" } = {};
+  const body: { text?: string; urls?: string[]; locale?: "vi" | "en"; checkLinks?: true } = {};
   if (isRecord(request)) {
     const text = request.text;
     if (typeof text === "string") body.text = text;
@@ -82,6 +98,7 @@ function buildBody(request: unknown): string {
     }
     const locale = request.locale;
     if (locale === "vi" || locale === "en") body.locale = locale;
+    if (request.checkLinks === true) body.checkLinks = true;
   }
   return JSON.stringify(body);
 }
@@ -139,11 +156,16 @@ function okResult(body: unknown): AnalyzeClientResult {
   ) {
     return { ok: false, code: "bad-response" };
   }
-  return {
+  const result: AnalyzeClientResult = {
     ok: true,
     verdict: verdict as unknown as Verdict,
     semanticMode: meta.semanticMode as SemanticMode,
   };
+  const rm = meta.reputationMode;
+  if (typeof rm === "string" && REPUTATION_MODES.includes(rm)) {
+    result.reputationMode = rm as ReputationMode;
+  }
+  return result;
 }
 
 export async function analyzeRequest(

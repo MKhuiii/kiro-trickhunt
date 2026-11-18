@@ -33,4 +33,5 @@ export interface AnalyzeRequest {
   text?: string;
   urls?: string[];
   locale?: AnalyzeLocale;
+  checkLinks?: true;
 }

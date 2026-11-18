@@ -66,6 +66,63 @@ export function IconStop({ className }: IconProps): ReactElement {
   );
 }
 
+/** Two linked loops. Also the fallback for link art. */
+export function IconLink({ className }: IconProps): ReactElement {
+  return (
+    <Frame className={className}>
+      <rect x="2" y="8" width="12" height="8" rx="4" />
+      <rect x="10" y="8" width="12" height="8" rx="4" />
+    </Frame>
+  );
+}
+
+/** Tone icons differ by shape (filled diamond, half circle, open circle), not by color. */
+export function IconToneStrong({ className }: IconProps): ReactElement {
+  return (
+    <Frame className={className}>
+      <path d="M12 2l10 10-10 10L2 12 12 2z" fill="currentColor" />
+    </Frame>
+  );
+}
+
+export function IconToneMedium({ className }: IconProps): ReactElement {
+  return (
+    <Frame className={className}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" />
+    </Frame>
+  );
+}
+
+export function IconToneSoft({ className }: IconProps): ReactElement {
+  return (
+    <Frame className={className}>
+      <circle cx="12" cy="12" r="9" />
+    </Frame>
+  );
+}
+
+const TONE_ICONS: Readonly<Record<string, (props: IconProps) => ReactElement>> = {
+  "icon-tone-strong": IconToneStrong,
+  "icon-tone-medium": IconToneMedium,
+  "icon-tone-soft": IconToneSoft,
+};
+
+/** Renders a tone icon by key. Unknown, inherited or non-string keys fall back to the soft icon. */
+export function ToneIcon({
+  iconKey,
+  className,
+}: {
+  readonly iconKey: unknown;
+  readonly className?: string;
+}): ReactElement {
+  const Icon =
+    typeof iconKey === "string" && Object.hasOwn(TONE_ICONS, iconKey)
+      ? TONE_ICONS[iconKey]
+      : IconToneSoft;
+  return <Icon className={className} />;
+}
+
 const ICONS: Readonly<Record<string, (props: IconProps) => ReactElement>> = {
   "icon-candle": IconCandle,
   "icon-eye": IconEye,

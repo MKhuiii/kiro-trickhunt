@@ -26,3 +26,9 @@ export const SEMANTIC_POLICY: "when-not-critical" | "always" =
 
 /** Pipeline-level semantic timeout; slightly above the analyzer's 8000 ms. */
 export const SEMANTIC_TIMEOUT_MS = 9000;
+
+/**
+ * Pipeline-level link reputation timeout; above the largest allowed provider
+ * timeout (LINK_REPUTATION_TIMEOUT_MS bound of 6000 ms).
+ */
+export const REPUTATION_PIPELINE_TIMEOUT_MS = 6500;

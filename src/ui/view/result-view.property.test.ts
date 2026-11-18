@@ -6,6 +6,7 @@ import type { MessageKey } from "../i18n/dictionary";
 import { KNOWN_SIGNAL_IDS } from "../i18n/signal-ids";
 import { buildResultView } from "./result-view";
 import type { ReadyResultView } from "./result-view";
+import { NO_REPUTATION } from "../../pipeline/reputation-fixture";
 
 const NUM_RUNS = 150;
 const SOURCE_ORDER = ["text", "url", "semantic", "image", "qr", "other"];
@@ -42,6 +43,7 @@ const verdictArb: fc.Arbitrary<Verdict> = fc
     inputTruncated: fc.boolean(),
     urlsAnalyzed: fc.nat({ max: 5 }),
     urlsSkipped: fc.nat({ max: 5 }),
+    reputation: fc.constant(NO_REPUTATION),
   })
   .map(
     (r) =>
@@ -159,6 +161,7 @@ describe("PBT-66: risk meter and wording", () => {
       inputTruncated: false,
       urlsAnalyzed: 0,
       urlsSkipped: 0,
+      reputation: NO_REPUTATION,
     }) as unknown as Verdict;
 
   const percentOf = (score: number): number => {

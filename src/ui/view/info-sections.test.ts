@@ -4,6 +4,7 @@ import { splitSections } from "./info-sections";
 import { resultSections } from "./page-layout";
 import type { SectionId } from "./page-layout";
 import { buildResultView } from "./result-view";
+import { NO_REPUTATION } from "../../pipeline/reputation-fixture";
 
 function verdict(overrides: Partial<Verdict> = {}): Verdict {
   return {
@@ -25,6 +26,7 @@ function verdict(overrides: Partial<Verdict> = {}): Verdict {
     inputTruncated: false,
     urlsAnalyzed: 0,
     urlsSkipped: 0,
+    reputation: NO_REPUTATION,
     ...overrides,
   };
 }
@@ -75,6 +77,14 @@ describe("splitSections", () => {
     expect(splitSections(["heading", "monster"])).toEqual({
       scrolling: ["heading", "monster"],
       pinned: [],
+    });
+  });
+
+  it("keeps linkSpotlight in the scrolling part", () => {
+    const input: SectionId[] = ["heading", "levelBanner", "linkSpotlight", "limitsNote"];
+    expect(splitSections(input)).toEqual({
+      scrolling: ["heading", "levelBanner", "linkSpotlight"],
+      pinned: ["limitsNote"],
     });
   });
 

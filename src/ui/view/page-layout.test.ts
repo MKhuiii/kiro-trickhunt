@@ -3,6 +3,7 @@ import type { Verdict } from "../../pipeline";
 import { resultSections } from "./page-layout";
 import { buildResultView } from "./result-view";
 import type { ResultExtras } from "./result-view";
+import { NO_REPUTATION } from "../../pipeline/reputation-fixture";
 
 function verdict(overrides: Partial<Verdict> = {}): Verdict {
   return {
@@ -24,6 +25,7 @@ function verdict(overrides: Partial<Verdict> = {}): Verdict {
     inputTruncated: false,
     urlsAnalyzed: 0,
     urlsSkipped: 0,
+    reputation: NO_REPUTATION,
     ...overrides,
   };
 }
@@ -79,6 +81,57 @@ describe("resultSections", () => {
     ]);
     expect(s.indexOf("monster")).toBeGreaterThan(s.indexOf("evidence"));
     expect(s.indexOf("monster")).toBeGreaterThan(s.indexOf("limitsNote"));
+  });
+
+  const LINK_SIGNAL = {
+    id: "url.brand-lookalike",
+    source: "url",
+    severity: 0.5,
+    evidence: "paypa1 looks like paypal",
+    whyItMatters: "x",
+  } as unknown as Verdict["signals"][number];
+
+  it("linkSpotlight sits right after levelBanner (before aiNote) when links exist", () => {
+    const v = verdict({ signals: [LINK_SIGNAL] });
+    const s = sections(v, { semanticMode: "not-configured" });
+    expect(s.filter((x) => x === "linkSpotlight")).toHaveLength(1);
+    expect(s.indexOf("linkSpotlight")).toBe(s.indexOf("levelBanner") + 1);
+    expect(s[s.indexOf("linkSpotlight") + 1]).toBe("aiNote");
+  });
+
+  const CHECKED = { status: "ok", checkedCount: 1 } as unknown as Verdict["reputation"];
+
+  it("reputationNote follows levelBanner when there is no creature", () => {
+    const s = sections(verdict({ reputation: CHECKED }), {
+      semanticMode: "not-configured",
+      reputationMode: "checked",
+    });
+    expect(s.filter((x) => x === "reputationNote")).toHaveLength(1);
+    expect(s.indexOf("reputationNote")).toBe(s.indexOf("levelBanner") + 1);
+    expect(s[s.indexOf("reputationNote") + 1]).toBe("aiNote");
+  });
+
+  it("no reputationNote section when creatures exist (spotlight renders it) or note is null", () => {
+    const withLink = sections(verdict({ signals: [LINK_SIGNAL], reputation: CHECKED }), {
+      reputationMode: "checked",
+    });
+    expect(withLink).not.toContain("reputationNote");
+    expect(withLink).toContain("linkSpotlight");
+    expect(sections(verdict())).not.toContain("reputationNote");
+  });
+
+  it("views without links get no linkSpotlight and the same list as before", () => {
+    expect(sections(verdict())).not.toContain("linkSpotlight");
+    const view = buildResultView(null as unknown as Verdict, "", "en");
+    expect(resultSections(view)).not.toContain("linkSpotlight");
+  });
+
+  it("stays total when linkCreatures is garbage", () => {
+    const view = buildResultView(verdict(), "urgent", "en");
+    for (const bad of [null, undefined, "x", 5, {}]) {
+      const garbled = { ...view, linkCreatures: bad } as unknown as typeof view;
+      expect(resultSections(garbled)).not.toContain("linkSpotlight");
+    }
   });
 
   it("withheld view shows heading, limits note and technical only", () => {

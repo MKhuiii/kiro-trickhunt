@@ -4,6 +4,7 @@ import type { Verdict } from "../../pipeline";
 import { t } from "../i18n/dictionary";
 import { buildResultView } from "./result-view";
 import type { ReadyResultView } from "./result-view";
+import { NO_REPUTATION } from "../../pipeline/reputation-fixture";
 
 const BANK_TEXT = "Urgent: your account has been locked. Enter your OTP now to unlock it.";
 const BANK_URL = "http://paypa1.com/verify";
@@ -28,6 +29,7 @@ function verdict(overrides: Partial<Verdict> = {}): Verdict {
     inputTruncated: false,
     urlsAnalyzed: 0,
     urlsSkipped: 0,
+    reputation: NO_REPUTATION,
     ...overrides,
   };
 }
@@ -310,5 +312,29 @@ describe("buildResultView: notices", () => {
   it("derives text-truncated and urls-skipped from the verdict", () => {
     const view = ready(verdict({ inputTruncated: true, urlsSkipped: 2 }));
     expect(view.notices.map((n) => n.kind)).toEqual(["text-truncated", "urls-skipped"]);
+  });
+});
+
+describe("buildResultView: reputationNote", () => {
+  const checked = { status: "ok", checkedCount: 1 } as unknown as Verdict["reputation"];
+
+  it("is null without a mode and for not-requested", () => {
+    expect(ready(verdict({ reputation: checked })).reputationNote).toBeNull();
+    expect(ready(verdict(), "", { reputationMode: "not-requested" }).reputationNote).toBeNull();
+  });
+
+  it("gives the not-listed and unavailable notes without changing anything else", () => {
+    const plain = ready(verdict({ reputation: checked }));
+    const a = ready(verdict({ reputation: checked }), "", { reputationMode: "checked" });
+    expect(a.reputationNote?.kind).toBe("not-listed");
+    const { reputationNote: _a, ...restA } = a;
+    const { reputationNote: _p, ...restP } = plain;
+    expect(restA).toEqual(restP);
+    const b = ready(
+      verdict({ reputation: { status: "unavailable", checkedCount: 0 } as unknown as Verdict["reputation"] }),
+      "",
+      { reputationMode: "failed" },
+    );
+    expect(b.reputationNote?.kind).toBe("unavailable");
   });
 });

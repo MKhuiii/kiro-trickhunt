@@ -45,6 +45,7 @@ const SCAM_VERDICT = {
   inputTruncated: false,
   urlsAnalyzed: 0,
   urlsSkipped: 0,
+  reputation: { status: "not-requested", checkedCount: 0 },
 };
 
 const CALM_VERDICT = {
@@ -58,6 +59,7 @@ const CALM_VERDICT = {
   inputTruncated: false,
   urlsAnalyzed: 0,
   urlsSkipped: 0,
+  reputation: { status: "not-requested", checkedCount: 0 },
 };
 
 async function mockAnalyze(page: Page, verdict: unknown): Promise<void> {

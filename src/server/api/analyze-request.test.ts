@@ -210,3 +210,42 @@ describe("readAnalyzeRequest locale", () => {
     );
   });
 });
+
+describe("readAnalyzeRequest checkLinks", () => {
+  it.each([true, false])("accepts checkLinks %s and keeps it in the input", async (checkLinks) => {
+    expect(await readAnalyzeRequest(jsonRequest({ text: "hi", checkLinks }))).toEqual({
+      ok: true,
+      input: { text: "hi", checkLinks },
+    });
+    expect(
+      await readAnalyzeRequest(jsonRequest({ urls: ["http://a.example"], checkLinks })),
+    ).toEqual({ ok: true, input: { urls: ["http://a.example"], checkLinks } });
+  });
+
+  it("omits checkLinks from the input when absent", async () => {
+    const result = await readAnalyzeRequest(jsonRequest({ text: "hi" }));
+    expect(result.ok && "checkLinks" in result.input).toBe(false);
+  });
+
+  it.each([
+    ['string "true"', "true"],
+    ['string "false"', "false"],
+    ["number 1", 1],
+    ["number 0", 0],
+    ["null", null],
+    ["array", []],
+    ["object", {}],
+  ])("rejects invalid checkLinks: %s", async (_name, checkLinks) => {
+    expect(await code(jsonRequest({ text: "hi", checkLinks }))).toBe("invalid-input");
+  });
+
+  it.each([true, false])("rejects a body with only checkLinks %s", async (checkLinks) => {
+    expect(await code(jsonRequest({ checkLinks }))).toBe("invalid-input");
+  });
+
+  it("rejects checkLinks with blank text and no urls", async () => {
+    expect(await code(jsonRequest({ text: "  ", urls: [], checkLinks: true }))).toBe(
+      "invalid-input",
+    );
+  });
+});

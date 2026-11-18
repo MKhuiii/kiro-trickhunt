@@ -94,6 +94,8 @@ export function App(): ReactElement {
   const [state, setState] = useState<PageState>({ kind: "idle", hint: null });
   const [file, setFile] = useState<File | null>(null);
   const [text, setText] = useState("");
+  // Consent for the link lookup of one scan. Memory only: never stored, reset after every scan.
+  const [checkLinks, setCheckLinks] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const ingestDepsRef = useRef<IngestDeps | null>(null);
   const startedAtRef = useRef(0);
@@ -188,6 +190,8 @@ export function App(): ReactElement {
     const userText = flow.slots.text ? text : "";
     const pickedFile = flow.slots.image ? file : null;
     if (!canConfirm(flow.slots, text, file)) return;
+    const scanCheckLinks = checkLinks;
+    setCheckLinks(false);
     const deps: CheckDeps = {
       ingestImage: async (picked, onProgress) => {
         // Loaded only when an image was chosen, so the OCR and QR code stay out of the first load.
@@ -209,7 +213,7 @@ export function App(): ReactElement {
     setElapsedMs(0);
     setState({ kind: "working", status: "preparing" });
     dispatch({ kind: "confirm", canConfirm: true });
-    void runCheck(deps, { userText, file: pickedFile, locale }, (status, percent) => {
+    void runCheck(deps, { userText, file: pickedFile, locale, checkLinks: scanCheckLinks }, (status, percent) => {
       if (runIdRef.current !== runId) return;
       setState({ kind: "working", status, percent });
     }).then((outcome) => {
@@ -256,6 +260,7 @@ export function App(): ReactElement {
     setElapsedMs(0);
     setText("");
     setFile(null);
+    setCheckLinks(false);
     // Dropping the verdict also drops its input text and extras.
     setState({ kind: "idle", hint: null });
     dispatch({ kind: "again" });
@@ -349,6 +354,8 @@ export function App(): ReactElement {
                   text={text}
                   file={file}
                   busy={state.kind === "working"}
+                  checkLinks={checkLinks}
+                  onCheckLinksChange={setCheckLinks}
                   onToggle={(slot) => dispatch({ kind: "toggle", slot })}
                   onTextChange={setText}
                   onFileChange={setFile}

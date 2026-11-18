@@ -370,6 +370,241 @@
         "chatSessionId": "sess_adcce411-8ea5-4043-a906-5d58b5fb3774",
         "timestamp": 1794736866738
       }
+    ],
+    "7.1 Dictionary wording": [
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902090563
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902100842
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902296493
+      }
+    ],
+    "7.2 Pure helper": [
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902090794
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902300011
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902351758
+      }
+    ],
+    "7.3 Theme pairs": [
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902090957
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902355534
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902467856
+      }
+    ],
+    "7.4 Icons and art": [
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902091160
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902472082
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902623383
+      }
+    ],
+    "7.5 Badge and card": [
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902091310
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902629602
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902786196
+      }
+    ],
+    "7.6 Source-scan rules": [
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902091468
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902789608
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902867521
+      }
+    ],
+    "7.7 Final checkpoint": [
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902091620
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794902874207
+      },
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794903102953
+      }
+    ],
+    "7. Link creature badges (amendment; needs `link-creatures` tasks 1 to 4 done first)": [
+      {
+        "executionId": "78f9fd81-e6a0-462d-bbac-ebe778b1769b",
+        "chatSessionId": "sess_cfc91cac-0d44-4f03-beac-839187b859cd",
+        "timestamp": 1794903103130
+      }
+    ],
+    "8.1 Dictionary": [
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977498572
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977505068
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977572428
+      }
+    ],
+    "8.2 Section list": [
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977498730
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977505615
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977572964
+      }
+    ],
+    "8.3 Spotlight component and card change": [
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977498830
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977576621
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977626991
+      }
+    ],
+    "8.4 Tests and properties": [
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977498929
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977630927
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977709605
+      }
+    ],
+    "8.5 Source-scan rules": [
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977499054
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977631565
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977708994
+      }
+    ],
+    "8.6 Final checkpoint": [
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977499151
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977713311
+      },
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977813504
+      }
+    ],
+    "8. Link spotlight (amendment; needs group 7 done first)": [
+      {
+        "executionId": "471055d0-8d7d-4d35-8a95-13dae59adc3e",
+        "chatSessionId": "sess_20e1b89f-9e19-45bb-be3f-8353551a7ae6",
+        "timestamp": 1794977813561
+      }
     ]
   }
 }

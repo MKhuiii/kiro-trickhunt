@@ -1,6 +1,6 @@
 import type { MessageKey } from "./en";
 
-/** The 23 signal ids emitted by the analyzers (10 text, 7 url, 6 semantic). */
+/** The 24 signal ids: 10 text, 7 url from the analyzer, 1 url from the reputation lookup, 6 semantic. */
 export const KNOWN_SIGNAL_IDS = [
   "text.otp-request",
   "text.urgency",
@@ -19,6 +19,7 @@ export const KNOWN_SIGNAL_IDS = [
   "url.known-shortener",
   "url.brand-lookalike",
   "url.credential-keywords",
+  "url.reputation-listed",
   "semantic.impersonation-tone",
   "semantic.emotional-manipulation",
   "semantic.too-good-to-be-true",

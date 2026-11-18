@@ -185,6 +185,32 @@ describe("runCheck", () => {
     }
   });
 
+  it("passes checkLinks to buildAnalyzeRequest and defaults it to false", async () => {
+    const seen: (boolean | undefined)[] = [];
+    const { deps } = makeDeps();
+    const build = deps.buildAnalyzeRequest;
+    deps.buildAnalyzeRequest = (i) => {
+      seen.push(i.checkLinks);
+      return build(i);
+    };
+    await runCheck(deps, { ...textInput("hi"), checkLinks: true }, noStatus);
+    await runCheck(deps, textInput("hi"), noStatus);
+    expect(seen).toEqual([true, false]);
+  });
+
+  it("copies reputationMode from the client result into extras", async () => {
+    const { deps } = makeDeps({
+      analyze: async () => ({
+        ok: true,
+        verdict: VERDICT,
+        semanticMode: "used",
+        reputationMode: "checked",
+      }),
+    });
+    const out = await runCheck(deps, textInput("hi"), noStatus);
+    expect(out.kind === "done" && out.extras.reputationMode).toBe("checked");
+  });
+
   it("reports statuses in order for an image check", async () => {
     const { deps } = makeDeps();
     const seen: CheckStatus[] = [];

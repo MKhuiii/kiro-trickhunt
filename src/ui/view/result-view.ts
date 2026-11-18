@@ -10,8 +10,12 @@ import type { ColorToken } from "../theme/palettes";
 import { evidenceNeedles, shortEvidence } from "./evidence";
 import { computeHighlights } from "./highlights";
 import type { HighlightSegment } from "./highlights";
+import { buildLinkCreatures } from "./link-creatures-view";
+import type { LinkCreatureView } from "./link-creatures-view";
 import { buildNotices } from "./notices";
 import type { NoticeView, ResultExtras } from "./notices";
+import { buildReputationNote } from "./reputation-note";
+import type { ReputationNoteView } from "./reputation-note";
 import { aiUnavailable, semanticNoteKey } from "./semantic-note";
 
 export type { NoticeView, ResultExtras };
@@ -67,6 +71,9 @@ export interface ReadyResultView {
   } | null;
   readonly highlights: readonly HighlightSegment[];
   readonly signalGroups: readonly SignalGroupView[];
+  readonly linkCreatures: readonly LinkCreatureView[];
+  /** A neutral note about the link lookup. Never changes level, score or actions. */
+  readonly reputationNote: ReputationNoteView | null;
   readonly actions: readonly string[];
   readonly limitations: readonly string[];
   readonly semanticNoteKey: MessageKey;
@@ -259,6 +266,8 @@ export function buildResultView(
         : null,
       highlights: computeHighlights(text, needles),
       signalGroups,
+      linkCreatures: buildLinkCreatures(signals),
+      reputationNote: buildReputationNote(verdict, extras?.reputationMode),
       actions: nonEmptyStrings(verdict.actions),
       limitations: nonEmptyStrings(verdict.limitations),
       semanticNoteKey: semanticNoteKey(verdict.semantic, extras?.semanticMode),

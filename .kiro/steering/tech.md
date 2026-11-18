@@ -60,6 +60,10 @@ See `.kiro/specs/core-engine/` for the full spec.
 |---|---|---|
 | `LLM_API_KEY` | server only | Key for the LLM provider |
 | `LLM_BASE_URL` | server only | Endpoint override (for local models) |
+| `LINK_REPUTATION_API_KEY` | server only | Key for the link reputation service. Optional: the lookup is off when it is missing |
+| `LINK_REPUTATION_TIMEOUT_MS` | server only | Provider timeout in ms. Default 3000, range 500 to 6000 |
+| `LINK_REPUTATION_CALLS_PER_MINUTE` | server only | Lookups per minute per instance. Default 10, range 0 to 60. 0 turns the lookup off |
+| `LINK_REPUTATION_CALLS_PER_DAY` | server only | Lookups per 24 hours per instance. Default 2000, range 0 to 10000. 0 turns the lookup off |
 
 No environment variables are exposed to the browser (`NEXT_PUBLIC_` prefix is
 not used for secrets).

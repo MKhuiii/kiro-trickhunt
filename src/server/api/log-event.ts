@@ -1,3 +1,5 @@
+import type { LogReputationMode } from "./reputation-mode";
+
 export type LogStatus = 200 | 400 | 413 | 415 | 429 | 500;
 export type LogSemanticMode =
   | "used"
@@ -13,6 +15,7 @@ export interface AnalyzeLogEvent {
   /** Integer >= 0. */
   readonly durationMs: number;
   readonly semanticMode: LogSemanticMode;
+  readonly reputationMode: LogReputationMode;
 }
 
 /**

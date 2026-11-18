@@ -108,7 +108,23 @@ describe("PBT-64: analyzeRequest body keys and locale values", () => {
         const body: unknown = JSON.parse(String(captured.init?.body));
         expect(typeof body).toBe("object");
         for (const key of Object.keys(body as object)) {
-          expect(["text", "urls", "locale"]).toContain(key);
+          expect(["text", "urls", "locale", "checkLinks"]).toContain(key);
+        }
+        if ("checkLinks" in (body as object)) {
+          expect((body as { checkLinks: unknown }).checkLinks).toBe(true);
+        }
+        if (typeof input === "object" && input !== null && (input as { checkLinks?: unknown }).checkLinks !== true) {
+          expect("checkLinks" in (body as object)).toBe(false);
+        }
+        if (result.ok && result.reputationMode !== undefined) {
+          expect([
+            "checked",
+            "not-requested",
+            "not-configured",
+            "budget-exhausted",
+            "skipped",
+            "failed",
+          ]).toContain(result.reputationMode);
         }
         if ("locale" in (body as object)) {
           expect(["vi", "en"]).toContain((body as { locale: unknown }).locale);

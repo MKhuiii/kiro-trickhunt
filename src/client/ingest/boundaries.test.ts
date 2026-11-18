@@ -187,8 +187,13 @@ describe("client ingest boundaries", () => {
       expect(offending(/\b(fetch|XMLHttpRequest|sendBeacon|WebSocket|EventSource)\b/)).toEqual([]);
     });
 
-    it("contains no http(s) URLs", () => {
-      expect(offending(/https?:\/\//i)).toEqual([]);
+    it("contains no http(s) URLs, except the advisory address (REQ-LREP-49)", () => {
+      const urls = ui().flatMap((s) =>
+        (s.text.match(/https?:\/\/[^\s"'`]+/gi) ?? []).map((u) => `${s.name}: ${u}`),
+      );
+      expect(urls).toEqual([
+        "reputation.config.ts: https://developers.google.com/safe-browsing/v4/advisory",
+      ]);
     });
   });
 });

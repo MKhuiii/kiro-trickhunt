@@ -38,6 +38,14 @@ export const COLOR_TOKENS = [
   "ink",
   "ink-faded",
   "blood",
+  "link-doppelganger",
+  "link-changeling",
+  "link-faceless-one",
+  "link-masked-stranger",
+  "link-hydra",
+  "link-cloaked-gate",
+  "link-wisp",
+  "link-plague-mark",
 ] as const;
 
 export type ColorToken = (typeof COLOR_TOKENS)[number];
@@ -79,6 +87,14 @@ export const NORMAL_PALETTE: Palette = {
   ink: "#2A1A12",
   "ink-faded": "#5A4636",
   blood: "#8B1A1A",
+  "link-doppelganger": "#6FE0D2",
+  "link-changeling": "#C9A6FF",
+  "link-faceless-one": "#E8E2C4",
+  "link-masked-stranger": "#FFB37A",
+  "link-hydra": "#8EE8A0",
+  "link-cloaked-gate": "#9FB8FF",
+  "link-wisp": "#F5A6C8",
+  "link-plague-mark": "#DDE36B",
 };
 
 export const HIGH_CONTRAST_PALETTE: Palette = {
@@ -116,4 +132,12 @@ export const HIGH_CONTRAST_PALETTE: Palette = {
   ink: "#000000",
   "ink-faded": "#1A1A1A",
   blood: "#8B0000",
+  "link-doppelganger": "#8FEBDF",
+  "link-changeling": "#DBC4FF",
+  "link-faceless-one": "#F3EFD9",
+  "link-masked-stranger": "#FFC9A0",
+  "link-hydra": "#A9F0B8",
+  "link-cloaked-gate": "#BCCEFF",
+  "link-wisp": "#FFBFD9",
+  "link-plague-mark": "#F0F4A8",
 };

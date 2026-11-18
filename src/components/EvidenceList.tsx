@@ -3,6 +3,7 @@ import type { Locale } from "../pipeline";
 import { t } from "../ui";
 import type { MessageKey, ReadyResultView } from "../ui";
 import { HighlightedMessage } from "./HighlightedMessage";
+import { ReputationAttribution } from "./ReputationAttribution";
 
 const SEVERITY_KEY: Readonly<Record<"low" | "medium" | "high", MessageKey>> = {
   low: "result.severity.low",
@@ -36,6 +37,11 @@ export function EvidenceList({ view, locale }: EvidenceListProps): ReactElement 
           <h4 className="text-lg font-bold text-[color:var(--th-muted)]">
             {t(locale, group.labelKey)}
           </h4>
+          {group.source === "url" ? (
+            <p className="mt-1 text-base text-[color:var(--th-muted)]">
+              {t(locale, "link.plain.note")}
+            </p>
+          ) : null}
           <ul className="mt-2 space-y-3">
             {group.cards.map((card, i) => (
               <li
@@ -50,6 +56,11 @@ export function EvidenceList({ view, locale }: EvidenceListProps): ReactElement 
                 <p className="mt-1 text-base font-semibold text-[color:var(--th-muted)]">
                   {t(locale, SEVERITY_KEY[card.severityBand])}
                 </p>
+                {card.signalId === "url.reputation-listed" ? (
+                  <div className="mt-2">
+                    <ReputationAttribution listed locale={locale} />
+                  </div>
+                ) : null}
               </li>
             ))}
           </ul>

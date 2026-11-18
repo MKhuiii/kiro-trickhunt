@@ -88,7 +88,7 @@ describe("analyze handler responses", () => {
     expect(res.status).toBe(200);
     const body = (await res.json()) as { verdict?: unknown; meta?: { semanticMode: string } };
     expect(body.verdict).toBeDefined();
-    expect(body.meta).toEqual({ semanticMode: "used" });
+    expect(body.meta).toEqual({ semanticMode: "used", reputationMode: "not-requested" });
   });
 
   it("returns 415 for a wrong content type", async () => {
@@ -361,7 +361,7 @@ describe("analyze handler privacy and logging", () => {
     expect(h.events).toHaveLength(1);
     const event = h.events[0]!;
     expect(Object.keys(event).sort()).toEqual(
-      ["durationMs", "event", "semanticMode", "status"].sort(),
+      ["durationMs", "event", "reputationMode", "semanticMode", "status"].sort(),
     );
     expect(event.event).toBe("analyze");
     expect(event.status).toBe(200);
@@ -373,7 +373,114 @@ describe("analyze handler privacy and logging", () => {
     const h = build();
     await h.handler(post("x", { "content-type": "text/plain" }));
     expect(h.events).toEqual([
-      { event: "analyze", status: 415, durationMs: expect.any(Number), semanticMode: "none" },
+      {
+        event: "analyze",
+        status: 415,
+        durationMs: expect.any(Number),
+        semanticMode: "none",
+        reputationMode: "none",
+      },
     ]);
+  });
+});
+
+describe("analyze handler link reputation", () => {
+  const LINK_TEXT = "Your account is locked http://192.168.1.1/login";
+
+  function reputationDeps(opts: { allow?: boolean; callGate?: boolean; returnNull?: boolean; throwCreate?: boolean } = {}) {
+    const state = { created: 0, acquired: 0, gateAnswers: [] as boolean[] };
+    const reputation: NonNullable<AnalyzeHandlerDeps["reputation"]> = {
+      budget: {
+        tryAcquire: () => {
+          state.acquired += 1;
+          return opts.allow ?? true;
+        },
+      },
+      createChecker: (gate) => {
+        state.created += 1;
+        if (opts.throwCreate) throw new Error(SECRET);
+        if (opts.returnNull) return null;
+        return {
+          check: async () => {
+            if (opts.callGate !== false) state.gateAnswers.push(gate());
+            return { status: "ok", checkedCount: 1, hits: [] } as never;
+          },
+        };
+      },
+    };
+    return { state, reputation };
+  }
+
+  function linkRequest(checkLinks?: boolean): Request {
+    return post(
+      JSON.stringify(checkLinks === undefined ? { text: LINK_TEXT } : { text: LINK_TEXT, checkLinks }),
+    );
+  }
+
+  it("does not create a checker without checkLinks true", async () => {
+    const { state, reputation } = reputationDeps();
+    const h = build({ reputation, client: null });
+    const res = await h.handler(linkRequest());
+    const body = (await res.json()) as { meta: { reputationMode: string } };
+    expect(body.meta.reputationMode).toBe("not-requested");
+    expect(state.created).toBe(0);
+    expect(state.acquired).toBe(0);
+    expect(h.pipelineOptions[0]?.reputationChecker).toBeUndefined();
+    expect(h.events[0]?.reputationMode).toBe("not-requested");
+  });
+
+  it("is not-configured when checkLinks is true and no reputation dependency exists", async () => {
+    const h = build({ client: null });
+    const res = await h.handler(linkRequest(true));
+    const body = (await res.json()) as { meta: { reputationMode: string } };
+    expect(body.meta.reputationMode).toBe("not-configured");
+    expect(h.pipelineOptions[0]?.reputationChecker).toBeUndefined();
+  });
+
+  it("is not-configured when createChecker throws or returns null", async () => {
+    for (const opts of [{ throwCreate: true }, { returnNull: true }]) {
+      const { reputation } = reputationDeps(opts);
+      const h = build({ reputation, client: null });
+      const res = await h.handler(linkRequest(true));
+      expect(res.status).toBe(200);
+      const body = (await res.json()) as { meta: { reputationMode: string } };
+      expect(body.meta.reputationMode).toBe("not-configured");
+    }
+  });
+
+  it("passes a checker, acquires the budget once and logs the mode", async () => {
+    const { state, reputation } = reputationDeps();
+    const h = build({ reputation, client: null });
+    const res = await h.handler(linkRequest(true));
+    expect(res.status).toBe(200);
+    expect(h.pipelineOptions[0]?.reputationChecker).toBeDefined();
+    expect(state.created).toBe(1);
+    expect(state.acquired).toBe(1);
+    const body = (await res.json()) as { meta: { reputationMode: string } };
+    expect(body.meta.reputationMode).toBe("checked");
+    expect(h.events[0]?.reputationMode).toBe("checked");
+  });
+
+  it("never acquires the budget when the checker does not call the gate", async () => {
+    const { state, reputation } = reputationDeps({ callGate: false });
+    const h = build({ reputation, client: null });
+    await h.handler(linkRequest(true));
+    expect(state.acquired).toBe(0);
+  });
+
+  it("reports budget-exhausted when the gate is denied", async () => {
+    const { reputation } = reputationDeps({ allow: false });
+    const h = build({ reputation, client: null });
+    const res = await h.handler(linkRequest(true));
+    const body = (await res.json()) as { meta: { reputationMode: string } };
+    expect(res.status).toBe(200);
+    expect(body.meta.reputationMode).toBe("budget-exhausted");
+  });
+
+  it("logs reputationMode none on a non-200 exit", async () => {
+    const { reputation } = reputationDeps();
+    const h = build({ reputation });
+    await h.handler(post("{", { "content-type": "application/json" }));
+    expect(h.events[0]?.reputationMode).toBe("none");
   });
 });

@@ -8,6 +8,7 @@ import { MONSTER_PRESENTATION, buildJournalView, buildResultView } from "../ui";
 import { KNOWN_SIGNAL_IDS } from "../ui/i18n/signal-ids";
 import { shortEvidence } from "../ui/view/evidence";
 import type { Verdict } from "../pipeline";
+import { NO_REPUTATION } from "../pipeline/reputation-fixture";
 
 // PBT-93: no ids in the rendered result (REQ-HUNT-35, REQ-HUNT-37).
 
@@ -64,6 +65,7 @@ const verdictArb: fc.Arbitrary<Verdict> = fc
     inputTruncated: fc.boolean(),
     urlsAnalyzed: fc.nat({ max: 5 }),
     urlsSkipped: fc.nat({ max: 5 }),
+    reputation: fc.constant(NO_REPUTATION),
   })
   .map(
     (r) =>

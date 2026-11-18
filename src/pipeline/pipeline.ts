@@ -12,6 +12,7 @@ import type { SemanticResult } from "../analyzers/semantic-analyzer";
 import { TextAnalyzer } from "../analyzers/text-analyzer";
 import { UrlAnalyzer } from "../analyzers/url-analyzer";
 import type { LlmClient } from "../analyzers/llm-client";
+import type { ReputationChecker } from "../analyzers/reputation-checker";
 
 import { applyAwarenessAdjustment } from "./awareness";
 import { AWARENESS_ADJUSTMENT_ENABLED } from "./awareness.config";
@@ -20,10 +21,16 @@ import { prepareInput } from "./input";
 import type { PreparedInput } from "./input";
 import { buildActions, buildLimitations, resolveLocale } from "./messages";
 import { selectMonster } from "./monster";
-import { SEMANTIC_POLICY, SEMANTIC_TIMEOUT_MS } from "./pipeline.config";
+import {
+  REPUTATION_PIPELINE_TIMEOUT_MS,
+  SEMANTIC_POLICY,
+  SEMANTIC_TIMEOUT_MS,
+} from "./pipeline.config";
+import { runReputation } from "./reputation";
 import { reduceForScoring, shortenEvidence, sortBySeverity } from "./reduce";
 import type {
   Locale,
+  ReputationOutcome,
   RiskLevel,
   SemanticOutcome,
   Verdict,
@@ -39,6 +46,10 @@ export interface PipelineOptions {
    * LLM is not asked for the awareness marker at all.
    */
   readonly awarenessEnabled?: boolean;
+  /** Optional link reputation checker, injected like the LLM client. */
+  readonly reputationChecker?: ReputationChecker | null;
+  /** Test hook: pipeline-level reputation timeout in ms. */
+  readonly reputationTimeoutMs?: number;
 }
 
 export interface Pipeline {
@@ -70,6 +81,12 @@ function deepFreeze<T>(value: T): T {
   return value;
 }
 
+/** Outcome when no checker is injected, and for the fallback verdict. */
+const NOT_REQUESTED: ReputationOutcome = Object.freeze({
+  status: "not-requested",
+  checkedCount: 0,
+});
+
 function assemble(params: {
   readonly scored: Scored;
   readonly signals: readonly Signal[];
@@ -77,6 +94,8 @@ function assemble(params: {
   readonly prepared: Pick<PreparedInput, "inputTruncated" | "urls" | "urlsSkipped">;
   readonly locale: Locale;
   readonly awarenessApplied?: boolean;
+  readonly reputation: ReputationOutcome;
+  readonly reputationListed: boolean;
 }): Verdict {
   const { scored, semantic, prepared, locale } = params;
   const signals = sortBySeverity(params.signals);
@@ -92,11 +111,13 @@ function assemble(params: {
       semanticStatus: semantic.status,
       locale,
       awarenessApplied: params.awarenessApplied === true,
+      reputationListed: params.reputationListed,
     }),
     semantic,
     inputTruncated: prepared.inputTruncated,
     urlsAnalyzed: prepared.urls.length,
     urlsSkipped: prepared.urlsSkipped,
+    reputation: params.reputation,
   };
   return deepFreeze(verdict);
 }
@@ -120,6 +141,7 @@ function fallbackVerdict(locale: Locale, hasClient: boolean): Verdict {
     inputTruncated: false,
     urlsAnalyzed: 0,
     urlsSkipped: 0,
+    reputation: NOT_REQUESTED,
   } as Verdict);
 }
 
@@ -128,11 +150,18 @@ export function createPipeline(options: PipelineOptions): Pipeline {
   let locale: Locale = "en";
   let timeoutMs = SEMANTIC_TIMEOUT_MS;
   let awarenessEnabled: boolean = AWARENESS_ADJUSTMENT_ENABLED;
+  let checker: ReputationChecker | null = null;
+  let reputationTimeoutMs: number = REPUTATION_PIPELINE_TIMEOUT_MS;
   try {
     client = options?.llmClient ?? null;
     locale = resolveLocale(options?.locale);
     const t = options?.semanticTimeoutMs;
     if (typeof t === "number" && Number.isFinite(t) && t >= 0) timeoutMs = t;
+    checker = options?.reputationChecker ?? null;
+    const rt = options?.reputationTimeoutMs;
+    if (typeof rt === "number" && Number.isFinite(rt) && rt >= 0) {
+      reputationTimeoutMs = rt;
+    }
     if (typeof options?.awarenessEnabled === "boolean") {
       awarenessEnabled = options.awarenessEnabled;
     }
@@ -234,6 +263,11 @@ export function createPipeline(options: PipelineOptions): Pipeline {
           semantic: emptySemantic,
           prepared,
           locale,
+          reputation:
+            checker === null
+              ? NOT_REQUESTED
+              : { status: "ok", checkedCount: 0 },
+          reputationListed: false,
         });
       }
 
@@ -241,12 +275,25 @@ export function createPipeline(options: PipelineOptions): Pipeline {
       registry.register(new TextAnalyzer());
       registry.register(new UrlAnalyzer());
 
+      // Started now, awaited after the analyzers; never rejects.
+      const reputationRun = runReputation(
+        checker,
+        prepared.urls,
+        reputationTimeoutMs,
+        locale,
+      );
+
       const [textSignals, ...urlResults] = await Promise.all([
         textBlank ? Promise.resolve<Signal[]>([]) : registry.analyze("text", prepared.text),
         ...prepared.urls.map((u) => registry.analyze("url", u)),
       ]);
 
-      const ruleSignals = shortenEvidence([...textSignals, ...urlResults.flat()]);
+      const rep = await reputationRun;
+      const ruleSignals = shortenEvidence([
+        ...textSignals,
+        ...urlResults.flat(),
+        ...rep.signals,
+      ]);
       const rulesScored = score(ruleSignals);
 
       let signals = ruleSignals;
@@ -290,6 +337,8 @@ export function createPipeline(options: PipelineOptions): Pipeline {
         prepared,
         locale,
         awarenessApplied: adjusted.applied,
+        reputation: rep.outcome,
+        reputationListed: rep.signals.length > 0,
       });
     } catch {
       return fallbackVerdict(locale, client !== null);

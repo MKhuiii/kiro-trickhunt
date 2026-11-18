@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { aggregate, createSignal } from "../core";
+import { REPUTATION_LISTED_SIGNAL_ID } from "../analyzers/reputation-checker";
 import { SEMANTIC_SIGNALS } from "../analyzers/semantic-analyzer.config";
 import { TEXT_PATTERNS } from "../analyzers/text-analyzer.config";
 import {
@@ -13,11 +14,23 @@ import {
   LIMITATIONS_DEGRADED,
   LIMITATIONS_FIXED,
   LIMITATIONS_NO_SIGNALS,
+  LIMITATIONS_REPUTATION,
   LIMITATIONS_UNAVAILABLE,
 } from "./messages.config";
 import { MONSTERS, MONSTER_ORDER } from "./monsters.config";
 import { OVERLAP_GROUPS } from "./overlap.config";
-import { COMBINATION_RULES, MIN_SCORE_BY_LEVEL } from "./rules.config";
+import { BLOCKING_SIGNAL_IDS } from "./awareness.config";
+import { REPUTATION_PIPELINE_TIMEOUT_MS } from "./pipeline.config";
+import {
+  CATEGORY_LABELS,
+  CATEGORY_PRIORITY,
+  LISTED_WHY,
+} from "./reputation.config";
+import {
+  COMBINATION_RULES,
+  MIN_SCORE_BY_LEVEL,
+  REPUTATION_LISTED_SEVERITY,
+} from "./rules.config";
 import type { Locale, MonsterId } from "./verdict";
 
 const LOCALES: readonly Locale[] = ["en", "vi"];
@@ -42,6 +55,7 @@ const REAL_IDS: ReadonlySet<string> = new Set([
   ...TEXT_PATTERNS.map((p) => p.id),
   ...SEMANTIC_SIGNALS.map((s) => s.id),
   ...urlSignalIds(),
+  REPUTATION_LISTED_SIGNAL_ID,
 ]);
 
 /** True if `key` is an exact real id or a ".*" prefix matching one. */
@@ -54,6 +68,7 @@ function resolves(key: string): boolean {
 }
 
 const messageLists: ReadonlyArray<readonly [string, Record<Locale, readonly string[]>]> = [
+  ["LIMITATIONS_REPUTATION", LIMITATIONS_REPUTATION],
   ["LIMITATIONS_AWARENESS", LIMITATIONS_AWARENESS],
   ["ACTIONS_FALLBACK", ACTIONS_FALLBACK],
   ["LIMITATIONS_FIXED", LIMITATIONS_FIXED],
@@ -187,6 +202,37 @@ describe("monsters config", () => {
     const ids = MONSTERS.map((m) => m.id);
     expect(new Set(ids).size).toBe(ids.length);
     expect([...ids].sort()).toEqual([...MONSTER_ORDER].sort());
+  });
+});
+
+describe("reputation config", () => {
+  it("has the pinned constants and rule", () => {
+    expect(REPUTATION_PIPELINE_TIMEOUT_MS).toBe(6500);
+    expect(REPUTATION_LISTED_SEVERITY).toBe(0.75);
+    const rule = COMBINATION_RULES.find((r) => r.id === "reputation-listed");
+    expect(rule?.minLevel).toBe("high");
+    expect(rule?.allOf).toEqual([[REPUTATION_LISTED_SIGNAL_ID]]);
+  });
+
+  it("blocks the awareness adjustment by explicit id", () => {
+    expect(BLOCKING_SIGNAL_IDS).toContain(REPUTATION_LISTED_SIGNAL_ID);
+  });
+
+  it("covers every category in both locales, with no safety words", () => {
+    expect([...CATEGORY_PRIORITY].sort()).toEqual(
+      ["malware", "other", "social-engineering", "unwanted-software"],
+    );
+    for (const locale of LOCALES) {
+      const texts = [
+        LISTED_WHY[locale],
+        ...CATEGORY_PRIORITY.map((c) => CATEGORY_LABELS[locale][c]),
+        ...LIMITATIONS_REPUTATION[locale],
+      ];
+      for (const t of texts) {
+        expect(t.trim()).not.toBe("");
+        expect(t).not.toMatch(/\bsafe\b|\bclean\b|\bmalicious\b|\bdangerous\b|an toàn|sạch/i);
+      }
+    }
   });
 });
 

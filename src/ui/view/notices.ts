@@ -5,6 +5,8 @@ import type { SemanticMode } from "./semantic-note";
 
 export interface ResultExtras {
   semanticMode?: SemanticMode;
+  /** Link lookup mode from the response meta. Read only by `buildReputationNote`. */
+  reputationMode?: string;
   ingestNotices?: readonly { kind: string }[];
   buildNotices?: readonly { kind: string }[];
   /** Only the count is used. */

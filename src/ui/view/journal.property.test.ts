@@ -7,6 +7,7 @@ import { MONSTER_PRESENTATION } from "../monsters";
 import { MAX_ACTIONS, MAX_CLUES, buildJournalView } from "./journal";
 import { resultSections } from "./page-layout";
 import { buildResultView } from "./result-view";
+import { NO_REPUTATION } from "../../pipeline/reputation-fixture";
 
 // PBT-96 (REQ-HUNT-66 to REQ-HUNT-68, REQ-HUNT-71).
 
@@ -53,6 +54,7 @@ const verdictArb: fc.Arbitrary<Verdict> = fc
     inputTruncated: fc.boolean(),
     urlsAnalyzed: fc.nat({ max: 5 }),
     urlsSkipped: fc.nat({ max: 5 }),
+    reputation: fc.constant(NO_REPUTATION),
   })
   .map(
     (r) =>

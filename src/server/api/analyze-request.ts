@@ -13,7 +13,12 @@ import {
 export type ParsedRequest =
   | {
       readonly ok: true;
-      readonly input: { text?: string; urls?: string[]; locale?: "vi" | "en" };
+      readonly input: {
+        text?: string;
+        urls?: string[];
+        locale?: "vi" | "en";
+        checkLinks?: boolean;
+      };
     }
   | {
       readonly ok: false;
@@ -25,6 +30,7 @@ const bodySchema = z
     text: z.string().max(MAX_TEXT_CHARS).optional(),
     urls: z.array(z.string().max(MAX_URL_CHARS)).max(MAX_URLS_IN).optional(),
     locale: z.enum(["vi", "en"]).optional(),
+    checkLinks: z.boolean().optional(),
   })
   .refine(
     (value) =>
@@ -115,10 +121,16 @@ export async function readAnalyzeRequest(req: Request): Promise<ParsedRequest> {
       return { ok: false, code: "invalid-input" };
     }
 
-    const input: { text?: string; urls?: string[]; locale?: "vi" | "en" } = {};
+    const input: {
+      text?: string;
+      urls?: string[];
+      locale?: "vi" | "en";
+      checkLinks?: boolean;
+    } = {};
     if (parsed.data.text !== undefined) input.text = parsed.data.text;
     if (parsed.data.urls !== undefined) input.urls = parsed.data.urls;
     if (parsed.data.locale !== undefined) input.locale = parsed.data.locale;
+    if (parsed.data.checkLinks !== undefined) input.checkLinks = parsed.data.checkLinks;
     return { ok: true, input };
   } catch {
     return { ok: false, code: "invalid-input" };

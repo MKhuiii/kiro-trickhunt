@@ -21,6 +21,9 @@ export const MIN_SCORE_BY_LEVEL: Readonly<Record<RuleLevel, number>> = {
   critical: 80,
 };
 
+/** Severity of the `url.reputation-listed` signal (one listed link scores 75). */
+export const REPUTATION_LISTED_SEVERITY = 0.75;
+
 export const COMBINATION_RULES: readonly CombinationRule[] = [
   {
     id: "otp-urgent-impersonation",
@@ -80,6 +83,11 @@ export const COMBINATION_RULES: readonly CombinationRule[] = [
   {
     id: "job-offer-off-platform",
     allOf: [["text.job-offer"], ["text.off-platform"]],
+    minLevel: "high",
+  },
+  {
+    id: "reputation-listed",
+    allOf: [["url.reputation-listed"]],
     minLevel: "high",
   },
 ];

@@ -7,6 +7,9 @@ export type { Pipeline, PipelineOptions } from "./pipeline";
 export type {
   Locale,
   MonsterId,
+  ReputationOutcome,
+  ReputationReason,
+  ReputationStatus,
   RiskLevel,
   SemanticOutcome,
   SemanticPolicy,

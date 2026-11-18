@@ -21,6 +21,18 @@ export type {
   ResultExtras,
 } from "./view/result-view";
 
+export { LINK_CREATURES, LINK_TONES } from "./link-creatures";
+export type {
+  LinkCreature,
+  LinkCreatureId,
+  LinkTone,
+} from "./link-creatures";
+export type { LinkCreatureView } from "./view/link-creatures-view";
+export { linkBadgesForGroup } from "./view/link-badges";
+
+export { buildReputationNote } from "./view/reputation-note";
+export type { ReputationNoteView } from "./view/reputation-note";
+
 export { resultSections } from "./view/page-layout";
 export type { SectionId } from "./view/page-layout";
 

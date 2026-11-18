@@ -27,3 +27,9 @@ fileMatchPattern: "src/{app,ui}/**"
 - English is the default and the source language of the dictionary. Vietnamese
   is secondary and must have the same keys. The UI never auto-detects the
   language; the user's saved choice overrides the default.
+- Link wording: the tool never visits links and cannot know whether a link
+  exists. Say a link "has traits of" a lookalike, hidden destination, and so on;
+  never call a link "fake", "malicious" or "dangerous" as a fact. Links are
+  always plain text, never clickable.
+- Link creatures are a secondary layer shown on URL signal cards. They never
+  change the level, the score or the main monster.

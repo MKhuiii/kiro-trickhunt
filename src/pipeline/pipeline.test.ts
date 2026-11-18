@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { FakeLlmClient } from "../analyzers/fake-llm-client";
+import type {
+  ReputationChecker,
+  ReputationResult,
+} from "../analyzers/reputation-checker";
 import { TextAnalyzer } from "../analyzers/text-analyzer";
 import { UrlAnalyzer } from "../analyzers/url-analyzer";
 import { createPipeline } from "./pipeline";
@@ -7,6 +11,7 @@ import {
   ACTIONS_FALLBACK,
   LIMITATIONS_DEGRADED,
   LIMITATIONS_NO_SIGNALS,
+  LIMITATIONS_REPUTATION,
   LIMITATIONS_UNAVAILABLE,
 } from "./messages.config";
 import type { Verdict } from "./verdict";
@@ -290,5 +295,83 @@ describe("createPipeline — output shape", () => {
       locale: "fr" as unknown as "en",
     }).run({ text: MILD_TEXT });
     expect(odd.actions).toEqual(en.actions);
+  });
+});
+
+describe("createPipeline — link reputation", () => {
+  const LISTED_URL = "http://evil.example.com/path?secret=1";
+  const fakeChecker = (result: ReputationResult | "hang") => {
+    const calls: { urls: readonly string[]; signal?: AbortSignal }[] = [];
+    const checker: ReputationChecker = {
+      check: (urls, signal) => {
+        calls.push({ urls, signal });
+        if (result === "hang") return new Promise<ReputationResult>(() => undefined);
+        return Promise.resolve(result);
+      },
+    };
+    return { checker, calls };
+  };
+
+  it("without a checker the outcome is not-requested", async () => {
+    const v = await createPipeline({ llmClient: null }).run({ urls: [LISTED_URL] });
+    expect(v.reputation).toEqual({ status: "not-requested", checkedCount: 0 });
+  });
+
+  it("empty input with a checker is ok with zero checked, no call", async () => {
+    const { checker, calls } = fakeChecker({ status: "ok", hits: [], checkedCount: 0 });
+    const v = await createPipeline({ llmClient: null, reputationChecker: checker }).run({});
+    expect(v.reputation).toEqual({ status: "ok", checkedCount: 0 });
+    expect(calls).toHaveLength(0);
+  });
+
+  it("a listed link adds a signal, raises to high and adds the limitation", async () => {
+    const { checker } = fakeChecker({
+      status: "ok",
+      hits: [{ url: LISTED_URL, category: "malware" }],
+      checkedCount: 1,
+    });
+    const v = await createPipeline({ llmClient: null, reputationChecker: checker }).run({
+      urls: [LISTED_URL],
+    });
+    const sig = v.signals.find((s) => s.id === "url.reputation-listed");
+    expect(sig).toBeDefined();
+    expect(sig?.evidence).not.toContain("secret");
+    expect(["high", "critical"]).toContain(v.level);
+    expect(v.reputation).toEqual({ status: "ok", checkedCount: 1 });
+    expect(v.limitations).toEqual(
+      expect.arrayContaining([...LIMITATIONS_REPUTATION.en]),
+    );
+  });
+
+  it("not listed adds no signal and no reputation limitation", async () => {
+    const { checker } = fakeChecker({ status: "ok", hits: [], checkedCount: 1 });
+    const v = await createPipeline({ llmClient: null, reputationChecker: checker }).run({
+      urls: [LISTED_URL],
+    });
+    expect(v.signals.some((s) => s.id === "url.reputation-listed")).toBe(false);
+    for (const l of LIMITATIONS_REPUTATION.en) expect(v.limitations).not.toContain(l);
+  });
+
+  it("a hanging checker times out and the verdict still returns", async () => {
+    const { checker, calls } = fakeChecker("hang");
+    const v = await createPipeline({
+      llmClient: null,
+      reputationChecker: checker,
+      reputationTimeoutMs: 10,
+    }).run({ urls: [LISTED_URL] });
+    expect(v.reputation).toEqual({ status: "degraded", reason: "timeout", checkedCount: 0 });
+    expect(calls[0].signal?.aborted).toBe(true);
+  });
+
+  it("a throwing checker degrades to provider-error", async () => {
+    const checker: ReputationChecker = {
+      check: () => {
+        throw new Error("boom");
+      },
+    };
+    const v = await createPipeline({ llmClient: null, reputationChecker: checker }).run({
+      urls: [LISTED_URL],
+    });
+    expect(v.reputation.status).toBe("degraded");
   });
 });

@@ -28,6 +28,7 @@ export interface CheckDeps {
     ocrText?: string;
     qrResults?: IngestResult["qrResults"];
     locale: CheckLocale;
+    checkLinks?: boolean;
   }): BuildAnalyzeResult;
   analyzeRequest(request: AnalyzeRequest): Promise<AnalyzeClientResult>;
 }
@@ -43,6 +44,7 @@ export interface CheckInput {
   readonly userText: string;
   readonly file: File | null;
   readonly locale: CheckLocale;
+  readonly checkLinks?: boolean;
 }
 
 const GENERIC_FAILURE: MessageRef = { key: "error.generic", params: {}, technicalCode: "unknown" };
@@ -109,6 +111,7 @@ export async function runCheck(
       ocrText,
       qrResults,
       locale: input.locale,
+      checkLinks: input.checkLinks === true,
     });
     if (built.request === null) return { kind: "nothing" };
 
@@ -128,6 +131,7 @@ export async function runCheck(
       inputText: built.request.text ?? "",
       extras: {
         semanticMode: result.semanticMode,
+        reputationMode: result.reputationMode,
         ingestNotices,
         buildNotices: built.notices.map((n) => ({ kind: n.kind })),
         qrResults,

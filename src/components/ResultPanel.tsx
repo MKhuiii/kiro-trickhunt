@@ -7,8 +7,10 @@ import { AiNote } from "./AiNote";
 import { EvidenceList } from "./EvidenceList";
 import { LevelBanner } from "./LevelBanner";
 import { LimitsNote } from "./LimitsNote";
+import { LinkSpotlight } from "./LinkSpotlight";
 import { MonsterCard } from "./MonsterCard";
 import { Notices } from "./Notices";
+import { ReputationNote } from "./ReputationNote";
 import { TechnicalDetails } from "./TechnicalDetails";
 import { FOCUS_RING } from "./styles";
 
@@ -49,6 +51,14 @@ export function renderSection(
   switch (id) {
     case "levelBanner":
       return <LevelBanner view={view} locale={locale} />;
+    case "linkSpotlight":
+      return (
+        <LinkSpotlight creatures={view.linkCreatures} locale={locale} note={view.reputationNote} />
+      );
+    case "reputationNote":
+      return view.reputationNote === null ? null : (
+        <ReputationNote note={view.reputationNote} locale={locale} />
+      );
     case "aiNote":
       return view.aiNote === null ? null : <AiNote aiNote={view.aiNote} locale={locale} />;
     case "actions":

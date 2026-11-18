@@ -123,6 +123,16 @@ export const LIMITATIONS_NO_SIGNALS: ByLocale<readonly string[]> = {
   ],
 };
 
+/** Shown once when a link was found on the list of reported sites. */
+export const LIMITATIONS_REPUTATION: ByLocale<readonly string[]> = {
+  en: [
+    "The list of reported sites only covers sites that were already reported. A new or unreported link is not on it yet.",
+  ],
+  vi: [
+    "Danh sách trang bị báo cáo chỉ gồm các trang đã được báo cáo. Đường dẫn mới hoặc chưa được báo cáo thì chưa có trong đó.",
+  ],
+};
+
 /** Shown when the awareness adjustment lowered the level (rules-tuning-v5). */
 export const LIMITATIONS_AWARENESS: ByLocale<readonly string[]> = {
   en: [

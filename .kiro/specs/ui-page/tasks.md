@@ -83,3 +83,66 @@ No change to `src/core`, `src/analyzers`, `src/pipeline`, `src/server`,
   - Run `vitest run`, `npx tsc --noEmit`, `npm run lint` and `npx next build`
   - Confirm `git status` shows changes only in `src/ui/`, `src/components/`, `src/app/page.tsx`, `layout.tsx`, `globals.css`, `src/client/ingest/boundaries.test.ts`, `.kiro/steering/privacy-and-safety.md` and `.kiro/specs/ui-page/`
   - Manual check in a browser (run `npm run dev` yourself): a suspicious sample reads calm with the generic monster; with `LLM_API_KEY` unset the AI note appears under the level and a neutral sample shows the strong reminder; the limits note is visible; text size 150 and high contrast work; keyboard-only use works
+
+- [x] 7. Link creature badges (amendment; needs `link-creatures` tasks 1 to 4 done first)
+  - Tasks 1 to 6 are checked and are not reopened. This group is the rework.
+  - [x] 7.1 Dictionary wording
+    - Rewrite the five `signal.url.*.explain` texts and add `link.badge.caption` and `link.plain.note` in `en.ts` and `vi.ts` from design C4; update any existing test that pins an old text
+    - Write `i18n/link-wording.property.test.ts` (PBT-113)
+    - _Requirements: REQ-PAGE-45_
+  - [x] 7.2 Pure helper
+    - Create `src/ui/view/link-badges.ts`, export it from `src/ui/index.ts`; write `link-badges.test.ts` and `link-badges.property.test.ts` (PBT-110)
+    - _Requirements: REQ-PAGE-40, REQ-PAGE-41_
+  - [x] 7.3 Theme pairs
+    - Add 14 `ui` pairs (seven `link-*` tokens on `surface` and `raised`) to `pairs.ts`; do not change thresholds
+    - _Requirements: REQ-PAGE-46_
+  - [x] 7.4 Icons and art
+    - Add `IconLink` and the three tone icons with `ToneIcon` to `icons.tsx`; create `art/link-creatures.tsx` (seven pieces and `LinkCreatureArt`); write `art/link-creatures.test.ts` (PBT-111)
+    - _Requirements: REQ-PAGE-42, REQ-PAGE-43_
+  - [x] 7.5 Badge and card
+    - Create `LinkBadge.tsx`; edit `EvidenceList.tsx` (badge per card, `link.plain.note` once in the url group); write `LinkBadge.test.ts` and `EvidenceList.link.property.test.ts` (PBT-112)
+    - _Requirements: REQ-PAGE-40, REQ-PAGE-44, REQ-PAGE-46_
+  - [x] 7.6 Source-scan rules
+    - Extend `components.boundaries.test.ts`: `href`, `<a ` and `onClick` are forbidden in `LinkBadge.tsx`, `EvidenceList.tsx` and `HighlightedMessage.tsx`; add sanity cases
+    - _Requirements: REQ-PAGE-39, REQ-PAGE-44_
+  - [x] 7.7 Final checkpoint
+    - Run `vitest run`, `npx tsc --noEmit`, `npm run lint` and `npx next build`; confirm `git status` shows changes only in `src/ui/`, `src/components/` and `.kiro/specs/`
+    - Manual check in a browser: paste a message with a link such as `http://paypa1.com/verify`; the url card shows the badge with art, name, description, tone label and line; the link is plain text and cannot be clicked; text size 150 and high contrast still read well
+
+- [x] 8. Link spotlight (amendment; needs group 7 done first)
+  - Groups 1 to 7 are checked and are not reopened. This group moves the link badges to a section right under the level banner (design Part D).
+  - [x] 8.1 Dictionary
+    - Add `result.links.heading` to `en.ts` and `vi.ts` from design D4; add the key to the PBT-113 set in `link-wording.property.test.ts`; confirm the key set, placeholder and tier tests still pass
+    - _Requirements: REQ-PAGE-52_
+  - [x] 8.2 Section list
+    - Add `linkSpotlight` to `SectionId` and to `resultSections` in `page-layout.ts` (right after `levelBanner`, only for a ready view with links); check that `journal.ts` puts it first on page 2 and that `splitSections` keeps it in the scrolling part; extend `page-layout.test.ts` and the journal tests
+    - _Requirements: REQ-PAGE-47, REQ-PAGE-53, REQ-PAGE-54_
+  - [x] 8.3 Spotlight component and card change
+    - Create `LinkSpotlight.tsx`; add the `linkSpotlight` case to `renderSection` in `ResultPanel.tsx`; remove the badge rendering (and the `linkBadgesForGroup` and `LinkBadge` imports) from `EvidenceList.tsx`, keeping `link.plain.note` once in the url group
+    - _Requirements: REQ-PAGE-47, REQ-PAGE-48, REQ-PAGE-49, REQ-PAGE-50, REQ-PAGE-51_
+  - [x] 8.4 Tests and properties
+    - Edit `EvidenceList.link.property.test.ts` (PBT-112) and add PBT-115 there; create `ResultPanel.link.property.test.ts` (PBT-114); add the examples listed in `requirements.md` to `ResultPanel.test.ts`
+    - _Requirements: REQ-PAGE-47 to REQ-PAGE-51, REQ-PAGE-54_
+  - [x] 8.5 Source-scan rules
+    - Extend `components.boundaries.test.ts`: `href`, `<a ` and `onClick` are forbidden in `LinkSpotlight.tsx` and `ResultPanel.tsx`; the hard-coded text scan covers `LinkSpotlight.tsx`; add sanity cases
+    - _Requirements: REQ-PAGE-39, REQ-PAGE-51_
+  - [x] 8.6 Final checkpoint
+    - Run `vitest run`, `npx tsc --noEmit`, `npm run lint` and `npx next build`; confirm `git status` shows changes only in `src/ui/`, `src/components/` and `.kiro/specs/`
+    - Manual check in a browser: paste a message with a link such as `http://paypa1.com/verify`; the badge appears right under the level banner with its heading, the url card has no badge but keeps the plain-text note; the link cannot be clicked; text size 150 and high contrast still read well; in the journal the badges are the first block of page 2
+
+## Notes
+
+- Group 8 is the only unchecked group; its sub-tasks touch different files per wave.
+- Vietnamese text is a draft pending human review.
+
+## Task Dependency Graph
+
+```json
+{
+  "waves": [
+    { "id": 0, "tasks": ["8.1", "8.2"] },
+    { "id": 1, "tasks": ["8.3"] },
+    { "id": 2, "tasks": ["8.4", "8.5"] }
+  ]
+}
+```

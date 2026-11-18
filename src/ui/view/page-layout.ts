@@ -3,6 +3,8 @@ import type { ResultView } from "./result-view";
 export type SectionId =
   | "heading"
   | "levelBanner"
+  | "linkSpotlight"
+  | "reputationNote"
   | "aiNote"
   | "actions"
   | "evidence"
@@ -24,6 +26,12 @@ export function resultSections(view: ResultView): readonly SectionId[] {
     return out;
   }
   const out: SectionId[] = ["heading", "levelBanner"];
+  if (Array.isArray(view.linkCreatures) && view.linkCreatures.length > 0) {
+    out.push("linkSpotlight");
+  } else if (view.reputationNote !== null && view.reputationNote !== undefined) {
+    // With creatures, the Link Spotlight renders the note itself.
+    out.push("reputationNote");
+  }
   if (view.aiNote !== null) out.push("aiNote");
   if (view.actions.length > 0) out.push("actions");
   out.push("evidence", "limitsNote");

@@ -67,6 +67,7 @@ export const WARNING_CUE_PHRASES: Readonly<{ en: readonly string[]; vi: readonly
  */
 export const BLOCKING_SIGNAL_IDS: readonly string[] = [
   "url.*",
+  "url.reputation-listed",
   "semantic.*",
   "text.otp-request",
   "text.sensitive-data-request",

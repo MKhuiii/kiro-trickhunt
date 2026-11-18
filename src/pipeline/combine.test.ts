@@ -4,7 +4,7 @@ import { aggregate, createSignal } from "../core";
 import type { Signal } from "../core";
 
 import { applyRules } from "./combine";
-import { MIN_SCORE_BY_LEVEL } from "./rules.config";
+import { MIN_SCORE_BY_LEVEL, REPUTATION_LISTED_SEVERITY } from "./rules.config";
 
 function sig(id: string, severity = 0.1): Signal {
   return createSignal({
@@ -27,6 +27,27 @@ describe("MIN_SCORE_BY_LEVEL", () => {
     expect(aggregate([sig("text.a", MIN_SCORE_BY_LEVEL.critical / 100)]).level).toBe("critical");
     expect(aggregate([sig("text.a", (MIN_SCORE_BY_LEVEL.high - 1) / 100)]).level).toBe("suspicious");
     expect(aggregate([sig("text.a", (MIN_SCORE_BY_LEVEL.critical - 1) / 100)]).level).toBe("high");
+  });
+});
+
+describe("applyRules reputation-listed", () => {
+  it("raises a weak listed signal to at least high", () => {
+    const out = run([sig("url.reputation-listed", 0.1)]);
+    expect(out.level).toBe("high");
+    expect(out.score).toBeGreaterThanOrEqual(MIN_SCORE_BY_LEVEL.high);
+  });
+
+  it("a listed signal at the configured severity scores 75 (high)", () => {
+    const out = run([sig("url.reputation-listed", REPUTATION_LISTED_SEVERITY)]);
+    expect(out).toEqual({ score: 75, level: "high" });
+  });
+
+  it("never lowers a critical result", () => {
+    const signals = [sig("url.reputation-listed", 0.75), sig("text.threat", 0.95)];
+    const agg = aggregate(signals);
+    const out = applyRules(agg, signals);
+    expect(out.score).toBeGreaterThanOrEqual(agg.score);
+    expect(out.level).toBe(agg.level);
   });
 });
 

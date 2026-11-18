@@ -1,3 +1,4 @@
+import { extractEntities } from "../../analyzers/text-analyzer";
 import { MAX_TEXT_CHARS, MAX_URLS_IN } from "./ingest.config";
 import { isHttpUrl } from "./qr-payload";
 import type { AnalyzeRequest, QrKind } from "./types";
@@ -13,6 +14,7 @@ export interface BuildAnalyzeInput {
   readonly ocrText?: unknown;
   readonly qrResults?: unknown;
   readonly locale?: unknown;
+  readonly checkLinks?: unknown;
 }
 
 export interface BuildAnalyzeResult {
@@ -88,6 +90,16 @@ function readEntries(qrResults: unknown): unknown[] {
   }
 }
 
+function hasAnyUrl(text: string | null, urls: readonly string[]): boolean {
+  if (urls.length > 0) return true;
+  if (text === null) return false;
+  try {
+    return extractEntities(text).urls.length > 0;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Merge user text, OCR text and QR classifications into an API request body
  * plus notices. Never throws. `request` is null when there is nothing to
@@ -140,6 +152,9 @@ export function buildAnalyzeRequest(input: unknown): BuildAnalyzeResult {
     if (urls.length > 0) request.urls = urls;
     const locale = readProp(input, "locale");
     if (locale === "vi" || locale === "en") request.locale = locale;
+    if (readProp(input, "checkLinks") === true && hasAnyUrl(text, urls)) {
+      request.checkLinks = true;
+    }
     return { request, notices };
   } catch {
     return { request: null, notices: [] };

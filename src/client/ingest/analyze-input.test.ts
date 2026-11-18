@@ -91,6 +91,44 @@ describe("buildAnalyzeRequest", () => {
     expect(r.request?.urls?.[MAX_URLS_IN - 1]).toBe(`https://h${MAX_URLS_IN - 1}.example/`);
   });
 
+  describe("checkLinks", () => {
+    const qr = [{ kind: "url", url: "https://a.example/" }];
+
+    it("is set when ticked and a URL is in urls", () => {
+      expect(buildAnalyzeRequest({ checkLinks: true, qrResults: qr }).request).toEqual({
+        urls: ["https://a.example/"],
+        checkLinks: true,
+      });
+    });
+
+    it("is set when ticked and a URL is in the text", () => {
+      const r = buildAnalyzeRequest({ checkLinks: true, userText: "visit https://a.example/x now" });
+      expect(r.request?.checkLinks).toBe(true);
+    });
+
+    it("is absent when ticked but there is no URL", () => {
+      const r = buildAnalyzeRequest({ checkLinks: true, userText: "hello there" });
+      expect(r.request).toEqual({ text: "hello there" });
+      expect("checkLinks" in (r.request ?? {})).toBe(false);
+    });
+
+    it("is absent when the URL sits only beyond the truncation point", () => {
+      const r = buildAnalyzeRequest({
+        checkLinks: true,
+        userText: "x".repeat(MAX_TEXT_CHARS) + " https://a.example/",
+      });
+      expect(r.request && "checkLinks" in r.request).toBe(false);
+    });
+
+    it.each([[false], [undefined], [null], ["true"], [1], [{}], [[]]])(
+      "is absent when checkLinks is %j",
+      (checkLinks) => {
+        const r = buildAnalyzeRequest({ checkLinks, qrResults: qr });
+        expect(r.request && "checkLinks" in r.request).toBe(false);
+      },
+    );
+  });
+
   it("ignores malformed entries and non-http urls, and never throws", () => {
     const r = buildAnalyzeRequest({
       qrResults: [null, 5, "x", { kind: "url", url: "javascript:alert(1)" }, { kind: "bogus" }, { kind: "url" }],
