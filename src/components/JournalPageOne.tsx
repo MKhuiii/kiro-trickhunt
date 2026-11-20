@@ -2,7 +2,8 @@ import type { CSSProperties, ReactElement, Ref } from "react";
 import type { Locale } from "../pipeline";
 import { firstSentence, t } from "../ui";
 import type { JournalReady } from "../ui";
-import { LevelIcon } from "./icons";
+import { LINK_CREATURE_COLOR, LinkCreatureArt } from "./art/link-creatures";
+import { LevelIcon, ToneIcon } from "./icons";
 
 interface JournalPageOneProps {
   readonly journal: JournalReady;
@@ -40,6 +41,32 @@ export function JournalPageOne({ journal, locale, headingRef }: JournalPageOnePr
         </p>
         <p className="mt-1 text-base text-[color:var(--th-ink)] md:text-lg">{t(locale, p.monsterShortKey)}</p>
       </div>
+
+      {p.linkCreatures.length > 0 ? (
+        <div style={step(n++)}>
+          <h3 className="th-hand text-2xl text-[color:var(--th-ink)]">{t(locale, "result.links.heading")}</h3>
+          <ul className="mt-1 space-y-3">
+            {p.linkCreatures.map((c) => (
+              <li key={c.id} className="flex items-start gap-3">
+                <span className="shrink-0" style={{ color: LINK_CREATURE_COLOR }}>
+                  <LinkCreatureArt artKey={c.artKey} className="h-16 w-16 md:h-20 md:w-20" />
+                </span>
+                <span className="min-w-0 text-base text-[color:var(--th-ink)]">
+                  <span className="block text-xl font-bold md:text-2xl">{t(locale, c.nameKey)}</span>
+                  <span className="flex items-center gap-2 font-semibold">
+                    <span className="text-xl text-[color:var(--th-blood)]">
+                      <ToneIcon iconKey={c.toneIconKey} />
+                    </span>
+                    <span>{t(locale, c.toneLabelKey)}</span>
+                  </span>
+                  <span className="block">{firstSentence(t(locale, c.explanationKey))}</span>
+                  <span className="block break-words">{c.evidence}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <div style={step(n++)}>
         <p className="flex items-center gap-2 text-xl font-bold text-[color:var(--th-ink)] md:text-2xl">

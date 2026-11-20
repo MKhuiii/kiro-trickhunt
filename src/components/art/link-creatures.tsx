@@ -146,6 +146,13 @@ export const LINK_ART: Readonly<Record<string, (props: ArtProps) => ReactElement
   "creature-plague-mark": PlagueMark,
 };
 
+/**
+ * One dark color for every link creature badge: ink. On paper it is drawn as
+ * is; on dark surfaces it sits on a paper disc (ink on paper is a declared pair).
+ */
+export const LINK_CREATURE_COLOR = "var(--th-ink)";
+export const LINK_CREATURE_DISC = "inline-flex rounded-full bg-[var(--th-paper)] p-1";
+
 /** Renders the art for `artKey`. Any unregistered key shows the generic link icon. Never throws. */
 export function LinkCreatureArt({
   artKey,

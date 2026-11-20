@@ -35,8 +35,10 @@ describe("LinkBadge", () => {
     }
   });
 
-  it("colors the art wrapper with the creature token", () => {
-    expect(html).toContain(`var(--th-${creature().colorToken})`);
+  it("draws the art in dark ink on a paper disc, the same for every creature", () => {
+    expect(html).toContain("color:var(--th-ink)");
+    expect(html).toContain("bg-[var(--th-paper)]");
+    expect(html).not.toContain(`var(--th-${creature().colorToken})`);
   });
 
   it("renders evidence as escaped plain text in a break-words span", () => {

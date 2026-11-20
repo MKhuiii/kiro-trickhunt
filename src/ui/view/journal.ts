@@ -7,6 +7,7 @@
 import type { MessageKey } from "../i18n/en";
 import { resultSections } from "./page-layout";
 import type { SectionId } from "./page-layout";
+import type { LinkCreatureView } from "./link-creatures-view";
 import type { ReadyResultView, ResultView, SignalCardView } from "./result-view";
 
 export const MAX_CLUES = 3;
@@ -30,6 +31,8 @@ export interface JournalPage1 {
   readonly actions: readonly string[];
   /** At most `MAX_CLUES`, most serious first. */
   readonly clues: readonly SignalCardView[];
+  /** Link creatures found in the message, shown right after the monster. */
+  readonly linkCreatures: readonly LinkCreatureView[];
   /** The one note worth a line on the first page. */
   readonly note: JournalNote | null;
   /** Other notes that moved to page 2. */
@@ -134,6 +137,7 @@ export function buildJournalView(view: ResultView): JournalView {
         noSignals: view.noSignals,
         actions: view.actions.slice(0, MAX_ACTIONS),
         clues: pickClues(view),
+        linkCreatures: view.linkCreatures,
         note,
         moreNotes: Math.max(0, more),
         limitsNoteKey: view.limitsNoteKey,

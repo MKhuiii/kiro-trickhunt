@@ -3,6 +3,8 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { MonsterStage } from "./MonsterStage";
 import { MONSTER_PRESENTATION, t } from "../ui";
+import { buildLinkCreatures } from "../ui/view/link-creatures-view";
+import { LINK_CREATURES } from "../ui/link-creatures";
 import type { MonsterKey } from "../ui";
 
 // Markup tests for the reveal (REQ-HUNT-28, REQ-HUNT-33, REQ-HUNT-41, REQ-HUNT-42).
@@ -28,19 +30,16 @@ describe("MonsterStage markup", () => {
       it(`${locale}: renders ${monster} with the right caption`, () => {
         const html = stage(locale, monster);
         const p = MONSTER_PRESENTATION[monster];
-        const expected =
-          monster === "neutral"
-            ? t(locale, "scene.reveal.nothing")
-            : t(locale, "scene.reveal.found", { name: t(locale, p.nameKey) });
         expect(html).toContain(`data-monster="${monster}"`);
-        expect(html).toContain(esc(expected));
+        if (monster === "neutral") expect(html).toContain(esc(t(locale, "scene.reveal.nothing")));
+        else expect(html).not.toContain(esc(t(locale, "scene.reveal.found", { name: t(locale, p.nameKey) })));
         expect(html).toContain("th-reveal");
         expect(html).toContain(`var(--th-${p.colorToken})`);
         expect(html).toContain('aria-hidden="true"');
         expect(html).not.toContain("{name}");
         expect(html).not.toContain("<text");
         expect(html).not.toContain("<title");
-        if (monster !== "neutral") expect(html).toContain(esc(t(locale, p.nameKey)));
+        if (monster !== "neutral") expect(html).not.toContain(esc(t(locale, p.nameKey)));
       });
     }
   }
@@ -48,6 +47,25 @@ describe("MonsterStage markup", () => {
   it("renders a distinct drawing for each of the six monsters", () => {
     const drawings = new Set(MONSTERS.map((m) => stage("en", m).replace(/data-monster="[^"]*"/, "")));
     expect(drawings.size).toBe(6);
+  });
+
+  it("shows the link creature art and name next to the monster", () => {
+    const creatures = buildLinkCreatures([
+      { id: LINK_CREATURES[0].signalId, source: "url", severity: 0.8, evidence: "paypa1.com" },
+    ]);
+    expect(creatures.length).toBeGreaterThan(0);
+    for (const locale of LOCALES) {
+      const html = renderToStaticMarkup(
+        createElement(MonsterStage, { locale, monster: "bank", linkCreatures: creatures }),
+      );
+      for (const c of creatures) {
+        expect(html).toContain(esc(t(locale, c.nameKey)));
+        expect(html).not.toContain(`var(--th-${c.colorToken})`);
+      }
+      expect(html).toContain("color:var(--th-ink)");
+      expect(html).toContain("bg-[var(--th-paper)]");
+    }
+    expect(stage("en", "bank")).not.toContain("<ul");
   });
 
   it("neutral caption has no banned word (diacritics folded)", () => {
