@@ -14,7 +14,7 @@
  * Master switch. Off until the live review (Task 6c, rules-tuning-v5) has
  * run with the real LLM and no scam was lowered. Turn on only after that.
  */
-export const AWARENESS_ADJUSTMENT_ENABLED = false;
+export const AWARENESS_ADJUSTMENT_ENABLED = true;
 
 /** Minimum LLM severity for the awareness marker. */
 export const AWARENESS_MIN_SEVERITY = 0.35;
@@ -77,6 +77,43 @@ export const BLOCKING_SIGNAL_IDS: readonly string[] = [
   "text.job-offer",
 ];
 
+/**
+ * Blocking signal ids that do not block when the message only describes the
+ * tactic. That holds when every phrase of the signal found in the text comes
+ * after a reporting cue (below) in the same clause. Clauses are split at
+ * . ! ? ; : , and line breaks. All other conditions still apply: a link, a
+ * phone or account number, a contact request or a command verb still block.
+ */
+export const REPORTABLE_SIGNAL_IDS: readonly string[] = ["text.payment-request"];
+/**
+ * Phrases that name a scam tactic or the scammer as the one asking, so a
+ * following payment phrase is reported, not requested. Keep them specific:
+ * matching ignores accents, so a short word such as "chiêu" would also
+ * match "chiều".
+ */
+export const REPORTING_CUE_PHRASES: Readonly<{ en: readonly string[]; vi: readonly string[] }> = {
+  en: [
+    "scammers ask you to",
+    "scammers ask people to",
+    "scammers tell you to",
+    "fraudsters ask you to",
+    "criminals ask you to",
+    "the scam asks you to",
+    "a trick where",
+    "will never ask you to",
+    "never asks you to",
+  ],
+  vi: [
+    "không bao giờ yêu cầu",
+    "thủ đoạn",
+    "chiêu trò",
+    "chiêu thức",
+    "kẻ gian yêu cầu",
+    "kẻ lừa đảo yêu cầu",
+    "đối tượng yêu cầu",
+    "đối tượng lừa đảo yêu cầu",
+  ],
+};
 /** A request to make contact or act, anywhere in the message, blocks the adjustment. */
 export const CONTACT_REQUEST_PHRASES: Readonly<{ en: readonly string[]; vi: readonly string[] }> = {
   en: [

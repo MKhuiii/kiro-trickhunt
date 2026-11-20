@@ -24,8 +24,11 @@ import {
   CONTACT_REQUEST_PHRASES,
   IMPERATIVE_VERBS,
   POLITE_PREFIXES,
+  REPORTABLE_SIGNAL_IDS,
+  REPORTING_CUE_PHRASES,
   WARNING_CUE_PHRASES,
 } from "./awareness.config";
+import { MAX_INPUT_CHARS, TEXT_PATTERNS } from "../analyzers/text-analyzer.config";
 import type { SemanticStatus } from "./verdict";
 
 /** Why the adjustment did or did not apply; used by tests and the probe. */
@@ -69,6 +72,14 @@ const CONTACTS = norm([...CONTACT_REQUEST_PHRASES.en, ...CONTACT_REQUEST_PHRASES
 const VERBS = norm([...IMPERATIVE_VERBS.en, ...IMPERATIVE_VERBS.vi]);
 const POLITE = norm(POLITE_PREFIXES);
 const FILLERS = norm(CLAUSE_FILLERS);
+const REPORTING_CUES = norm([...REPORTING_CUE_PHRASES.en, ...REPORTING_CUE_PHRASES.vi]);
+/** Normalized phrases of each reportable signal id, taken from the text analyzer config. */
+const REPORTABLE_PHRASES: ReadonlyMap<string, readonly string[]> = new Map(
+  TEXT_PATTERNS.filter((p) => REPORTABLE_SIGNAL_IDS.includes(p.id)).map((p) => [
+    p.id,
+    norm([...p.phrases.en, ...p.phrases.vi]),
+  ]),
+);
 
 function containsPhrase(padded: string, phrase: string): boolean {
   return padded.includes(` ${phrase} `);
@@ -82,6 +93,53 @@ function blocks(id: string): boolean {
   return BLOCKING_SIGNAL_IDS.some((p) =>
     p.endsWith(".*") ? id.startsWith(p.slice(0, -1)) : p === id,
   );
+}
+
+/** Word-boundary occurrences of `phrase` in a space-padded word form. */
+function countOccurrences(padded: string, phrase: string): number {
+  const needle = ` ${phrase} `;
+  let n = 0;
+  let from = 0;
+  for (;;) {
+    const at = padded.indexOf(needle, from);
+    if (at === -1) return n;
+    n++;
+    from = at + 1;
+  }
+}
+
+/**
+ * True when the text only describes the tactic behind signal `id`: at least
+ * one of its phrases occurs, and in every clause where one occurs, a
+ * reporting cue comes before the first occurrence. Ids not listed in
+ * REPORTABLE_SIGNAL_IDS are never reported.
+ */
+export function isReportedOnly(id: string, text: string): boolean {
+  const phrases = REPORTABLE_PHRASES.get(id);
+  if (phrases === undefined || phrases.length === 0) return false;
+  const capped = text.slice(0, MAX_INPUT_CHARS);
+  // Split before normalizing: normalization turns line breaks into spaces.
+  const clauses = capped.split(/[.!?;:,\r\n]+/u).map((c) => ` ${toWordForm(c)} `);
+  // A phrase the analyzer matched across a clause break is not inside any
+  // clause, so it cannot be shown to be reported: keep blocking.
+  const whole = ` ${toWordForm(capped)} `;
+  for (const p of phrases) {
+    const inClauses = clauses.reduce((n, c) => n + countOccurrences(c, p), 0);
+    if (countOccurrences(whole, p) > inClauses) return false;
+  }
+  let found = false;
+  for (const clause of clauses) {
+    let first = -1;
+    for (const p of phrases) {
+      const at = clause.indexOf(` ${p} `);
+      if (at !== -1 && (first === -1 || at < first)) first = at;
+    }
+    if (first === -1) continue;
+    found = true;
+    const before = clause.slice(0, first + 1);
+    if (!REPORTING_CUES.some((c) => before.includes(` ${c} `))) return false;
+  }
+  return found;
 }
 
 /** Strip leading filler words ("and", "then", "và", ...) from a clause. */
@@ -144,7 +202,9 @@ export function applyAwarenessAdjustment(input: AwarenessInput): AwarenessOutput
       return keep("has-link-or-number");
     }
 
-    if (input.signals.some((s) => blocks(s.id))) return keep("blocking-signal");
+    if (input.signals.some((s) => blocks(s.id) && !isReportedOnly(s.id, input.text))) {
+      return keep("blocking-signal");
+    }
     if (CONTACTS.some((c) => containsPhrase(padded, c))) return keep("contact-request");
     if (hasCommandVerb(input.text)) return keep("command-verb");
 

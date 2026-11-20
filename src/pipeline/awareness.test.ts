@@ -5,7 +5,7 @@
 import { describe, expect, it } from "vitest";
 import { createSignal } from "../core";
 import type { Signal } from "../core";
-import { applyAwarenessAdjustment, hasCommandVerb } from "./awareness";
+import { applyAwarenessAdjustment, hasCommandVerb, isReportedOnly } from "./awareness";
 import type { AwarenessInput } from "./awareness";
 import { AWARENESS_MAX_SCORE, AWARENESS_MIN_SEVERITY } from "./awareness.config";
 
@@ -84,6 +84,64 @@ describe("applyAwarenessAdjustment", () => {
     expect(out.reason).toBe(reason);
     expect(out.level).toBe(input.level);
     expect(out.score).toBe(input.score);
+  });
+});
+
+describe("reported payment phrases", () => {
+  const NEWS =
+    "Bài viết: Công an cảnh báo thủ đoạn giả danh cán bộ yêu cầu chuyển tiền vào tài khoản tạm giữ. Mọi người cẩn thận nhé!";
+
+  it("lowers a news warning that only describes the payment tactic", () => {
+    const out = applyAwarenessAdjustment(
+      base({
+        score: 80,
+        text: NEWS,
+        signals: [sig("text.payment-request"), sig("text.authority-impersonation", 0.35)],
+      }),
+    );
+    expect(out).toEqual({
+      score: AWARENESS_MAX_SCORE,
+      level: "suspicious",
+      applied: true,
+      reason: "applied",
+    });
+  });
+
+  it("still blocks when a separate clause asks for payment", () => {
+    const text = `${NEWS} Quý khách cần chuyển tiền vào tài khoản tạm giữ trước 17h.`;
+    const out = applyAwarenessAdjustment(base({ text, signals: [sig("text.payment-request")] }));
+    expect(out.reason).toBe("blocking-signal");
+  });
+
+  it("still blocks when the LLM adds any semantic sign", () => {
+    const out = applyAwarenessAdjustment(
+      base({ text: NEWS, signals: [sig("text.payment-request"), sig("semantic.pressure-escalation")] }),
+    );
+    expect(out.reason).toBe("blocking-signal");
+  });
+
+  it.each([
+    NEWS,
+    "Ngân hàng không bao giờ yêu cầu chuyển tiền vào tài khoản an toàn.",
+    "Scam warning: scammers ask you to transfer money to a safe account.",
+  ])("treats the payment phrase as reported in: %s", (text) => {
+    expect(isReportedOnly("text.payment-request", text)).toBe(true);
+  });
+
+  it.each([
+    ["no cue in the asking clause", "Kẻ gian giả danh công an. Quý khách cần chuyển tiền vào tài khoản tạm giữ."],
+    ["cue after the phrase", "Quý khách cần chuyển tiền vào tài khoản tạm giữ vì đây là thủ đoạn mới"],
+    ["cue in another clause", "Thủ đoạn mới, quý khách cần chuyển tiền vào tài khoản tạm giữ"],
+    ["accent look-alike of chiêu", "Chiều nay quý khách cần chuyển tiền vào tài khoản tạm giữ"],
+    ["phrase across a clause break", "Thủ đoạn này buộc bạn chuyển tiền. Ngay hôm nay"],
+    ["line break splits the clause", "Thủ đoạn lừa đảo mới\nQuý khách cần chuyển tiền vào tài khoản tạm giữ"],
+    ["no payment phrase at all", "Thủ đoạn giả danh công an."],
+  ])("does not treat it as reported when %s", (_name, text) => {
+    expect(isReportedOnly("text.payment-request", text)).toBe(false);
+  });
+
+  it("never exempts ids outside REPORTABLE_SIGNAL_IDS", () => {
+    expect(isReportedOnly("text.otp-request", "Kẻ gian yêu cầu cung cấp mã OTP.")).toBe(false);
   });
 });
 

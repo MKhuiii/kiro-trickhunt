@@ -12,7 +12,8 @@ import { describe, expect, it } from "vitest";
 import { createSignal } from "../core";
 import type { RiskLevel, Signal } from "../core";
 import { KNOWN_SIGNAL_IDS } from "../ui/i18n/signal-ids";
-import { applyAwarenessAdjustment } from "./awareness";
+import { TEXT_PATTERNS } from "../analyzers/text-analyzer.config";
+import { applyAwarenessAdjustment, isReportedOnly } from "./awareness";
 import type { AwarenessInput } from "./awareness";
 
 const LEVELS: readonly RiskLevel[] = ["no_signals", "suspicious", "high", "critical"];
@@ -55,7 +56,64 @@ const inputArb: fc.Arbitrary<AwarenessInput> = fc.record({
   }),
 });
 
+const PAYMENT_PHRASES = (() => {
+  const p = TEXT_PATTERNS.find((t) => t.id === "text.payment-request");
+  return p === undefined ? [] : [...p.phrases.en, ...p.phrases.vi];
+})();
+
+/** Warning sentences that contain a reporting cue and a payment phrase. */
+const WARNING_WITH_CUE = [
+  "Cảnh báo: kẻ lừa đảo dùng thủ đoạn giả danh công an yêu cầu chuyển tiền vào tài khoản tạm giữ.",
+  "Ngân hàng không bao giờ yêu cầu chuyển tiền vào tài khoản an toàn.",
+  "Scam warning: scammers ask you to transfer money to a safe account.",
+];
+
+/** A clause that asks for payment without a command verb at its start. */
+const askingClause = (phrase: string, lead: string): string => `${lead} ${phrase} trước 17h`;
+
 describe("awareness adjustment properties", () => {
+  it("PBT-94: a warning sentence never hides a payment request in another clause", () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...WARNING_WITH_CUE),
+        fc.constantFrom(...PAYMENT_PHRASES),
+        fc.constantFrom("Quý khách cần", "Bạn cần", "You need to", "Người nhận phải"),
+        fc.constantFrom(" ", "\n", " Lưu ý! ", ", "),
+        fc.boolean(),
+        (warning, phrase, lead, sep, warningFirst) => {
+          const asking = askingClause(phrase, lead);
+          const text = warningFirst ? `${warning}${sep}${asking}` : `${asking}.${sep}${warning}`;
+          expect(isReportedOnly("text.payment-request", text)).toBe(false);
+          const out = applyAwarenessAdjustment({
+            enabled: true,
+            score: 80,
+            level: "high",
+            signals: [sig("text.payment-request"), sig("text.authority-impersonation")],
+            text,
+            inputUrls: [],
+            semanticStatus: "ok",
+            awareness: { severity: 1 },
+          });
+          expect(out.applied).toBe(false);
+        },
+      ),
+      { numRuns: 500 },
+    );
+  });
+
+  it("PBT-95: a payment phrase before the cue in its clause is never reported", () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...PAYMENT_PHRASES),
+        fc.constantFrom("thủ đoạn", "chiêu trò", "kẻ gian yêu cầu", "scammers ask you to"),
+        (phrase, cue) => {
+          expect(isReportedOnly("text.payment-request", `Bạn cần ${phrase} theo ${cue}`)).toBe(false);
+        },
+      ),
+      { numRuns: 300 },
+    );
+  });
+
   it("PBT-90: without the marker the result is unchanged", () => {
     fc.assert(
       fc.property(inputArb, (input) => {
