@@ -76,8 +76,8 @@ describe("docs: README.md (REQ-LREP-65)", () => {
     expect(text).toContain('"checkLinks": true');
   });
 
-  it("documents the consent rule, data sent and not-listed statement", () => {
-    expect(text).toContain("unticked consent box for that one scan");
+  it("documents when it runs, data sent and not-listed statement", () => {
+    expect(text).toContain("automatically whenever a scan contains a link");
     expect(text).toContain("never stored and never carried to the next scan");
     expect(text).toContain("first 4 bytes of the SHA-256 hash");
     expect(text).toContain("never sent");
@@ -99,7 +99,7 @@ describe("docs: steering files (REQ-LREP-66)", () => {
     expect(t).toContain("It sends only a 4-byte hash prefix of each link, never the message and never the full link");
     expect(t).toContain("6. **Link reputation lookup (the only exception to forwarding).**");
     expect(t).toContain("all four conditions hold");
-    expect(t).toContain("Consent is never stored and never carried to the next scan.");
+    expect(t).toContain("the browser asked for the lookup.");
     expect(t).toContain("Full hashes are compared on our server.");
     expect(t).toContain("`src/server/reputation/reputation-config.ts` and never reaches the browser");
     expect(t).toContain("A link that is not listed is never called safe.");
@@ -117,7 +117,7 @@ describe("docs: steering files (REQ-LREP-66)", () => {
   it("product.md has the done line with the named exception", () => {
     const t = flat(read(".kiro/steering/product.md"));
     expect(t).toContain(
-      "except the consented link lookup of `link-reputation-check`, which sends only 4-byte hash prefixes of link expressions",
+      "except the automatic link lookup of `link-reputation-check`, which sends only 4-byte hash prefixes of link expressions",
     );
   });
 

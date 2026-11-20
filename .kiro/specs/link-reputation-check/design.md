@@ -94,7 +94,7 @@ src/
       reputation.config.ts        endpoint, MAX_PREFIXES_PER_REQUEST, threat table, response cap
       reputation-config.ts        readReputationConfig(env): the only reader of LINK_REPUTATION_*
       url-expressions.ts          canonicalize, host-suffix/path-prefix expressions, SHA-256, prefixes
-      safe-browsing-provider.ts   one GET, timeout, zod validation, status mapping
+      safe-browsing-provider.ts   one GET, timeout, protobuf decoding, status mapping
       reputation-checker.ts       createReputationChecker({ provider, gate, maxPrefixes })
       fake-reputation-provider.ts FakeReputationProvider for tests
       index.ts                    public exports
@@ -312,9 +312,18 @@ export function createSafeBrowsingProvider(options: {
 }): ReputationProvider;
 ```
 
-Request: `GET REPUTATION_ENDPOINT?hashPrefixes=<b64url>&hashPrefixes=...` with prefixes sorted (hides input order). Headers: `X-Goog-Api-Key`, `Accept: application/json`. Options: `method: "GET"`, `cache: "no-store"`, `redirect: "error"`, `credentials: "omit"`, `referrerPolicy: "no-referrer"`, `signal`. No `quotaUser` and no other identifying parameter (REQ-LREP-04). No retry (REQ-LREP-23).
+Request: `GET REPUTATION_ENDPOINT?hashPrefixes=<b64url>&hashPrefixes=...` with prefixes sorted (hides input order). Headers: `X-Goog-Api-Key`, `Accept: application/json` (Google ignores it: the v5 service answers only in protobuf and rejects `alt=json` with 400 "Unsupported Output Format"). Options: `method: "GET"`, `cache: "no-store"`, `redirect: "error"`, `credentials: "omit"`, `referrerPolicy: "no-referrer"`, `signal`. No `quotaUser` and no other identifying parameter (REQ-LREP-04). No retry (REQ-LREP-23).
 
-Response handling, in this order: abort or timeout gives `timeout`; thrown network error gives `provider-error`; status 429 gives `rate-limited`; any other non-200 gives `provider-error`; body longer than `MAX_RESPONSE_CHARS`, unparsable JSON or a zod failure gives `invalid-response`. The zod schema is a loose object (unknown fields ignored):
+Response handling, in this order: abort or timeout gives `timeout`; thrown network error gives `provider-error`; status 429 gives `rate-limited`; any other non-200 gives `provider-error`; body longer than `MAX_RESPONSE_CHARS` (bytes), a malformed protobuf body or a failed validation gives `invalid-response`. The body is read as bytes. A body that starts with `{` is read as JSON (kept for tests and for a future change of the service); any other body is read as protobuf, using the field numbers of `google/security/safebrowsing/v5/safebrowsing.proto`:
+
+```
+SearchHashesResponse { repeated FullHash full_hashes = 1; Duration cache_duration = 2; }
+FullHash             { bytes full_hash = 1; repeated FullHashDetail full_hash_details = 2; }
+FullHashDetail       { ThreatType threat_type = 1; repeated ThreatAttribute attributes = 2; }
+ThreatType           { 0 UNSPECIFIED, 1 MALWARE, 2 SOCIAL_ENGINEERING, 3 UNWANTED_SOFTWARE, 4 POTENTIALLY_HARMFUL_APPLICATION }
+```
+
+The decoder reads varints, length-delimited fields and skips fixed-width fields. Unknown field numbers are ignored. A truncated field, an unknown wire type or a `full_hash` that is not 32 bytes gives `invalid-response`. A threat type number outside the table is read as an unknown type, so it maps to `"other"` (REQ-LREP-24). An empty body is a valid answer with no matches. Every attribute (packed or not) is read as `ATTRIBUTE_<n>`, so any attribute (for example `CANARY` = 1) disregards the detail (D5). The JSON form uses a loose zod schema (unknown fields ignored):
 
 ```ts
 const detailSchema = z.looseObject({
@@ -694,10 +703,14 @@ GET https://safebrowsing.googleapis.com/v5/hashes:search?hashPrefixes=WwuJdQ&has
 X-Goog-Api-Key: <key>
 Accept: application/json
 
-200 { "fullHashes": [ { "fullHash": "<base64, 32 bytes>",
-                        "fullHashDetails": [ { "threatType": "SOCIAL_ENGINEERING" } ] } ],
-      "cacheDuration": "300s" }
+200 Content-Type: application/x-protobuf   (binary, not JSON)
+    SearchHashesResponse
+      full_hashes[0].full_hash          = <32 bytes>
+      full_hashes[0].full_hash_details  = [ { threat_type: MALWARE }, { threat_type: POTENTIALLY_HARMFUL_APPLICATION } ]
+      cache_duration                    = 300s
 ```
+
+Checked against the live service with `https://testsafebrowsing.appspot.com/s/malware.html`: one full hash with two details (MALWARE, then POTENTIALLY_HARMFUL_APPLICATION), which the adapter maps to the categories `malware` and `other`. A link that is not listed gives HTTP 200 with an empty body. `alt=json` and `Accept: application/json` do not give JSON.
 
 The two prefixes above are examples of the shape (6 characters for 4 bytes, unpadded, web-safe).
 
@@ -902,7 +915,7 @@ Every failure of the lookup ends as a neutral outcome. None changes the HTTP sta
 | Provider timeout or abort | adapter and `runReputation` | `degraded / timeout`; mode `failed` |
 | HTTP 429 | adapter | `degraded / rate-limited`; mode `failed` |
 | Other non-200, network error, redirect | adapter | `degraded / provider-error`; mode `failed` |
-| Body too long, not JSON, fails zod, bad hash length | adapter | `degraded / invalid-response`; mode `failed` |
+| Body too long, malformed protobuf, fails validation, bad hash length | adapter | `degraded / invalid-response`; mode `failed` |
 | Checker throws or returns a non-conforming value | `runReputation` | `degraded / invalid-response`; mode `failed` |
 | Hit URL cannot be parsed for its host | `listingSignals` | that hit is skipped |
 | `createSignal` throws | `listingSignals` | that host is skipped |

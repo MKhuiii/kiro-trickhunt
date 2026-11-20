@@ -222,3 +222,77 @@ describe("createSafeBrowsingProvider", () => {
     expect(calls).toHaveLength(0);
   });
 });
+
+describe("createSafeBrowsingProvider protobuf body (the real v5 wire format)", () => {
+  // Minimal protobuf writer for the test: FullHash{1: hash, 2: detail{1: type, 2: attributes}}.
+  const varint = (n: number): number[] => {
+    const out: number[] = [];
+    let v = n;
+    while (v >= 0x80) {
+      out.push((v & 0x7f) | 0x80);
+      v = Math.floor(v / 128);
+    }
+    out.push(v);
+    return out;
+  };
+  const field = (no: number, payload: number[]): number[] => [...varint(no * 8 + 2), ...varint(payload.length), ...payload];
+  const detail = (type: number, attrs: number[] = []): number[] =>
+    field(2, [...varint(8), ...varint(type), ...attrs.flatMap((a) => [...varint(16), ...varint(a)])]);
+  const fullHash = (fill: number, details: number[][]): number[] =>
+    field(1, [...field(1, Array.from(bytes(32, fill))), ...details.flat()]);
+  const duration = field(2, [8, 0x2c, 0x02]);
+  const proto = (...parts: number[][]) =>
+    new Response(new Uint8Array(parts.flat()), {
+      status: 200,
+      headers: { "content-type": "application/x-protobuf" },
+    });
+
+  it("reads a match with two threat types", async () => {
+    const { fetchImpl } = capture(() => proto(fullHash(7, [detail(1), detail(4)]), duration));
+    const r = await make(fetchImpl).searchHashes([bytes(4, 1)]);
+    expect(r.status).toBe("ok");
+    if (r.status !== "ok") return;
+    expect(r.matches).toHaveLength(1);
+    expect(Array.from(r.matches[0].fullHash)).toEqual(Array.from(bytes(32, 7)));
+    expect(r.matches[0].categories).toEqual(["malware", "other"]);
+  });
+
+  it("maps social engineering and unwanted software", async () => {
+    const { fetchImpl } = capture(() => proto(fullHash(1, [detail(2)]), fullHash(2, [detail(3)])));
+    const r = await make(fetchImpl).searchHashes([bytes(4, 1)]);
+    expect(r.status === "ok" && r.matches.map((m) => m.categories[0])).toEqual([
+      "social-engineering",
+      "unwanted-software",
+    ]);
+  });
+
+  it("returns no matches for an empty body or only a cache duration", async () => {
+    for (const body of [[], duration]) {
+      const { fetchImpl } = capture(() => proto(body));
+      expect(await make(fetchImpl).searchHashes([bytes(4, 1)])).toEqual({ status: "ok", matches: [] });
+    }
+  });
+
+  it("disregards a detail with any attribute (CANARY) or an unspecified type", async () => {
+    const { fetchImpl } = capture(() => proto(fullHash(1, [detail(1, [1]), detail(0)])));
+    expect(await make(fetchImpl).searchHashes([bytes(4, 1)])).toEqual({ status: "ok", matches: [] });
+  });
+
+  it("treats an unknown threat type number as other", async () => {
+    const { fetchImpl } = capture(() => proto(fullHash(1, [detail(99)])));
+    const r = await make(fetchImpl).searchHashes([bytes(4, 1)]);
+    expect(r.status === "ok" && r.matches[0].categories).toEqual(["other"]);
+  });
+
+  it("rejects a truncated body, a wrong hash length and random bytes", async () => {
+    const whole = fullHash(1, [detail(1)]);
+    const short = field(1, [...field(1, Array.from(bytes(10, 1))), ...detail(1)]);
+    for (const body of [whole.slice(0, whole.length - 3), short, [0xff, 0xff, 0xff]]) {
+      const { fetchImpl } = capture(() => proto(body));
+      expect(await make(fetchImpl).searchHashes([bytes(4, 1)])).toEqual({
+        status: "degraded",
+        reason: "invalid-response",
+      });
+    }
+  });
+});

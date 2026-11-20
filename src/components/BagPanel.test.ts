@@ -17,7 +17,7 @@ function escapeHtml(s: string): string {
     .replace(/'/g, "&#x27;");
 }
 
-function render(locale: Locale, slots: Slots, text = "", checkLinks?: boolean): string {
+function render(locale: Locale, slots: Slots, text = ""): string {
   const noop = (): void => undefined;
   return renderToStaticMarkup(
     createElement(BagPanel, {
@@ -25,8 +25,6 @@ function render(locale: Locale, slots: Slots, text = "", checkLinks?: boolean): 
       slots,
       text,
       file: null,
-      ...(checkLinks === undefined ? {} : { checkLinks }),
-      onCheckLinksChange: noop,
       onToggle: noop,
       onTextChange: noop,
       onFileChange: noop,
@@ -71,29 +69,9 @@ describe("BagPanel markup", () => {
         expect(submitButton(html)).not.toMatch(/\sdisabled(=""|\s|>)/);
       });
 
-      it("shows an unticked consent checkbox with a visible label and linked text (REQ-LREP-01, 06, 58)", () => {
-        const input = /<input\b[^>]*id="input-check-links"[^>]*>/.exec(empty);
-        if (!input) throw new Error("no consent checkbox");
-        expect(input[0]).toContain('type="checkbox"');
-        expect(input[0]).not.toMatch(/\schecked(=""|\s|\/|>)/);
-        expect(input[0]).toContain('aria-describedby="input-check-links-hint"');
-        expect(input[0]).toMatch(/\bh-11\b/);
-        expect(input[0]).toMatch(/\bw-11\b/);
-        expect(empty).toMatch(
-          new RegExp(
-            `<label\\b[^>]*for="input-check-links"[^>]*>${escapeHtml(t(locale, "reputation.consent.label"))}</label>`,
-          ),
-        );
-        expect(empty).toMatch(
-          new RegExp(
-            `<p\\b[^>]*id="input-check-links-hint"[^>]*>${escapeHtml(t(locale, "reputation.consent.text"))}</p>`,
-          ),
-        );
-      });
-
-      it("shows the consent checkbox even when no slot is on, and ticks it only when told", () => {
-        const ticked = render(locale, { text: true, image: false }, "hi", true);
-        expect(/<input\b[^>]*id="input-check-links"[^>]*>/.exec(ticked)?.[0]).toMatch(/\schecked(=""|\s|\/|>)/);
+      it("has no link-check consent checkbox", () => {
+        expect(empty).not.toContain('input-check-links');
+        expect(empty).not.toContain("type=\"checkbox\"");
       });
 
       it("shows only the picture input when only the image slot is on", () => {

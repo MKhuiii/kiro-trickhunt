@@ -7,8 +7,8 @@ in raw form. This is a hard constraint, not a preference.
 
 One narrow exception exists: the optional link lookup of `link-reputation-check`
 (data flow rule 6). It sends only a 4-byte hash prefix of each link, never the
-message and never the full link, and only after the user ticks a box for that
-one scan.
+message and never the full link. The browser asks for it automatically when a
+scan contains a link; there is no consent box.
 
 ## What "user content" means
 
@@ -44,8 +44,9 @@ Anything the user provides as input:
    ask one third-party reputation list (Google Safe Browsing, `hashes.search`)
    whether a link is on its list of reported sites. This is allowed only when
    all four conditions hold:
-   1. The user ticked the unticked consent box for that one scan. Consent is
-      never stored and never carried to the next scan.
+   1. The scan contains at least one link and the browser asked for the lookup.
+      It does so automatically, without a consent box. Nothing about the request
+      is stored or carried to the next scan.
    2. Only the first 4 bytes of the SHA-256 of each URL expression leave the
       server. The message, the image, the full link, its path and query, and
       any user identifier are never sent. Full hashes are compared on our server.

@@ -1,4 +1,4 @@
-﻿This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
@@ -141,11 +141,11 @@ Set these in `.env` (see `.env.example`). Missing or invalid values fall back to
 
 ## Link reputation check
 
-An optional lookup asks Google Safe Browsing whether a link is on its list of reported sites. It is off unless the user asks for it.
+An optional lookup asks Google Safe Browsing whether a link is on its list of reported sites. It runs automatically when a scan contains a link and a key is configured.
 
-### Consent rule
+### When it runs
 
-The lookup runs only when the user ticks the unticked consent box for that one scan. The choice is never stored and never carried to the next scan. Without the tick, no lookup is made.
+The browser asks for the lookup automatically whenever a scan contains a link. There is no consent box. The request is never stored and never carried to the next scan. Without a link, or without a configured key, no lookup is made.
 
 ### Data sent
 
@@ -157,7 +157,7 @@ A link that is not on the list is not called safe. New and unreported links are 
 
 ### Request field and response mode
 
-Send `"checkLinks": true` in the `POST /api/analyze` body to ask for the lookup. The browser sends it only when the box is ticked and the input has a link. `meta.reputationMode` reports what happened:
+Send `"checkLinks": true` in the `POST /api/analyze` body to ask for the lookup. The browser sends it automatically when the input has a link. `meta.reputationMode` reports what happened:
 
 | `reputationMode` | Meaning |
 |---|---|
