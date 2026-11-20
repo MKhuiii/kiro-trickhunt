@@ -17,6 +17,7 @@ const EXPECTED_IDS: readonly ArtId[] = [
   "hunter",
   "bag",
   "shade",
+  "notebook",
   "monster-bank-ghost",
   "monster-prize-vampire",
   "monster-job-zombie",

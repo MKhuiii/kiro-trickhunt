@@ -54,6 +54,28 @@ export type { CssVarName } from "./theme/css-vars";
 export { computeHighlights } from "./view/highlights";
 export type { HighlightSegment } from "./view/highlights";
 
+export {
+  BESTIARY_ENTRIES,
+  groupEntries,
+  findEntry,
+  pageCount,
+  clampPage,
+  flipTarget,
+  entryForPage,
+  spreadCount,
+  clampSpread,
+  spreadOf,
+  pagesOfSpread,
+  flipSpread,
+  visiblePages,
+} from "./bestiary";
+export type {
+  BestiaryEntry,
+  EntryKind,
+  FlipDirection,
+  LayoutMode,
+} from "./bestiary";
+
 export { MONSTER_PRESENTATION } from "./monsters";
 export type { MonsterKey } from "./monsters";
 

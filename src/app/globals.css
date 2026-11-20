@@ -524,3 +524,369 @@ body {
 [data-canvas-actor="on"] svg {
   opacity: 0;
 }
+
+
+/*
+ * Field notebook (bestiary): an open notebook lying on a wooden table.
+ * Wood band, paper, stitched binding, stacked page edges, page curl, ribbon and
+ * the sticker scraps on the contents page are drawn here with gradients and
+ * shadows only (no image, no text, no clip-path). On wide screens the book
+ * shows two leaves, below 48rem one sheet. The flip changes only transform and opacity, keyframes hold only
+ * the start, and the reduced-motion rules above (`animation: none !important`
+ * on `*`) make the page change instantly. The look adds no animation.
+ */
+.th-notebook {
+  position: relative;
+  perspective: 70rem;
+  --th-text: var(--th-ink);
+  --th-muted: var(--th-ink-faded);
+  --th-surface: transparent;
+  --th-raised: transparent;
+  --th-border: transparent;
+  --th-accent: var(--th-blood);
+  --th-focus: var(--th-blood);
+  color: var(--th-ink);
+  border: 0.5rem solid transparent;
+  border-radius: 0.5rem;
+  background-color: var(--th-paper);
+  background-clip: padding-box;
+}
+/* The table: wood grain around the open book (paper layers clip to the page, wood to the border band). */
+.th-notebook-spread {
+  --th-nb-wood:
+    repeating-linear-gradient(
+      3deg,
+      transparent 0,
+      transparent 0.75rem,
+      color-mix(in srgb, var(--th-bg) 55%, transparent) 0.75rem,
+      color-mix(in srgb, var(--th-bg) 55%, transparent) 0.8125rem
+    ),
+    linear-gradient(to right, var(--th-stone), var(--th-fog), var(--th-stone));
+  --th-nb-speckle:
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--th-ink) 9%, transparent) 0 0.0625rem, transparent 0.125rem),
+    radial-gradient(circle at 70% 65%, color-mix(in srgb, var(--th-ink) 7%, transparent) 0 0.0625rem, transparent 0.125rem);
+  --th-nb-ruled: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 1.6875rem,
+    color-mix(in srgb, var(--th-ink-faded) 16%, transparent) 1.6875rem,
+    color-mix(in srgb, var(--th-ink-faded) 16%, transparent) 1.75rem
+  );
+  --th-nb-glow: radial-gradient(ellipse 80% 60% at 50% 45%, rgba(255, 250, 235, 0.35), transparent 85%);
+  --th-nb-sheet: linear-gradient(var(--th-paper), var(--th-paper));
+  background-image: var(--th-nb-glow), var(--th-nb-speckle), var(--th-nb-ruled), var(--th-nb-sheet), var(--th-nb-wood);
+  background-size: auto, 2.25rem 2.25rem, 3.25rem 3.25rem, auto, auto, auto, auto;
+  background-origin: border-box;
+  background-clip: padding-box, padding-box, padding-box, padding-box, padding-box, border-box, border-box;
+}
+.th-notebook-edges {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.5rem;
+  box-shadow:
+    0.125rem 0.125rem 0 0 var(--th-paper),
+    0.25rem 0.25rem 0 0 var(--th-ink-faded),
+    0.375rem 0.375rem 0 0 var(--th-paper),
+    0.5rem 0.5rem 0 0 var(--th-ink-faded);
+  pointer-events: none;
+}
+/* Page curl at the lower right corner. */
+.th-notebook-edges::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0 0 0.5rem 0;
+  background: linear-gradient(
+    135deg,
+    transparent 50%,
+    var(--th-ink-faded) 50%,
+    var(--th-paper) 85%
+  );
+  pointer-events: none;
+}
+.th-notebook-gutter {
+  display: none;
+}
+/* Narrow screens: soft binding shade and stitching along the left edge. */
+.th-notebook-stitch {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: min(1.75rem, 10%);
+  border-radius: 0.5rem 0 0 0.5rem;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      var(--th-ink-faded) 0,
+      var(--th-ink-faded) 0.375rem,
+      transparent 0.375rem,
+      transparent 0.625rem
+    )
+      min(1.25rem, 7%) 0.5rem / 0.125rem calc(100% - 1rem) no-repeat,
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--th-ink) 40%, transparent),
+      color-mix(in srgb, var(--th-ink) 10%, transparent) 60%,
+      transparent
+    );
+  pointer-events: none;
+}
+.th-notebook-ribbon {
+  position: absolute;
+  top: 0;
+  right: 1.5rem;
+  width: 0.75rem;
+  height: 3.5rem;
+  background: linear-gradient(to right, var(--th-blood), color-mix(in srgb, var(--th-blood) 70%, var(--th-ink)));
+  border-radius: 0 0 0.125rem 0.125rem;
+  pointer-events: none;
+}
+.th-notebook-page-area {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-wrap: anywhere;
+  border-radius: 0.5rem;
+}
+@media (min-width: 48rem) {
+  /* Page curl at the lower left corner (mirror of the right one). */
+  .th-notebook-edges::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0 0 0 0.5rem;
+    background: linear-gradient(
+      225deg,
+      transparent 50%,
+      var(--th-ink-faded) 50%,
+      var(--th-paper) 85%
+    );
+    pointer-events: none;
+  }
+  .th-notebook-ribbon {
+    right: auto;
+    left: 50%;
+    margin-left: -0.375rem;
+  }
+  .th-notebook-edges {
+    box-shadow:
+      0.125rem 0.125rem 0 0 var(--th-paper),
+      0.25rem 0.25rem 0 0 var(--th-ink-faded),
+      0.375rem 0.375rem 0 0 var(--th-paper),
+      0.5rem 0.5rem 0 0 var(--th-ink-faded),
+      -0.125rem 0.125rem 0 0 var(--th-paper),
+      -0.25rem 0.25rem 0 0 var(--th-ink-faded),
+      -0.375rem 0.375rem 0 0 var(--th-paper),
+      -0.5rem 0.5rem 0 0 var(--th-ink-faded);
+  }
+  .th-notebook-gutter {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4rem;
+    margin-left: -2rem;
+    background: linear-gradient(
+      to right,
+      transparent 0,
+      color-mix(in srgb, var(--th-ink) 14%, transparent) 38%,
+      color-mix(in srgb, var(--th-ink) 38%, transparent) 50%,
+      color-mix(in srgb, var(--th-ink) 14%, transparent) 62%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+  .th-notebook-stitch {
+    left: 50%;
+    width: 4rem;
+    margin-left: -2rem;
+    border-radius: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--th-ink-faded) 0,
+        var(--th-ink-faded) 0.375rem,
+        transparent 0.375rem,
+        transparent 0.625rem
+      )
+      center 0.5rem / 0.125rem calc(100% - 1rem) no-repeat;
+  }
+}
+
+/* Leaves: one column below 48rem, two equal columns in spread mode. */
+.th-notebook-leaves {
+  display: grid;
+  flex: 1 1 auto;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+.th-notebook-leaf {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow-wrap: anywhere;
+}
+/* Each leaf scrolls on its own. The flip class sits on the wrapper above, never on this box. */
+.th-notebook-leaf-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
+  padding: 1rem min(1rem, 4%) 1.5rem min(2.5rem, 14%);
+  scrollbar-width: thin;
+  scrollbar-color: var(--th-ink-faded) var(--th-paper);
+}
+@media (min-width: 48rem) {
+  .th-notebook-leaf-scroll {
+    padding: 1.25rem 1.25rem 1.75rem;
+  }
+}
+.th-notebook-leaf-scroll::-webkit-scrollbar {
+  width: 0.875rem;
+}
+.th-notebook-leaf-scroll::-webkit-scrollbar-track {
+  background: var(--th-paper);
+}
+.th-notebook-leaf-scroll::-webkit-scrollbar-thumb {
+  background: var(--th-ink-faded);
+  border: 0.1875rem solid var(--th-paper);
+  border-radius: 0.5rem;
+}
+.th-notebook-leaf-scroll:focus-visible {
+  outline: 0.1875rem solid var(--th-focus);
+  outline-offset: -0.25rem;
+}
+.th-notebook-leaves[data-layout="spread"],
+[data-layout="spread"] .th-notebook-leaves {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+[data-layout="spread"] .th-notebook-leaf-left .th-notebook-leaf-scroll {
+  padding-right: 2.25rem;
+}
+[data-layout="spread"] .th-notebook-leaf-right .th-notebook-leaf-scroll {
+  padding-left: 2.25rem;
+}
+
+/* Contents page: paper scraps taped into the notebook. */
+.th-sticker-board {
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 0.25rem 0.25rem;
+}
+.th-sticker {
+  position: relative;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0.125rem 0.375rem 0.1875rem 0.25rem;
+  background: linear-gradient(160deg, var(--th-moon), var(--th-paper) 90%);
+  box-shadow:
+    0 0 0 0.0625rem color-mix(in srgb, var(--th-ink-faded) 55%, transparent),
+    0.125rem 0.25rem 0.375rem color-mix(in srgb, var(--th-ink) 35%, transparent);
+}
+.th-sticker::before {
+  content: "";
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  width: 2.5rem;
+  height: 0.875rem;
+  margin-left: -1.25rem;
+  background: color-mix(in srgb, var(--th-lantern) 55%, transparent);
+  box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--th-ink-faded) 25%, transparent);
+  transform: rotate(-3deg);
+  pointer-events: none;
+}
+.th-sticker:hover {
+  box-shadow:
+    0 0 0 0.0625rem var(--th-ink-faded),
+    0.1875rem 0.375rem 0.625rem color-mix(in srgb, var(--th-ink) 45%, transparent);
+}
+.th-sticker-board > li:nth-child(4n + 1) .th-sticker {
+  transform: rotate(-1.5deg);
+}
+.th-sticker-board > li:nth-child(4n + 2) .th-sticker {
+  transform: rotate(1deg);
+}
+.th-sticker-board > li:nth-child(4n + 3) .th-sticker {
+  transform: rotate(-0.5deg);
+}
+.th-sticker-board > li:nth-child(4n) .th-sticker {
+  transform: rotate(2deg);
+}
+.th-sticker-board > li .th-sticker:focus-visible {
+  transform: none;
+}
+
+.th-flip-next {
+  transform-origin: 0% 50%;
+  animation: th-flip-next 1s ease-out both;
+}
+.th-flip-prev {
+  transform-origin: 100% 50%;
+  animation: th-flip-prev 1s ease-out both;
+}
+@keyframes th-flip-next {
+  from {
+    opacity: 0;
+    transform: rotateY(-70deg);
+  }
+}
+@keyframes th-flip-prev {
+  from {
+    opacity: 0;
+    transform: rotateY(70deg);
+  }
+}
+
+/* High contrast: plain text on a plain surface, no decoration, no tilt. */
+[data-high-contrast="true"] .th-notebook,
+[data-high-contrast="true"] .th-notebook-spread,
+[data-high-contrast="true"] .th-notebook-page-area {
+  background-image: none;
+  box-shadow: none;
+}
+[data-high-contrast="true"] .th-notebook {
+  border-color: var(--th-ink);
+}
+[data-high-contrast="true"] .th-notebook-edges,
+[data-high-contrast="true"] .th-notebook-gutter,
+[data-high-contrast="true"] .th-notebook-stitch,
+[data-high-contrast="true"] .th-notebook-ribbon,
+[data-high-contrast="true"] .th-sticker::before {
+  display: none;
+}
+[data-high-contrast="true"] .th-notebook-leaf-scroll {
+  margin-left: 0;
+  padding: 1rem;
+  scrollbar-color: var(--th-ink) var(--th-paper);
+}
+[data-high-contrast="true"] .th-notebook-leaf-scroll::-webkit-scrollbar-thumb {
+  background: var(--th-ink);
+  border: 0.125rem solid var(--th-paper);
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-high-contrast="true"] [data-layout="spread"] .th-notebook-leaf-right {
+  border-left: 0.125rem solid var(--th-ink);
+}
+[data-high-contrast="true"] .th-sticker-board > li .th-sticker,
+[data-high-contrast="true"] .th-sticker {
+  transform: none;
+  background: none;
+  box-shadow: none;
+  border: 0.125rem solid var(--th-ink);
+}

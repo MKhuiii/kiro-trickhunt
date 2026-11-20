@@ -34,6 +34,8 @@ import type {
   Preferences,
   ResultExtras,
 } from "../ui";
+import { BestiaryButton } from "./BestiaryButton";
+import { BestiaryPanel } from "./BestiaryPanel";
 import { ErrorAlert } from "./ErrorAlert";
 import { Frame } from "./Frame";
 import { TopControls } from "./TopControls";
@@ -102,6 +104,9 @@ export function App(): ReactElement {
   const hasImageRef = useRef(false);
   const reducedMotionRef = useRef(false);
   const [elapsedMs, setElapsedMs] = useState(0);
+  // The field guide has no input from the check: open or closed is all it keeps.
+  const [guideOpen, setGuideOpen] = useState(false);
+  const guideButtonRef = useRef<HTMLButtonElement>(null);
 
   const locale: Locale = prefs.language;
 
@@ -313,6 +318,14 @@ export function App(): ReactElement {
       <Frame
         step={step}
         controls={<TopControls prefs={prefs} locale={locale} onChange={updatePref} />}
+        guide={
+          <BestiaryButton
+            locale={locale}
+            open={guideOpen}
+            onClick={() => setGuideOpen(true)}
+            buttonRef={guideButtonRef}
+          />
+        }
         stage={
           <PixiStage
             phase={flow.step}
@@ -391,6 +404,13 @@ export function App(): ReactElement {
           </div>
         )}
       </Frame>
+      {guideOpen ? (
+        <BestiaryPanel
+          locale={locale}
+          onClose={() => setGuideOpen(false)}
+          returnFocusRef={guideButtonRef}
+        />
+      ) : null}
     </div>
   );
 }

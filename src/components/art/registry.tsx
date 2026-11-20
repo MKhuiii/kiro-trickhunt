@@ -7,6 +7,7 @@ import { Hunter } from "./hunter";
 import { MonsterBankGhost, MonsterJobZombie, MonsterPrizeVampire } from "./monsters";
 import { MonsterAuthorityBanshee } from "./monsters-authority";
 import { MonsterGenericShade, MonsterNeutralCandle } from "./monsters-generic";
+import { Notebook } from "./notebook";
 import { Shade } from "./shade";
 
 /**
@@ -25,6 +26,7 @@ export type ArtId =
   | "hunter"
   | "bag"
   | "shade"
+  | "notebook"
   | "monster-bank-ghost"
   | "monster-prize-vampire"
   | "monster-job-zombie"
@@ -65,6 +67,7 @@ export const ART_REGISTRY: Readonly<Record<ArtId, ArtEntry>> = {
   hunter: { kind: "svg", Component: Hunter },
   bag: { kind: "svg", Component: Bag },
   shade: { kind: "svg", Component: Shade },
+  notebook: { kind: "svg", Component: Notebook },
   "monster-bank-ghost": { kind: "svg", Component: MonsterBankGhost },
   "monster-prize-vampire": { kind: "svg", Component: MonsterPrizeVampire },
   "monster-job-zombie": { kind: "svg", Component: MonsterJobZombie },

@@ -32,7 +32,7 @@ export const TIER_RULES: readonly TierRule[] = [
   // B: meaning first.
   {
     pattern:
-      /^(input\.|progress\.|result\.heading$|result\.message\.|result\.signals\.heading$|result\.evidence\.|result\.limitations\.heading$|journal\.|settings\.sound\.)/,
+      /^(input\.|progress\.|result\.heading$|result\.message\.|result\.signals\.heading$|result\.evidence\.|result\.limitations\.heading$|journal\.|settings\.sound\.|bestiary\.)/,
     tier: "B",
   },
 ];

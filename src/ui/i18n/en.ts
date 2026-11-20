@@ -323,6 +323,23 @@ export const en = {
   "reputation.attribution.newTab": "(opens in a new tab)",
   "signal.url.reputation-listed.explain": "This link may be on a list of reported sites kept by Google. Lists can miss sites, and some listings are mistakes. Do not open it.",
   "result.links.heading": "Links in this message",
+
+  // Field guide (bestiary)
+  "bestiary.open": "Field guide",
+  "bestiary.title": "Field guide",
+  "bestiary.close": "Close",
+  "bestiary.group.monsters": "Scam monsters",
+  "bestiary.group.links": "Link creatures",
+  "bestiary.kind.monster": "Scam monster",
+  "bestiary.kind.link": "Link creature",
+  "bestiary.signs.heading": "Warning signs",
+  "bestiary.note": "These are common patterns to help you spot a scam. A message can match none of them and still be a scam, so keep checking.",
+  "bestiary.toc.heading": "Contents",
+  "bestiary.toc.intro": "Turn the pages to read about each one. Tap a picture to jump to its page.",
+  "bestiary.toc.page": "page {page}",
+  "bestiary.page.prev": "Previous page",
+  "bestiary.page.next": "Next page",
+  "bestiary.page.label": "Page {current} of {total}: {name}",
 } as const;
 
 export type MessageKey = keyof typeof en;
