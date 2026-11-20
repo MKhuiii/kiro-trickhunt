@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createElement } from "react";
+import { createElement, type ComponentProps } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -9,11 +9,14 @@ import { Frame } from "./Frame";
 
 function render(guide?: string): string {
   return renderToStaticMarkup(
-    createElement(Frame, {
-      step: "home",
-      guide: guide ? createElement("button", { id: "g" }, guide) : undefined,
-      children: createElement("p", null, "content"),
-    }),
+    createElement(
+      Frame,
+      {
+        step: "home",
+        guide: guide ? createElement("button", { id: "g" }, guide) : undefined,
+      } as ComponentProps<typeof Frame>,
+      createElement("p", null, "content"),
+    ),
   );
 }
 
