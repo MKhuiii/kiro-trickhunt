@@ -338,7 +338,7 @@ export function App(): ReactElement {
         {flow.step !== "home" ? <h1 className="sr-only">{t(locale, "app.name")}</h1> : null}
         {flow.step === "home" ? (
           <div className="relative min-h-0 flex-1">
-            <Art id="backdrop-home" className="absolute inset-0 h-full w-full" />
+            <Art id="backdrop-home" className="absolute inset-x-0 top-0 h-[107%] w-full" />
             <div className="relative flex h-full flex-col items-center overflow-x-hidden overflow-y-auto px-4 pb-4 pt-[3.75rem]">
               <HunterButton
                 ref={hunterRef}
@@ -350,7 +350,7 @@ export function App(): ReactElement {
           </div>
         ) : flow.step === "bag" ? (
           <div className="relative min-h-0 flex-1">
-            <Art id="backdrop-home" className="absolute inset-0 h-full w-full opacity-40" />
+            <Art id="backdrop-home" className="absolute inset-x-0 top-0 h-[107%] w-full opacity-40" />
             <div className="relative flex h-full flex-col items-center gap-4 overflow-hidden px-4 pb-4 pt-[3.75rem] md:flex-row md:items-center">
               <div className="hidden h-[11dvh] w-[11dvh] shrink-0 md:block [@media(min-height:52rem)]:block md:aspect-square md:h-auto md:max-h-full md:w-[28%] md:max-w-none">
                 <Art id="hunter" pose="idle" className="h-full w-full" />

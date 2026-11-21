@@ -16,7 +16,7 @@ export function LostScene({ locale, onAgain, children }: LostSceneProps): ReactE
   const scene = sceneFor({ step: "lost" });
   return (
     <div className="relative h-full min-h-0 w-full overflow-hidden">
-      <Art id="backdrop-home" className="absolute inset-0 h-full w-full" />
+      <Art id="backdrop-home" className="absolute inset-x-0 top-0 h-[107%] w-full" />
       <div className="absolute bottom-[30%] left-1/2 h-[40%] min-h-[6rem] w-[40%] min-w-[6rem] -translate-x-1/2">
         <Art id="hunter" pose="downcast" className="h-full w-full" />
       </div>
