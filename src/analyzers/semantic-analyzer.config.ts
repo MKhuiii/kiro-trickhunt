@@ -41,6 +41,7 @@ export const PROMPT_GUIDANCE: readonly string[] = [
   "- Flag a signal only when the message itself uses that tactic on the reader.",
   "- Do not flag ordinary requests between family, friends or colleagues, such as sharing a bill, a gift or a plan.",
   "- Do not flag a message that only describes or warns about a scam without asking the reader to act on it.",
+  "- Use semantic.romance-money-story or semantic.investment-scheme only when the message itself asks for money or a payment. Affection between people who know each other, a partner abroad, market news or a club that discusses investing is not enough.",
 ];
 
 export const SEMANTIC_SIGNALS: readonly SemanticSignalDef[] = [
@@ -78,6 +79,20 @@ export const SEMANTIC_SIGNALS: readonly SemanticSignalDef[] = [
     hint: "A stranger offers friendship, romance or easy paid work to build trust before asking for money or details.",
     whyItMatters:
       "A sudden friendly contact, romance or easy job offer can be a way to earn your trust before asking for money or details.",
+  },
+  {
+    id: "semantic.romance-money-story",
+    maxSeverity: 0.45,
+    hint: "Sudden affection from a stranger, then a story about being far away, then a request for money or gift cards.",
+    whyItMatters:
+      "Sudden closeness followed by a story of being far away or short of money, and a request to send money or gift cards, is a common pattern in romance scams.",
+  },
+  {
+    id: "semantic.investment-scheme",
+    maxSeverity: 0.45,
+    hint: "The message promises high or steady returns or a private group and asks the reader to deposit, top up or pay to join.",
+    whyItMatters:
+      "The message promises steady profits or a members-only group and asks for money to start. Real investments carry risk and do not promise a fixed return.",
   },
   {
     id: "semantic.pressure-escalation",

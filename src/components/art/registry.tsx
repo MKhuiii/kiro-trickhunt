@@ -7,6 +7,7 @@ import { Hunter } from "./hunter";
 import { MonsterBankGhost, MonsterJobZombie, MonsterPrizeVampire } from "./monsters";
 import { MonsterAuthorityBanshee } from "./monsters-authority";
 import { MonsterGenericShade, MonsterNeutralCandle } from "./monsters-generic";
+import { MonsterInvestmentGoblin, MonsterRomanceWraith } from "./monsters-new";
 import { Notebook } from "./notebook";
 import { Shade } from "./shade";
 
@@ -32,7 +33,9 @@ export type ArtId =
   | "monster-job-zombie"
   | "monster-authority-banshee"
   | "monster-generic-shade"
-  | "monster-neutral-candle";
+  | "monster-neutral-candle"
+  | "monster-investment-goblin"
+  | "monster-romance-wraith";
 
 export interface ArtProps {
   readonly pose?: string;
@@ -51,9 +54,11 @@ export {
   MonsterAuthorityBanshee,
   MonsterBankGhost,
   MonsterGenericShade,
+  MonsterInvestmentGoblin,
   MonsterJobZombie,
   MonsterNeutralCandle,
   MonsterPrizeVampire,
+  MonsterRomanceWraith,
 };
 
 /* ---------- Registry ---------- */
@@ -74,6 +79,8 @@ export const ART_REGISTRY: Readonly<Record<ArtId, ArtEntry>> = {
   "monster-authority-banshee": { kind: "svg", Component: MonsterAuthorityBanshee },
   "monster-generic-shade": { kind: "svg", Component: MonsterGenericShade },
   "monster-neutral-candle": { kind: "svg", Component: MonsterNeutralCandle },
+  "monster-investment-goblin": { kind: "svg", Component: MonsterInvestmentGoblin },
+  "monster-romance-wraith": { kind: "svg", Component: MonsterRomanceWraith },
 };
 
 function lookup(id: string): ArtEntry {

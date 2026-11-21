@@ -24,6 +24,8 @@ const EXPECTED_IDS: readonly ArtId[] = [
   "monster-authority-banshee",
   "monster-generic-shade",
   "monster-neutral-candle",
+  "monster-investment-goblin",
+  "monster-romance-wraith",
 ];
 
 const FORBIDDEN_MARKUP = ["<text", "<title", "<filter", "<animate", "blur("];

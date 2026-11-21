@@ -9,7 +9,7 @@ import type { MonsterKey } from "../ui";
 
 // Markup tests for the reveal (REQ-HUNT-28, REQ-HUNT-33, REQ-HUNT-41, REQ-HUNT-42).
 
-const MONSTERS: readonly MonsterKey[] = ["bank", "prize", "job-bait", "authority", "generic", "neutral"];
+const MONSTERS: readonly MonsterKey[] = ["bank", "prize", "job-bait", "authority", "investment", "romance", "generic", "neutral"];
 const LOCALES = ["en", "vi"] as const;
 
 function esc(s: string): string {
@@ -44,9 +44,9 @@ describe("MonsterStage markup", () => {
     }
   }
 
-  it("renders a distinct drawing for each of the six monsters", () => {
+  it("renders a distinct drawing for each monster", () => {
     const drawings = new Set(MONSTERS.map((m) => stage("en", m).replace(/data-monster="[^"]*"/, "")));
-    expect(drawings.size).toBe(6);
+    expect(drawings.size).toBe(8);
   });
 
   it("shows the link creature art and name next to the monster", () => {

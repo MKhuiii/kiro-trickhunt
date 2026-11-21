@@ -82,6 +82,31 @@ describe("buildResultView: monster state", () => {
   });
 });
 
+describe("buildResultView: investment and romance monsters (REQ-UI-52, REQ-UI-53)", () => {
+  const rows = [
+    ["investment", "Profit Goblin", "monster-investment-goblin"],
+    ["romance", "Heart Wraith", "monster-romance-wraith"],
+  ] as const;
+
+  for (const [id, name, art] of rows) {
+    it(`${id} at high gives its own name, short text, three tips and art`, () => {
+      const view = ready(verdict({ level: "high", monster: id }), "text");
+      expect(view.state).toBe("monster");
+      expect(view.monster.id).toBe(id);
+      expect(view.monster.nameKey).toBe(`monster.${id}.name`);
+      expect(t("en", view.monster.nameKey)).toBe(name);
+      expect(view.monster.shortKey).toBe(`monster.${id}.short`);
+      expect(view.monster.tipKeys).toEqual([
+        `monster.${id}.tip1`,
+        `monster.${id}.tip2`,
+        `monster.${id}.tip3`,
+      ]);
+      expect(view.monster.artKey).toBe(art);
+      expect(view.monster.colorToken).toBe(`monster-${id}`);
+    });
+  }
+});
+
 describe("buildResultView: neutral state", () => {
   it("no_signals gives neutral with the three keys", async () => {
     const v = await createPipeline({ llmClient: null }).run({

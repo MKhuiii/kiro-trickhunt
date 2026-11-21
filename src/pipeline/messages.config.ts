@@ -26,6 +26,12 @@ export const ACTIONS_BY_MONSTER: ByLocale<
     authority: [
       "Do not act on the message. Call the agency using a number you look up yourself.",
     ],
+    investment: [
+      "Do not send money or join a trading group because of promised returns. Check the company with your financial regulator first.",
+    ],
+    romance: [
+      "Do not send money or gift cards to someone you have only met online. Talk to a friend or family member you trust first.",
+    ],
     generic: [
       "Pause before replying. Check with the sender using a contact you already trust.",
     ],
@@ -42,6 +48,12 @@ export const ACTIONS_BY_MONSTER: ByLocale<
     ],
     authority: [
       "Đừng làm theo tin nhắn. Hãy gọi cho cơ quan đó bằng số điện thoại do chính bạn tìm.",
+    ],
+    investment: [
+      "Đừng chuyển tiền hoặc vào nhóm đầu tư vì lời hứa lợi nhuận. Hãy kiểm tra công ty với cơ quan quản lý tài chính trước.",
+    ],
+    romance: [
+      "Đừng gửi tiền hoặc thẻ quà tặng cho người bạn chỉ quen qua mạng. Hãy hỏi một người thân hoặc bạn bè bạn tin tưởng trước.",
     ],
     generic: [
       "Hãy dừng lại trước khi trả lời. Xác nhận với người gửi qua cách liên lạc bạn đã tin tưởng.",

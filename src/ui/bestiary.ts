@@ -26,6 +26,8 @@ const MONSTER_ORDER: readonly Exclude<MonsterKey, "neutral">[] = [
   "prize",
   "job-bait",
   "authority",
+  "investment",
+  "romance",
   "generic",
 ];
 

@@ -5,7 +5,13 @@
  * There is no entry for "generic"; it is the fallback (see GENERIC).
  */
 
-export type SpecificMonsterId = "bank" | "prize" | "job-bait" | "authority";
+export type SpecificMonsterId =
+  | "bank"
+  | "prize"
+  | "job-bait"
+  | "authority"
+  | "investment"
+  | "romance";
 
 export interface MonsterDef {
   readonly id: SpecificMonsterId;
@@ -57,12 +63,40 @@ export const MONSTERS: readonly MonsterDef[] = [
       "text.payment-request": 1,
     },
   },
+  {
+    id: "investment",
+    weights: {
+      "text.investment-pitch": 2,
+      "semantic.investment-scheme": 2,
+      "semantic.too-good-to-be-true": 1,
+      "semantic.isolation-secrecy": 1,
+      "text.payment-request": 1,
+    },
+  },
+  {
+    id: "romance",
+    weights: {
+      "text.romance-bait": 2,
+      "semantic.romance-money-story": 2,
+      "semantic.relationship-or-job-bait": 1,
+      "semantic.emotional-manipulation": 1,
+      "semantic.isolation-secrecy": 1,
+      "text.payment-request": 1,
+    },
+  },
 ];
 
-/** Tie-break order when totals are equal. */
+/**
+ * Tie-break order when totals are equal (earlier wins).
+ * `investment` and `romance` come before `job-bait` (monster-disambiguation-v1):
+ * they share weights with it, and a tie on shared signals is a better fit for
+ * them. `job-bait` stays before `authority`.
+ */
 export const MONSTER_ORDER: readonly SpecificMonsterId[] = [
   "bank",
   "prize",
+  "investment",
+  "romance",
   "job-bait",
   "authority",
 ];

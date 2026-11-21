@@ -19,7 +19,7 @@ function urlIdsFromSource(): string[] {
 }
 
 describe("signal ids", () => {
-  it("equal the analyzer configs, the url ids in url-analyzer.ts and the reputation id (24)", () => {
+  it("equal the analyzer configs, the url ids in url-analyzer.ts and the reputation id (26)", () => {
     const expected = [
       ...TEXT_PATTERNS.map((p) => p.id),
       ...urlIdsFromSource(),

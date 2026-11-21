@@ -1,0 +1,534 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "2.1 Create `src/pipeline/eval/new-monsters-samples.ts` with `NM_SAMPLES` (texts from the design, type `NmSample`). Imports only from `src/pipeline` and `src/core`": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269208311
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269216675
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269262669
+      }
+    ],
+    "2.2 Create `src/pipeline/new-monsters.test.ts`: one test per sample and mode (Rules_Mode, Fake_Mode), the synthetic checks (real brand list, no digit run of 8 or more, no URL) and unique ids": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269208437
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269265823
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269322993
+      }
+    ],
+    "3.1 Append `text.investment-pitch` and `text.romance-bait` to `text-analyzer.config.ts` and add the payment phrases, exactly as in the design. Weights 0.35. Do not edit any existing phrase or weight": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269208580
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269326514
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269356559
+      }
+    ],
+    "3.2 Add `text-analyzer.v5.test.ts` (examples of the requirements, including the bare-word list and the benign inputs)": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269208674
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269360853
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269412021
+      }
+    ],
+    "3.3 Update the two analyzer tests: `text-analyzer.config.test.ts` (\"contains exactly the 10 expected ids\", now 12) and `text-analyzer.test.ts` (\"covers all 10 groups\", now 12, one example input each). No other edit": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269208763
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269412216
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269443391
+      }
+    ],
+    "4.1 Edit `verdict.ts`, `monsters.config.ts` (type, two monsters, `MONSTER_ORDER` after `authority`), `overlap.config.ts` (two groups extended), `rules.config.ts` (two rules before `reputation-listed`) and `messages.config.ts` (actions en and vi), as in the design. `MONSTER_THRESHOLD` unchanged": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269208849
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269444556
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269492559
+      }
+    ],
+    "4.2 Update `config.test.ts`: local `MONSTER_IDS` gains `investment` and `romance`. No other edit": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269208939
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269492751
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269520364
+      }
+    ],
+    "4.3 Run `new-monsters.test.ts`: all 20 samples pass in both modes. Compare with the \"Prototype measurement\" table; any difference is written into `design.md`": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209027
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269521080
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269601609
+      }
+    ],
+    "4.4 Add the combination rule examples (REQ-PIPE-76) and the single-signal Fake_Mode checks to `new-monsters.test.ts`": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209113
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269602289
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269671264
+      }
+    ],
+    "5.1 `new-monsters.property.test.ts`: PBT-145, PBT-146, PBT-149, PBT-150": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209190
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269675569
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269741492
+      }
+    ],
+    "5.2 `text-analyzer.v5.property.test.ts`: PBT-147, plus a fixture test that every added phrase exists in its group": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209289
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269742257
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269785037
+      }
+    ],
+    "6. Checkpoint": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209419
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269788939
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269826299
+      }
+    ],
+    "7.1 Add `monster-investment` and `monster-romance` to `COLOR_TOKENS`, both palettes (values in the design) and `MONSTER_TOKENS` in `pairs.ts`": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209504
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269827057
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269856226
+      }
+    ],
+    "7.2 Add the two entries to `MONSTER_PRESENTATION` in `monsters.ts`": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209583
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269856793
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269888033
+      }
+    ],
+    "7.3 Add the dictionary keys to `en.ts` and `vi.ts` (texts in the design) and the two ids to `KNOWN_SIGNAL_IDS`. Edit only the title of the `signal-ids.test.ts` test (\"24\" to \"26\")": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209669
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269888849
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269941717
+      }
+    ],
+    "7.4 `src/ui/new-monsters.property.test.ts`: PBT-148": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209769
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269942466
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270003741
+      }
+    ],
+    "8.1 Q1: add the two entries to `MONSTER_TEXT` in `result-view.ts`; add `result-view.test.ts` rows and a run through `buildResultView` for both monsters at `high`": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209853
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270012400
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270058625
+      }
+    ],
+    "8.2 Q2: add the two ids to `MONSTER_ORDER` in `bestiary.ts`; update the counts in `bestiary.test.ts` (13 to 15 entries, 5 to 7 monsters) and `bestiary-pages.property.test.ts` (13 to 15)": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269209984
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270064359
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270568488
+      }
+    ],
+    "8.3 Q3: add `goblin`, `goblins`, `wraith`, `wraiths` to `EN_HORROR` and `yêu tinh` to `VI_HORROR` in `voice.ts`, and the same words to the vocabulary list of `halloween-voice.md`; add examples to `voice.test.ts`": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269210089
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270569528
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270608449
+      }
+    ],
+    "8.4 Q4: extend the hand-written monster lists of `MonsterStage.test.ts`, `svg-markup.art.test.ts`, `result-view.property.test.ts` and `scene.test.ts` only": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269210181
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270609596
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270664682
+      }
+    ],
+    "9.1 `monsters-new.tsx`: `MonsterInvestmentGoblin` only (three to five shapes plus one `-detail` group, tokens only). Add the id to `ArtId` and `ART_REGISTRY`, and the id to `EXPECTED_IDS` in `art.test.ts`. Add `monsters-new.test.ts` rows (markup rules, tokens exist in both palettes, no hex color)": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269210277
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270665777
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270744833
+      }
+    ],
+    "9.2 `MonsterRomanceWraith`, registered and tested the same way": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269210370
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271155709
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271208019
+      }
+    ],
+    "10.1 `README.md`: list the six main monsters; extend \"Known limits\" (REQ NFR-RT-06). Documentation only": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269210468
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271208739
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271234951
+      }
+    ],
+    "11.1 Re-run the whole suite; fill the \"after\" columns of the table in `design.md` with the measured numbers (correct monsters, missed scams, false positives, Earlier_Samples unchanged); list any test that changed and why": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269210556
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271235960
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271678769
+      }
+    ],
+    "11.2 Delete every `tmp-*` file; `git status` shows only the files of the design \"Files\" table": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269210646
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271679608
+      },
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271712899
+      }
+    ],
+    "2. Evaluation set (measure before changing)": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269323150
+      }
+    ],
+    "3. Text rule configuration": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269443486
+      }
+    ],
+    "4. Pipeline configuration": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269671327
+      }
+    ],
+    "5. Property tests for the pipeline and the analyzer": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795269785199
+      }
+    ],
+    "7. UI data (not blocked)": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270003918
+      }
+    ],
+    "8. Rendering, voice and test lists (approved: Q1 to Q4 answered yes)": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795270664822
+      }
+    ],
+    "9. Art": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271208114
+      }
+    ],
+    "10. Documentation": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271235078
+      }
+    ],
+    "11. Final measurement and cleanup": [
+      {
+        "executionId": "98e0fab9-8073-44f7-8ffd-20d753e239b7",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795271713040
+      }
+    ],
+    "12.1 Redraw `MonsterInvestmentGoblin` in `monsters-new.tsx` to the hunter-scene detail standard: 4 to 6 shades from existing tokens, linear or radial gradients for depth (defined in `<defs>` with unique ids, stop colors as `var(--th-...)`), shading and rim light, fine details in groups whose `data-part` ends with `-detail` (coin shine, fur or cloth folds, teeth, chart grid). Keep `data-part` groups, viewBox 0 0 200 200, first token `monster-investment`, no `<text>`, `<title>`, `<filter>`, `<animate>`, no hex color": [
+      {
+        "executionId": "42e9432d-e443-4b62-850e-11c31d238fb4",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795273567610
+      },
+      {
+        "executionId": "42e9432d-e443-4b62-850e-11c31d238fb4",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795273572755
+      },
+      {
+        "executionId": "42e9432d-e443-4b62-850e-11c31d238fb4",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795273817357
+      }
+    ],
+    "12.2 Redraw `MonsterRomanceWraith` the same way (translucent hood and cloth folds, fog layers, hollow eyes with glow, heart with rim light and cracks in a `-detail` group)": [
+      {
+        "executionId": "42e9432d-e443-4b62-850e-11c31d238fb4",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795273567741
+      },
+      {
+        "executionId": "42e9432d-e443-4b62-850e-11c31d238fb4",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795273880579
+      },
+      {
+        "executionId": "42e9432d-e443-4b62-850e-11c31d238fb4",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795274054473
+      }
+    ],
+    "12. Detailed art for the two new monsters (maintainer request)": [
+      {
+        "executionId": "42e9432d-e443-4b62-850e-11c31d238fb4",
+        "chatSessionId": "sess_af1bc0e8-004c-428b-91f3-2c2f875c0c59",
+        "timestamp": 1795274054587
+      }
+    ]
+  }
+}

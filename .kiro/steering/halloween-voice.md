@@ -36,8 +36,8 @@ labels, `result.actions.heading`, `journal.do.heading`, `result.limitsNote`,
 
 ## Horror vocabulary (simple words only)
 
-- **English:** ghost, shadow, vampire, zombie, banshee, monster, hunter, lantern, candle, trail, forest, swamp, ruins, graveyard, grave, fog, mist, moon, night, dark, creep, lurk, wail, haunt, curse, spooky, eerie.
-- **Vietnamese:** ma, bóng ma, bóng, ma cà rồng, xác sống, ma nữ, quái vật, thợ săn, ngọn đèn, đèn, ngọn nến, nến, dấu vết, rừng, đầm lầy, tàn tích, nghĩa địa, sương, trăng, đêm, bóng tối, lởn vởn, gào khóc, lời nguyền, ma quái, săn.
+- **English:** ghost, shadow, vampire, zombie, banshee, monster, hunter, lantern, candle, trail, forest, swamp, ruins, graveyard, grave, fog, mist, moon, night, dark, creep, lurk, wail, haunt, curse, spooky, eerie, goblin, wraith.
+- **Vietnamese:** ma, bóng ma, bóng, ma cà rồng, xác sống, ma nữ, quái vật, thợ săn, ngọn đèn, đèn, ngọn nến, nến, dấu vết, rừng, đầm lầy, tàn tích, nghĩa địa, sương, trăng, đêm, bóng tối, lởn vởn, gào khóc, lời nguyền, ma quái, săn, yêu tinh.
 
 ## Never write (any tier)
 

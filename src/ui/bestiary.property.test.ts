@@ -33,7 +33,7 @@ describe("bestiary properties", () => {
     /** **Validates: Requirements REQ-BEST-01.1, REQ-BEST-01.3, REQ-BEST-01.5, REQ-BEST-01.6** */
     const monsters = BESTIARY_ENTRIES.filter((e) => e.kind === "monster");
     const links = BESTIARY_ENTRIES.filter((e) => e.kind === "link");
-    const keys = (["bank", "prize", "job-bait", "authority", "generic"] as const);
+    const keys = (["bank", "prize", "job-bait", "authority", "investment", "romance", "generic"] as const);
     expect(monsters.map((e) => e.id)).toEqual(keys.map((k) => `monster:${k}`));
     monsters.forEach((e, i) => {
       const p = MONSTER_PRESENTATION[keys[i]];

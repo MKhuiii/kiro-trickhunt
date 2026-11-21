@@ -9,7 +9,14 @@ import type { RiskLevel, Signal } from "../core";
 export type { RiskLevel };
 
 /** Closed set of monsters. `generic` is used when no specific monster fits. */
-export type MonsterId = "bank" | "prize" | "job-bait" | "authority" | "generic";
+export type MonsterId =
+  | "bank"
+  | "prize"
+  | "job-bait"
+  | "authority"
+  | "investment"
+  | "romance"
+  | "generic";
 
 /** Supported message locales (REQ-PIPE-07). */
 export type Locale = "en" | "vi";

@@ -86,6 +86,16 @@ export const COMBINATION_RULES: readonly CombinationRule[] = [
     minLevel: "high",
   },
   {
+    id: "investment-with-payment",
+    allOf: [["text.investment-pitch"], ["text.payment-request"]],
+    minLevel: "high",
+  },
+  {
+    id: "romance-with-payment",
+    allOf: [["text.romance-bait"], ["text.payment-request"]],
+    minLevel: "high",
+  },
+  {
     id: "reputation-listed",
     allOf: [["url.reputation-listed"]],
     minLevel: "high",

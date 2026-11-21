@@ -18,6 +18,8 @@ const MONSTERS: readonly ArtId[] = [
   "monster-authority-banshee",
   "monster-generic-shade",
   "monster-neutral-candle",
+  "monster-investment-goblin",
+  "monster-romance-wraith",
 ];
 
 function drawings(): { name: string; markup: string }[] {

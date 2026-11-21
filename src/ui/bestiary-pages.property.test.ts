@@ -94,6 +94,6 @@ describe("bestiary page helper properties", () => {
       expect(e).toBe(BESTIARY_ENTRIES[n - 1]);
       seen.add(e!.id);
     }
-    expect(seen.size).toBe(13);
+    expect(seen.size).toBe(15);
   });
 });

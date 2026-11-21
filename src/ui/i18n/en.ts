@@ -148,6 +148,10 @@ export const en = {
     "The message offers easy pay for little work or asks for a fee to start. Real employers do not charge you to begin. Check the company on its official website.",
   "signal.text.financial-institution.explain":
     "The message asks you to verify or unlock a bank or wallet account. Scammers use this to steal logins. Open your bank's own app or site yourself instead.",
+  "signal.text.investment-pitch.explain":
+    "The message promises high profits, little risk or a private trading group. Real investments carry risk and never promise a fixed return. Check the firm with your financial regulator.",
+  "signal.text.romance-bait.explain":
+    "The message mixes sudden closeness with a story about being far away, a frozen account or paying you back later. Scammers use this to ask for money. Talk to a friend or family member before you reply.",
   "signal.url.punycode-host.explain":
     "The web address has traits of a disguised name. It uses unusual characters that can look like normal letters. Do not open it.",
   "signal.url.ip-address-host.explain":
@@ -174,6 +178,10 @@ export const en = {
     "A stranger is friendly or offers easy paid work. This can win your trust before they ask for money. Check who they are first.",
   "signal.semantic.pressure-escalation.explain":
     "The message keeps pushing you harder. Real organisations usually give you time. Check before you reply.",
+  "signal.semantic.romance-money-story.explain":
+    "Someone you barely know is very warm, then tells a story about being far away or short of money. They ask you to send money or gift cards. Talk to a person you trust first.",
+  "signal.semantic.investment-scheme.explain":
+    "The message promises steady profits or a members-only group and asks for money to start. Real investments carry risk. Check the firm with your financial regulator.",
   "signal.unknown.explain":
     "We found a warning sign in this content. Check with the sender in a way you trust.",
 
@@ -200,6 +208,18 @@ export const en = {
   "monster.authority.tip1": "It says you are linked to a case.",
   "monster.authority.tip2": "It threatens arrest or a fine if you do not act now.",
   "monster.authority.tip3": "It tells you to keep it secret and send money.",
+  "monster.investment.name": "Profit Goblin",
+  "monster.investment.short":
+    "A goblin counting coins in the dark. It promises big profits and wants a deposit first.",
+  "monster.investment.tip1": "It promises high profits with no risk.",
+  "monster.investment.tip2": "It invites you to a private group and asks for a deposit to join.",
+  "monster.investment.tip3": "It pushes you to hurry before the spots run out.",
+  "monster.romance.name": "Heart Wraith",
+  "monster.romance.short":
+    "A hooded wraith in the fog, holding a heart. It wants your trust first and your money next.",
+  "monster.romance.tip1": "A stranger says they love you after only a few days.",
+  "monster.romance.tip2": "They say they are far away, in a risky job or locked out of their account.",
+  "monster.romance.tip3": "They ask for money or gift cards and promise to pay you back.",
   "monster.generic.name": "Odd Shadow",
   "monster.generic.short":
     "A shadow creeping in the fog. It shows warning signs, but its face is unknown.",

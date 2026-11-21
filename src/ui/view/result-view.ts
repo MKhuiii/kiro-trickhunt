@@ -114,6 +114,18 @@ const MONSTER_TEXT: Readonly<
     short: "monster.authority.short",
     tips: ["monster.authority.tip1", "monster.authority.tip2", "monster.authority.tip3"],
   },
+  investment: {
+    short: "monster.investment.short",
+    tips: [
+      "monster.investment.tip1",
+      "monster.investment.tip2",
+      "monster.investment.tip3",
+    ],
+  },
+  romance: {
+    short: "monster.romance.short",
+    tips: ["monster.romance.tip1", "monster.romance.tip2", "monster.romance.tip3"],
+  },
   generic: {
     short: "monster.generic.short",
     tips: ["monster.generic.tip1", "monster.generic.tip2", "monster.generic.tip3"],

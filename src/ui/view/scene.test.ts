@@ -29,7 +29,7 @@ describe("sceneFor table rows", () => {
     });
   });
 
-  it.each(["bank", "prize", "job-bait", "authority", "generic"] as const)(
+  it.each(["bank", "prize", "job-bait", "authority", "investment", "romance", "generic"] as const)(
     "revealed with monster %s",
     (monster) => {
       expect(sceneFor({ step: "revealed", monster })).toEqual({

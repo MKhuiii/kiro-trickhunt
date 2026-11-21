@@ -36,6 +36,8 @@ const MONSTER_TOKENS: readonly ColorToken[] = [
   "monster-job-bait",
   "monster-authority",
   "monster-generic",
+  "monster-investment",
+  "monster-romance",
 ];
 
 export const LINK_TOKENS: readonly ColorToken[] = [

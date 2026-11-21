@@ -39,6 +39,8 @@ const MONSTER_IDS: readonly MonsterId[] = [
   "prize",
   "job-bait",
   "authority",
+  "investment",
+  "romance",
   "generic",
 ];
 

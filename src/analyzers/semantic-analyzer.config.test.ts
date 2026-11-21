@@ -8,10 +8,13 @@ const EXPECTED_IDS = [
   "semantic.isolation-secrecy",
   "semantic.relationship-or-job-bait",
   "semantic.pressure-escalation",
+  // monster-disambiguation-v1
+  "semantic.romance-money-story",
+  "semantic.investment-scheme",
 ];
 
 describe("semantic-analyzer.config", () => {
-  it("contains exactly the six ids from REQ-SEM-01, with no duplicates", () => {
+  it("contains exactly the eight ids (six from REQ-SEM-01, two from monster-disambiguation-v1), with no duplicates", () => {
     const ids = SEMANTIC_SIGNALS.map((s) => s.id);
     expect(ids).toHaveLength(EXPECTED_IDS.length);
     expect(new Set(ids).size).toBe(ids.length);

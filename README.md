@@ -237,10 +237,27 @@ Licenses and sources of the shipped components are listed in [`THIRD_PARTY_NOTIC
 
 Each suspicious trait in a link gets a small creature on the result card. For example, the Doppelganger marks a name that is very close to a well-known brand. Creatures only help you read the evidence. They never change the risk level, the score or the main monster. TrickHunt never opens, visits or tests a link, so it cannot tell whether a link exists, where it leads or whether the page behind it is genuine. It only looks at the characters of the link.
 
+## The main monsters
+
+Each kind of scam has one main monster. The result card shows the monster that best matches the evidence. The monster is a memory aid, not a verdict.
+
+| Monster | Scam pattern |
+|---|---|
+| Bank Ghost | Fake bank or account messages that ask for a code, password or card number |
+| Gift Vampire | Prizes and gifts that ask for a fee or your details |
+| Job Zombie | Easy, high-pay job offers that ask for a deposit or a move to another chat app |
+| Authority Banshee | Threats of arrest or fines from a supposed officer or office |
+| Profit Goblin | Investment pitches that promise big profits and ask for a deposit first |
+| Heart Wraith | Romance scams that build trust first and then ask for money |
+
 ## Known limits
 
 - **Rules-only mode misses new wording.** Without the AI layer, TrickHunt checks messages against a fixed set of known warning phrases. It often misses scam wording it has not seen before. The AI layer is needed to catch those. A result of "Nothing detected yet" only means the rules found no warning signs. It is not a guarantee about the message.
 - **The evaluation set is not an accuracy estimate.** The 75 sample messages (26 scam, 49 benign) were used to tune the rules. The rules were adjusted until they handled these samples well, so good results on them do not show how the rules will do on new messages.
+- **Rules alone have low recall on unfamiliar wording.** The phrase rules for the Profit Goblin and Heart Wraith only catch wording close to what they already know.
+- **The AI layer carries most of the detection for investment and romance scams.** Without it, many of these messages get no signal. With it, results still depend on the AI provider and are not guaranteed.
+- **The 20 `nm-` samples are not an accuracy estimate.** They were used to tune the new phrases, so good results on them say little about new messages.
+- **The 14 `mc-` confusion samples are not an accuracy estimate either.** They were used to tune the monster choice between similar scam types. When the AI layer returns only one warning sign, or none, the result can stay on the general monster even when the message matches a specific one. The AI layer is not deterministic, so two runs on the same message can differ.
 - **Accepted recall losses: currently none.** Every scam sample in the set still reaches at least its expected risk level. Two scam samples moved from `critical` to `high`. They still meet their minimum level, so they are not counted as losses.
 
 ## Learn More

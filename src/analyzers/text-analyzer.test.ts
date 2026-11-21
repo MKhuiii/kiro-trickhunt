@@ -85,8 +85,16 @@ describe("TextAnalyzer", () => {
     expect(analyzer.sourceType).toBe("text");
   });
 
-  it("covers all 10 groups", () => {
-    expect(TEXT_PATTERNS).toHaveLength(10);
+  it("covers all 12 groups", () => {
+    expect(TEXT_PATTERNS).toHaveLength(12);
+  });
+
+  it.each([
+    ["text.investment-pitch", "They offer guaranteed daily profit on every deposit."],
+    ["text.romance-bait", "I am working on an oil rig and my bank account is frozen."],
+  ])("%s: example input yields that group's signal", async (id, text) => {
+    const signals = await analyzer.analyze(text);
+    expect(signals.some((s) => s.id === id)).toBe(true);
   });
 
   it.each(cases)("%s (%s): '%s' yields that group's signal", async (id, _lang, phrase, weight) => {

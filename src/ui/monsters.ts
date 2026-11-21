@@ -41,6 +41,18 @@ export const MONSTER_PRESENTATION: Readonly<
     colorToken: "monster-authority",
     artKey: "monster-authority-banshee",
   },
+  investment: {
+    id: "investment",
+    nameKey: "monster.investment.name",
+    colorToken: "monster-investment",
+    artKey: "monster-investment-goblin",
+  },
+  romance: {
+    id: "romance",
+    nameKey: "monster.romance.name",
+    colorToken: "monster-romance",
+    artKey: "monster-romance-wraith",
+  },
   generic: {
     id: "generic",
     nameKey: "monster.generic.name",

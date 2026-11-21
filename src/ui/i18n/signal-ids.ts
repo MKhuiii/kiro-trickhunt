@@ -1,6 +1,6 @@
 import type { MessageKey } from "./en";
 
-/** The 24 signal ids: 10 text, 7 url from the analyzer, 1 url from the reputation lookup, 6 semantic. */
+/** The 28 signal ids: 12 text, 7 url from the analyzer, 1 url from the reputation lookup, 8 semantic. */
 export const KNOWN_SIGNAL_IDS = [
   "text.otp-request",
   "text.urgency",
@@ -12,6 +12,8 @@ export const KNOWN_SIGNAL_IDS = [
   "text.sensitive-data-request",
   "text.job-offer",
   "text.financial-institution",
+  "text.investment-pitch",
+  "text.romance-bait",
   "url.punycode-host",
   "url.ip-address-host",
   "url.at-in-authority",
@@ -26,6 +28,8 @@ export const KNOWN_SIGNAL_IDS = [
   "semantic.isolation-secrecy",
   "semantic.relationship-or-job-bait",
   "semantic.pressure-escalation",
+  "semantic.romance-money-story",
+  "semantic.investment-scheme",
 ] as const;
 
 export type KnownSignalId = (typeof KNOWN_SIGNAL_IDS)[number];

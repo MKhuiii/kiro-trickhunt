@@ -124,6 +124,14 @@ describe("countHorrorWords", () => {
     expect(countHorrorWords("Đang thắp đèn", "vi")).toBe(1);
   });
 
+  it("counts the goblin and wraith words (new-monsters-v1, REQ-UI-53)", () => {
+    expect(countHorrorWords("Profit Goblin", "en")).toBe(1);
+    expect(countHorrorWords("Heart Wraith", "en")).toBe(1);
+    expect(countHorrorWords("Goblins and wraiths", "en")).toBe(2);
+    expect(countHorrorWords("Yêu tinh lợi nhuận", "vi")).toBe(1);
+    expect(countHorrorWords("Bóng ma trái tim", "vi")).toBe(1);
+  });
+
   it("does not read mã (code) as ma (ghost)", () => {
     expect(countHorrorWords("Hãy nhập mã xác nhận", "vi")).toBe(0);
     expect(countHorrorWords("Một con ma", "vi")).toBe(1);

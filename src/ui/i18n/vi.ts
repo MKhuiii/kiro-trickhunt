@@ -150,6 +150,10 @@ export const vi: Record<MessageKey, string> = {
     "Tin nhắn hứa trả công cao cho việc nhẹ hoặc đòi phí để bắt đầu. Nhà tuyển dụng thật không thu phí để bạn đi làm. Hãy kiểm tra công ty trên trang web chính thức.",
   "signal.text.financial-institution.explain":
     "Tin nhắn yêu cầu bạn xác minh hoặc mở khóa tài khoản ngân hàng hoặc ví. Kẻ lừa đảo dùng cách này để lấy thông tin đăng nhập. Hãy tự mở ứng dụng hoặc trang web chính thức của ngân hàng.",
+  "signal.text.investment-pitch.explain":
+    "Tin nhắn hứa lợi nhuận cao, ít rủi ro hoặc mời vào nhóm giao dịch kín. Đầu tư thật luôn có rủi ro và không hứa lãi cố định. Hãy kiểm tra công ty với cơ quan quản lý tài chính.",
+  "signal.text.romance-bait.explain":
+    "Tin nhắn vừa tỏ ra rất thân thiết vừa kể chuyện ở xa, tài khoản bị khóa hoặc hứa trả tiền sau. Kẻ lừa đảo dùng cách này để xin tiền. Hãy hỏi một người thân hoặc bạn bè trước khi trả lời.",
   "signal.url.punycode-host.explain":
     "Địa chỉ web có dấu hiệu của một tên đội lốt. Nó dùng ký tự lạ có thể trông giống chữ thường. Đừng mở nó.",
   "signal.url.ip-address-host.explain":
@@ -176,6 +180,10 @@ export const vi: Record<MessageKey, string> = {
     "Một người lạ tỏ ra thân thiện hoặc mời việc dễ kiếm tiền. Đây có thể là cách lấy lòng tin trước khi xin tiền. Hãy tìm hiểu họ là ai trước.",
   "signal.semantic.pressure-escalation.explain":
     "Tin nhắn càng lúc càng thúc ép bạn. Cơ quan thật thường cho bạn thời gian. Hãy kiểm tra trước khi trả lời.",
+  "signal.semantic.romance-money-story.explain":
+    "Một người bạn mới quen tỏ ra rất thân thiết, rồi kể chuyện ở xa hoặc thiếu tiền. Họ nhờ bạn gửi tiền hoặc thẻ quà tặng. Hãy hỏi một người bạn tin tưởng trước.",
+  "signal.semantic.investment-scheme.explain":
+    "Tin nhắn hứa lợi nhuận đều hoặc mời vào nhóm kín, rồi đòi tiền để bắt đầu. Đầu tư thật luôn có rủi ro. Hãy kiểm tra công ty với cơ quan quản lý tài chính.",
   "signal.unknown.explain":
     "Chúng tôi thấy một dấu hiệu lạ trong nội dung này. Hãy hỏi lại người gửi bằng cách bạn tin tưởng.",
 
@@ -200,6 +208,18 @@ export const vi: Record<MessageKey, string> = {
   "monster.authority.tip1": "Nó nói bạn có liên quan đến một vụ việc.",
   "monster.authority.tip2": "Nó dọa bắt hoặc phạt nếu bạn không làm ngay.",
   "monster.authority.tip3": "Nó bảo bạn giữ bí mật và chuyển tiền.",
+  "monster.investment.name": "Yêu tinh lợi nhuận",
+  "monster.investment.short":
+    "Yêu tinh đếm tiền xu trong bóng tối. Nó hứa lãi lớn và đòi bạn nạp tiền trước.",
+  "monster.investment.tip1": "Nó hứa lợi nhuận cao mà không có rủi ro.",
+  "monster.investment.tip2": "Nó mời bạn vào nhóm kín và đòi tiền để tham gia.",
+  "monster.investment.tip3": "Nó giục bạn nhanh lên vì sắp hết chỗ.",
+  "monster.romance.name": "Bóng ma trái tim",
+  "monster.romance.short":
+    "Một bóng ma trùm mũ giữa sương, tay cầm trái tim. Nó lấy lòng tin trước rồi mới xin tiền.",
+  "monster.romance.tip1": "Người lạ nói yêu bạn chỉ sau vài ngày.",
+  "monster.romance.tip2": "Họ nói đang ở xa, làm việc nguy hiểm hoặc bị khóa tài khoản.",
+  "monster.romance.tip3": "Họ xin tiền hoặc thẻ quà tặng và hứa trả lại.",
   "monster.generic.name": "Bóng lạ",
   "monster.generic.short":
     "Một cái bóng len lỏi trong sương. Nó có dấu hiệu lạ nhưng chưa rõ mặt.",

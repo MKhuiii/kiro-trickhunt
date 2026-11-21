@@ -86,12 +86,13 @@ const EN_HORROR: ReadonlySet<string> = new Set([
   "candle", "trail", "forest", "swamp", "ruins", "graveyard", "grave", "fog", "mist", "moon",
   "night", "dark", "darkness", "creep", "creeps", "creeping", "lurk", "lurks", "lurking",
   "wail", "wails", "wailing", "haunt", "haunts", "haunted", "curse", "cursed", "spooky", "eerie",
+  "goblin", "goblins", "wraith", "wraiths",
 ]);
 
 const VI_HORROR: readonly string[] = [
   "bóng ma", "ma cà rồng", "xác sống", "ma nữ", "ma quái", "quái vật", "thợ săn", "ngọn đèn",
   "ngọn nến", "dấu vết", "đầm lầy", "tàn tích", "nghĩa địa", "bóng tối", "lởn vởn", "gào khóc",
-  "lời nguyền", "bóng", "ma", "đèn", "nến", "rừng", "sương", "trăng", "đêm", "săn",
+  "lời nguyền", "yêu tinh", "bóng", "ma", "đèn", "nến", "rừng", "sương", "trăng", "đêm", "săn",
 ];
 
 const EN_BANNED: ReadonlySet<string> = new Set([

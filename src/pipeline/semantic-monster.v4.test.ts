@@ -35,7 +35,10 @@ describe("emotional-manipulation and monster choice (rules-tuning-v4)", () => {
     expect(v.monster).toBe("generic");
   });
 
-  it("romance-style combination picks job-bait over authority on a tie", async () => {
+  // monster-disambiguation-v1: `romance` now comes before `job-bait` and
+  // `authority` in MONSTER_ORDER, so this three-way tie on shared signals goes
+  // to `romance` (it was `job-bait`). Only the expected monster changed.
+  it("romance-style combination picks romance over job-bait and authority on a tie", async () => {
     const v = await runMany([
       "semantic.impersonation-tone",
       "semantic.emotional-manipulation",
@@ -43,6 +46,6 @@ describe("emotional-manipulation and monster choice (rules-tuning-v4)", () => {
       "semantic.pressure-escalation",
     ]);
     expect(v.level).toBe("critical");
-    expect(v.monster).toBe("job-bait");
+    expect(v.monster).toBe("romance");
   });
 });

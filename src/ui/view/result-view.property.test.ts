@@ -11,7 +11,7 @@ import { NO_REPUTATION } from "../../pipeline/reputation-fixture";
 const NUM_RUNS = 150;
 const SOURCE_ORDER = ["text", "url", "semantic", "image", "qr", "other"];
 const LEVELS = ["no_signals", "suspicious", "high", "critical"] as const;
-const MONSTERS = ["bank", "prize", "job-bait", "authority", "generic"] as const;
+const MONSTERS = ["bank", "prize", "job-bait", "authority", "investment", "romance", "generic"] as const;
 const SOURCES = ["text", "url", "semantic", "image", "qr", "other"] as const;
 
 const evidenceArb = fc

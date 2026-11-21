@@ -4,16 +4,18 @@ import { en } from "./i18n/en";
 import { LINK_CREATURES } from "./link-creatures";
 
 describe("bestiary entries", () => {
-  it("has 13 entries in the specified order", () => {
+  it("has 15 entries in the specified order", () => {
     expect(BESTIARY_ENTRIES.map((e) => e.id)).toEqual([
       "monster:bank",
       "monster:prize",
       "monster:job-bait",
       "monster:authority",
+      "monster:investment",
+      "monster:romance",
       "monster:generic",
       ...LINK_CREATURES.map((c) => `link:${c.id}`),
     ]);
-    expect(BESTIARY_ENTRIES).toHaveLength(13);
+    expect(BESTIARY_ENTRIES).toHaveLength(15);
   });
 
   it("does not include the neutral candle", () => {
@@ -49,7 +51,7 @@ describe("bestiary entries", () => {
 
   it("groups monsters then links", () => {
     const g = groupEntries(BESTIARY_ENTRIES);
-    expect(g.monsters).toHaveLength(5);
+    expect(g.monsters).toHaveLength(7);
     expect(g.links).toHaveLength(8);
   });
 
