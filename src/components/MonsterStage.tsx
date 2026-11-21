@@ -26,7 +26,7 @@ export function MonsterStage({ locale, monster, linkCreatures = [] }: MonsterSta
       className="relative flex h-full min-h-0 w-full flex-col overflow-hidden"
       data-monster={presentation.id}
     >
-      <Art id="backdrop-home" className="absolute inset-x-0 top-0 h-[107%] w-full opacity-40" />
+      <Art id="backdrop-home" className="absolute inset-x-0 top-0 h-[109%] w-full opacity-40" />
       <div className="relative flex min-h-0 flex-1 items-center justify-center p-3 pr-[9.5rem] md:pr-3">
         <div
           data-actor="monster"

@@ -38,7 +38,7 @@ export function HuntScene({ locale, leg, children }: HuntSceneProps): ReactEleme
   return (
     <div className="relative h-full min-h-0 w-full overflow-hidden" data-leg={current}>
       <div key={current} className="th-leg-in absolute inset-0">
-        <Art id={BACKDROP[current]} className="absolute inset-x-0 top-0 h-[107%] w-full" />
+        <Art id={BACKDROP[current]} className="absolute inset-x-0 top-0 h-[109%] w-full" />
         <div
           data-actor="hunter"
           data-actor-key={HUNTER_POSE[current]}
